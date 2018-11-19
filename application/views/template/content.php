@@ -1,0 +1,110 @@
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="../../index2.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><img src="http://jdih.awanesia.com/logo-esdm-kuning.png"></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>BSC</b></span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+     <!--  <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a> -->
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">   
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="http://jdih.awanesia.com/logo-esdm-kuning.png" class="user-image" alt="User Image">
+              <span class="hidden-xs"><?php echo @$this->session->userdata('name') ? $this->session->userdata('name') : 'Undefined'; ?></span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="http://jdih.awanesia.com/logo-esdm-kuning.png" class="img-circle" alt="User Image">
+
+                <p>
+                  Alexander Pierce - Web Developer
+                  <small>Member since Nov. 2012</small>
+                </p>
+              </li>
+              <!-- Menu Body --> 
+              <!-- Menu Footer-->
+              <li class="user-footer"> 
+                <div class="pull-right">
+                  <a href="<?php echo site_url('auth/logout/') ?>" class="btn btn-default btn-flat">Keluar</a>
+                </div>
+              </li>
+            </ul>
+          </li> 
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar"> 
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">NAVIGASI</li>
+           <li class="active">
+          <a href="../calendar.html">
+            <i class="fa fa-dashboard"></i> <span>Dashboard</span> 
+          </a>
+        </li> 
+       <!--  <li class="treeview">
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>Layout Options</span>
+            <span class="pull-right-container">
+              <span class="label label-primary pull-right">4</span>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+            <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
+            <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
+            <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+          </ul>
+        </li>
+        
+         -->
+         <li>
+          <a href="../widgets.html">
+            <i class="fa fa-th"></i> <span>Master Target</span>
+          </a>
+        </li>
+        <li>
+          <a href="../widgets.html">
+            <i class="fa fa-th"></i> <span>Master Kegiatan</span>
+          </a>
+        </li>  
+          <li>
+          <a href="../widgets.html">
+            <i class="fa fa-th"></i> <span>Pengajuan</span>
+          </a>
+        </li>
+
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+  <?php
+  // echo @$page ? $this->load->view($page) : ''; 
+    if (@$page) {
+      $this->load->view($page);
+    }
+  ?>
+  </div>
+  <!-- /.content-wrapper -->
+  
