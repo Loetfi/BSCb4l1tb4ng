@@ -16,6 +16,7 @@ $(function(){
 	$('#addForm').submit(function(){
 		parent_id = $('#parent_id').val();
 		branch_id = $('#branch_id').val();
+		type = $('#type').val();
 		code = $('#code').val();
 		org_name = $('#org_name').val();
 		description = $('#description').val();
@@ -28,6 +29,7 @@ $(function(){
 			data : {
 				parent_id: parent_id,
 				branch_id: branch_id,
+				type: type,
 				code: code,
 				org_name: org_name,
 				description: description,
@@ -52,6 +54,7 @@ $(function(){
 		org_id = $('#org_id').val();
 		parent_id = $('#parent_id').val();
 		branch_id = $('#branch_id').val();
+		type = $('#type').val();
 		code = $('#code').val();
 		org_name = $('#org_name').val();
 		description = $('#description').val();
@@ -66,6 +69,7 @@ $(function(){
 				parent_id: parent_id,
 				branch_id: branch_id,
 				code: code,
+				type: type,
 				org_name: org_name,
 				description: description,
 				sts_deleted: sts_deleted,

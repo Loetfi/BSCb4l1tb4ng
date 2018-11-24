@@ -44,6 +44,7 @@ class Struktur extends CI_Controller {
 		$dataInsert = array(
 			'parent_id'		=> @$_POST['parent_id'],
 			'branch_id'		=> @$_POST['branch_id'],
+			'type'			=> @$_POST['type'],
 			'code'			=> @$_POST['code'],
 			'org_name'		=> @$_POST['org_name'],
 			'description'	=> @$_POST['description'],
@@ -104,6 +105,7 @@ class Struktur extends CI_Controller {
 		$dataUpdate = array(
 			'parent_id'		=> @$_POST['parent_id'],
 			'branch_id'		=> @$_POST['branch_id'],
+			'type'			=> @$_POST['type'],
 			'code'			=> @$_POST['code'],
 			'org_name'		=> @$_POST['org_name'],
 			'description'	=> @$_POST['description'],

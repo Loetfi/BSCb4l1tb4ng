@@ -49,6 +49,17 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label for="type" class="col-sm-2 control-label">Type</label>
+							<div class="col-sm-10">
+								<select class="form-control" id="type" required>
+									<option value="">Pilih Type</option>
+									<option value="Penerimaan" <?php echo $detail['type']=='Penerimaan'?'selected':''; ?>>Penerimaan</option>
+									<option value="Pelaksanaan" <?php echo $detail['type']=='Pelaksanaan'?'selected':''; ?>>Pelaksanaan</option>
+									<option value="Keuangan" <?php echo $detail['type']=='Keuangan'?'selected':''; ?>>Keuangan</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="org_name" class="col-sm-2 control-label">org_name</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="org_name" placeholder="org_name" value="<?php echo $detail['org_name']; ?>" required>

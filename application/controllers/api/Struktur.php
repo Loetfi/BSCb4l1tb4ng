@@ -36,6 +36,7 @@ class Struktur extends CI_Controller {
 	
 	function getChildComboOrg($name, $data){
 		$parent_id = @$_GET['parent_id'];
+		$childOnly = @$_GET['childOnly'];
 		$head = '';
 		foreach($name as $row){
 			$head .= $row.' -> ';
@@ -44,6 +45,9 @@ class Struktur extends CI_Controller {
 		
 		foreach($data as $row){
 			if ($row['group']){
+				if ($childOnly){}
+				else echo '<option value="'.$row['data']['org_id'].'" '.($parent_id==$row['data']['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
+				
 				$nameParent[] = $row['name'];
 				$this->getChildComboOrg($nameParent, $row['data']);
 			}
