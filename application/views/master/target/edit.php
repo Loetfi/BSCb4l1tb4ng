@@ -20,30 +20,31 @@
 				<!-- /.box-header -->
 				
 				<form action="#" method="POST" id="editForm" class="form-horizontal">
-					<input type="hidden" id="branch_id" value="<?php echo @$detail['branch_id']; ?>">
+					<input type="hidden" id="target_id" value="<?php echo @$detail['target_id']; ?>">
 					<div class="box-body">
 						<div class="form-group">
-							<label for="ip_address" class="col-sm-2 control-label">ip_address</label>
+							<label for="org_id" class="col-sm-2 control-label">org_id</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="ip_address" placeholder="ip_address" value="<?php echo @$detail['ip_address']; ?>" required>
+								<select id="org_id" class="form-control" required>
+								</select>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="branch_name" class="col-sm-2 control-label">branch_name</label>
+							<label for="year" class="col-sm-2 control-label">year</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="branch_name" placeholder="branch_name" value="<?php echo @$detail['branch_name']; ?>" required>
+								<input type="text" class="form-control" id="year" placeholder="year" value="<?php echo @$detail['year']; ?>" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="address" class="col-sm-2 control-label">address</label>
+							<label for="month" class="col-sm-2 control-label">month</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="address" placeholder="address" value="<?php echo @$detail['address']; ?>" required>
+								<input type="text" class="form-control" id="month" placeholder="month" value="<?php echo @$detail['month']; ?>" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="phone" class="col-sm-2 control-label">phone</label>
+							<label for="amount" class="col-sm-2 control-label">amount</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="phone" placeholder="phone" value="<?php echo @$detail['phone']; ?>" required>
+								<input type="text" class="form-control" id="amount" placeholder="amount" value="<?php echo @$detail['amount']; ?>" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -72,4 +73,4 @@
 		<!-- /.col -->
 	</div>
 </section>
-<?php $this->load->view('master/branch/script'); ?>
+<?php $this->load->view('master/target/script'); ?>

@@ -15,21 +15,27 @@ class Struktur extends CI_Controller {
 	function getComboOrg(){
 		
 		$branch = @$_GET['branch_id'];
+		$parent_id = @$_GET['parent_id'];
+		$childOnly = @$_GET['childOnly'];
 		
 		$dataOrg = $this->struktur->getHead(@$branch);
 		
 		foreach($dataOrg as $rowHead){
 			if ($rowHead['group']){
+				if ($childOnly){}
+				else echo '<option value="'.@$rowHead['org_id'].'" '.($parent_id==@$rowHead['org_id']?'selected':'').'>'.@$rowHead['name'].'</option>';
+				
 				$this->getChildComboOrg(array($rowHead['name']), $rowHead['data']);
 			}
 			else {
-				echo '<option value="'.$rowHead['data']['org_id'].'">'.$rowHead['name'].' -> '.$rowHead['name'].'</option>';
+				echo '<option value="'.$rowHead['org_id'].'" '.($parent_id==$rowHead['org_id']?'selected':'').'>'.$rowHead['name'].' -> '.$rowHead['name'].'</option>';
 			}
 		}
 		
 	}
 	
 	function getChildComboOrg($name, $data){
+		$parent_id = @$_GET['parent_id'];
 		$head = '';
 		foreach($name as $row){
 			$head .= $row.' -> ';
@@ -42,7 +48,7 @@ class Struktur extends CI_Controller {
 				$this->getChildComboOrg($nameParent, $row['data']);
 			}
 			else{
-				echo '<option value="'.$row['data']['org_id'].'">'.$head.$row['name'].'</option>';
+				echo '<option value="'.$row['data']['org_id'].'" '.($parent_id==$row['data']['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
 			}
 		}
 	}

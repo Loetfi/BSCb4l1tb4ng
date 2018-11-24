@@ -23,20 +23,20 @@
 					<div class="box-body">
 						<table class="table table-bordered table-strip">
 							<tr>
-								<th width="150px">ip_address</th>
-								<td><?php echo @$detail['ip_address']; ?></td>
+								<th width="150px">parent_name</th>
+								<td><?php echo @$detail['parent_name']; ?></td>
 							</tr>
 							<tr>
 								<th>branch_name</th>
 								<td><?php echo @$detail['branch_name']; ?></td>
 							</tr>
 							<tr>
-								<th>address</th>
-								<td><?php echo @$detail['address']; ?></td>
+								<th>org_name</th>
+								<td><?php echo @$detail['org_name']; ?></td>
 							</tr>
 							<tr>
-								<th>phone</th>
-								<td><?php echo @$detail['phone']; ?></td>
+								<th>description</th>
+								<td><?php echo @$detail['description']; ?></td>
 							</tr>
 							<tr>
 								<th>create_date</th>

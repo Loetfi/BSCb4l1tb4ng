@@ -31,12 +31,20 @@
 								<td><?php echo @$detail['branch_name']; ?></td>
 							</tr>
 							<tr>
-								<th>address</th>
-								<td><?php echo @$detail['address']; ?></td>
+								<th>org_name</th>
+								<td><?php echo @$detail['org_name']; ?></td>
 							</tr>
 							<tr>
-								<th>phone</th>
-								<td><?php echo @$detail['phone']; ?></td>
+								<th>year</th>
+								<td><?php echo @$detail['year']; ?></td>
+							</tr>
+							<tr>
+								<th>month</th>
+								<td><?php echo @$detail['month']; ?></td>
+							</tr>
+							<tr>
+								<th>amount</th>
+								<td><?php echo @$detail['amount']; ?></td>
 							</tr>
 							<tr>
 								<th>create_date</th>
@@ -62,4 +70,4 @@
 		<!-- /.col -->
 	</div>
 </section>
-<?php $this->load->view('master/branch/script'); ?>
+<?php $this->load->view('master/target/script'); ?>

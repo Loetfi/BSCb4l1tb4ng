@@ -1,6 +1,8 @@
 <script src="<?php echo base_url('assets'); ?>/bower_components/fastclick/lib/fastclick.js"></script>
 <script>
+var branch_id = 1;
 $(function(){
+	$('#menuTarget').addClass('active');
 	$('#thisDataTable').DataTable({
 		'paging'      : true,
 		'lengthChange': false,
@@ -12,10 +14,10 @@ $(function(){
 	});
 	
 	$('#addForm').submit(function(){
-		ip_address = $('#ip_address').val();
-		branch_name = $('#branch_name').val();
-		address = $('#address').val();
-		phone = $('#phone').val();
+		org_id = $('#org_id').val();
+		year = $('#year').val();
+		month = $('#month').val();
+		amount = $('#amount').val();
 		sts_deleted = $('#sts_deleted').val();
 		
 		$.ajax({
@@ -23,10 +25,10 @@ $(function(){
 			type: "POST",
 			url: "<?php echo site_url($thisUrl.'/addProcess'); ?>",
 			data : {
-				ip_address: ip_address,
-				branch_name: branch_name,
-				address: address,
-				phone: phone,
+				org_id: org_id,
+				year: year,
+				month: month,
+				amount: amount,
 				sts_deleted: sts_deleted,
 			},
 			success: function(data){
@@ -45,11 +47,11 @@ $(function(){
 	});
 	
 	$('#editForm').submit(function(){
-		branch_id = $('#branch_id').val();
-		ip_address = $('#ip_address').val();
-		branch_name = $('#branch_name').val();
-		address = $('#address').val();
-		phone = $('#phone').val();
+		target_id = $('#target_id').val();
+		org_id = $('#org_id').val();
+		year = $('#year').val();
+		month = $('#month').val();
+		amount = $('#amount').val();
 		sts_deleted = $('#sts_deleted').val();
 		
 		$.ajax({
@@ -57,11 +59,11 @@ $(function(){
 			type: "POST",
 			url: "<?php echo site_url($thisUrl.'/editProcess'); ?>",
 			data : {
-				branch_id: branch_id,
-				ip_address: ip_address,
-				branch_name: branch_name,
-				address: address,
-				phone: phone,
+				target_id: target_id,
+				org_id: org_id,
+				year: year,
+				month: month,
+				amount: amount,
 				sts_deleted: sts_deleted,
 			},
 			success: function(data){
@@ -92,7 +94,9 @@ $(function(){
 		type: "GET",
 		url: "<?php echo site_url('api/Struktur/getComboOrg'); ?>",
 		data : {
-			branch_id: 2
+			branch_id: branch_id,
+			parent_id: '<?php echo @$detail['org_id']; ?>',
+			childOnly: 1,
 		},
 		success: function(data){
 			data = '<option>Pilih</option>' + data;

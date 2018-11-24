@@ -18,7 +18,7 @@ class Struktur_model extends CI_Model {
 		SELECT 
 			a.*,
 			b.branch_name,
-			c.org_name
+			c.org_name parent_name
 		FROM ms_organization a
 		LEFT JOIN ms_branch b 
 			ON a.branch_id=b.branch_id
@@ -40,10 +40,20 @@ class Struktur_model extends CI_Model {
 	}
 	
 	function detail($id){
-		$this->db->select('*');
-		$this->db->from($this->table);
-		$this->db->where('org_id', $id);
-		$resutl = $this->db->get()->row_array();
+		$sql = "
+		SELECT 
+			a.*,
+			b.branch_name,
+			b.ip_address,
+			c.org_name parent_name
+		FROM ms_organization a
+		LEFT JOIN ms_branch b 
+			ON a.branch_id=b.branch_id
+		LEFT JOIN ms_organization c
+			ON a.parent_id=c.org_id and a.branch_id=c.branch_id
+		WHERE a.org_id = '".$id."'
+		";
+		$resutl = $this->db->query($sql)->row_array();
 		return $resutl;
 	}
 	
@@ -128,6 +138,7 @@ class Struktur_model extends CI_Model {
 			}
 			
 			$myData[] = array(
+				'org_id' => $org_id,
 				'name' => $org_name,
 				'group'=> $group,
 				'data' => $data

@@ -5,16 +5,39 @@ class Target_model extends CI_Model {
 	
 	public function __construct(){
 		parent::__construct();
-		$this->table = "ms_branch";
+		$this->table = "target";
 	}
 	function getAll(){
-		$this->db->select('*');
-		$this->db->from($this->table);
-		$resutl = $this->db->get()->result_array();
+		$sql = "SELECT
+		t.target_id,
+		t.org_id,
+		t.`year`,
+		t.`month`,
+		t.amount,
+		t.create_date,
+		t.create_user,
+		t.modify_date,
+		t.modify_user,
+		t.delete_date,
+		t.delete_user,
+		t.sts_deleted,
+		o.org_name,
+		o.description,
+		o.code,
+		o.branch_id,
+		b.branch_name,
+		b.ip_address
+		from target t
+		left join ms_organization o
+			on t.org_id = o.org_id
+		left join ms_branch b
+			on b.branch_id = o.branch_id
+		";
+		$resutl = $this->db->query($sql)->result_array();
 		return $resutl;
 	}
 	
-	function insertBranch($post){
+	function insertTarget($post){
 		$query = $this->db->insert($this->table, $post);
 		if ($query) {
 			return true;
@@ -25,14 +48,37 @@ class Target_model extends CI_Model {
 	}
 	
 	function detail($id){
-		$this->db->select('*');
-		$this->db->from($this->table);
-		$this->db->where('branch_id', $id);
-		$resutl = $this->db->get()->row_array();
+		$sql = "SELECT
+		t.target_id,
+		t.org_id,
+		t.`year`,
+		t.`month`,
+		t.amount,
+		t.create_date,
+		t.create_user,
+		t.modify_date,
+		t.modify_user,
+		t.delete_date,
+		t.delete_user,
+		t.sts_deleted,
+		o.org_name,
+		o.description,
+		o.code,
+		o.branch_id,
+		b.branch_name,
+		b.ip_address
+		from target t
+		left join ms_organization o
+			on t.org_id = o.org_id
+		left join ms_branch b
+			on b.branch_id = o.branch_id
+		where t.target_id = '".$id."'
+		";
+		$resutl = $this->db->query($sql)->row_array();
 		return $resutl;
 	}
 	
-	function updateBranch($dataUpdate, $dataWhere){
+	function updateTarget($dataUpdate, $dataWhere){
 		$this->db->where($dataWhere);
 		$query = $this->db->update($this->table, $dataUpdate);
 		return $query;

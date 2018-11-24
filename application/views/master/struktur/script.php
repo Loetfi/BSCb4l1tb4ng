@@ -1,6 +1,8 @@
 <script src="<?php echo base_url('assets'); ?>/bower_components/fastclick/lib/fastclick.js"></script>
 <script>
+var branch_id = 1;
 $(function(){
+	$('#menuStruktur').addClass('active');
 	$('#thisDataTable').DataTable({
 		'paging'      : true,
 		'lengthChange': false,
@@ -92,7 +94,8 @@ $(function(){
 		type: "GET",
 		url: "<?php echo site_url('api/Struktur/getComboOrg'); ?>",
 		data : {
-			branch_id: 1
+			branch_id: branch_id,
+			parent_id: '<?php echo @$detail['parent_id']; ?>'
 		},
 		success: function(data){
 			data = '<option value="0">No Parent</option>' + data;

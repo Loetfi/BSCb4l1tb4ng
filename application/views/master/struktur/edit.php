@@ -20,38 +20,46 @@
 				<!-- /.box-header -->
 				
 				<form action="#" method="POST" id="editBranchForm" class="form-horizontal">
-					<input type="hidden" id="branch_id" value="<?php echo @$detail['branch_id']; ?>">
+					<input type="hidden" id="org_id" value="<?php echo @$detail['org_id']; ?>">
 					<div class="box-body">
 						<div class="form-group">
-							<label for="ip_address" class="col-sm-2 control-label">ip_address</label>
+							<label for="parent_id" class="col-sm-2 control-label">parent_id</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="ip_address" placeholder="ip_address" value="<?php echo @$detail['ip_address']; ?>" required>
+								<select class="form-control" id="parent_id" placeholder="parent_id" required>
+									<option value="">Pilih Parent</option>
+									<option value="0">No Parent</option>
+								</select>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="branch_name" class="col-sm-2 control-label">branch_name</label>
+							<label for="branch_id" class="col-sm-2 control-label">branch_id</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="branch_name" placeholder="branch_name" value="<?php echo @$detail['branch_name']; ?>" required>
+								<select class="form-control" id="branch_id" placeholder="branch_id" required>
+									<option value="">Pilih Cabang</option>
+									<?php foreach($branchAll as $row){ ?>
+									<option value="<?php echo $row['branch_id']; ?>" <?php echo $row['branch_id']==$detail['branch_id']?'selected':''; ?>><?php echo $row['branch_name'].' '.$row['ip_address']; ?></option>
+									<?php } ?>
+								</select>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="address" class="col-sm-2 control-label">address</label>
+							<label for="org_name" class="col-sm-2 control-label">org_name</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="address" placeholder="address" value="<?php echo @$detail['address']; ?>" required>
+								<input type="text" class="form-control" id="org_name" placeholder="org_name" value="<?php echo $detail['org_name']; ?>" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="phone" class="col-sm-2 control-label">phone</label>
+							<label for="description" class="col-sm-2 control-label">description</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="phone" placeholder="phone" value="<?php echo @$detail['phone']; ?>" required>
+								<input type="text" class="form-control" id="description" placeholder="description" value="<?php echo $detail['description']; ?>" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="sts_deleted" class="col-sm-2 control-label">sts_deleted</label>
 							<div class="col-sm-10">
 								<select name="sts_deleted" class="form-control" id="sts_deleted" required>
-									<option value="1">Aktif</option>
-									<option value="0">Pasif</option>
+									<option value="0" <?php echo $detail['sts_deleted']==0?'selected':''; ?>>Aktif</option>
+									<option value="1" <?php echo $detail['sts_deleted']==1?'selected':''; ?>>Pasif</option>
 								</select>
 							</div>
 						</div>

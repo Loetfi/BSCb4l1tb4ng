@@ -55,8 +55,8 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">NAVIGASI</li>
-           <li class="active">
-          <a href="../calendar.html">
+           <li id="menuDashboard">
+          <a href="<?php echo site_url('dashboard'); ?>">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span> 
           </a>
         </li> 
@@ -77,19 +77,19 @@
         </li>
         
          -->
-         <li>
-          <a href="../widgets.html">
+        <li id="menuTarget">
+          <a href="<?php echo site_url('master/target'); ?>">
             <i class="fa fa-th"></i> <span>Master Target</span>
           </a>
         </li>
-        <li>
-          <a href="../widgets.html">
-            <i class="fa fa-th"></i> <span>Master Kegiatan</span>
+        <li id="menuStruktur">
+          <a href="<?php echo site_url('master/struktur'); ?>">
+            <i class="fa fa-th"></i> <span>Master Organisasi</span>
           </a>
         </li>  
-          <li>
-          <a href="../widgets.html">
-            <i class="fa fa-th"></i> <span>Pengajuan</span>
+        <li id="menuBranch">
+          <a href="<?php echo site_url('master/branch'); ?>">
+            <i class="fa fa-th"></i> <span>Master Branch</span>
           </a>
         </li>
 

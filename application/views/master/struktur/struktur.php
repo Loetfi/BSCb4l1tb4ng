@@ -26,8 +26,8 @@
 						<thead>
 							<tr>
 								<th>org_id</th>
-								<th>parent_id</th>
 								<th>branch_id</th>
+								<th>parent_id</th>
 								<th>name</th>
 								<th>description</th>
 								<th>Wkt Input</th>
@@ -40,9 +40,9 @@
 							<?php foreach($getAll as $row){ ?>
 							<tr>
 								<td><?php echo @$row['org_id']; ?></td>
-								<td><?php echo @$row['parent_id']; ?></td>
-								<td><?php echo @$row['branch_id']; ?></td>
-								<td><?php echo @$row['name']; ?></td>
+								<td><?php echo @$row['branch_name']; ?></td>
+								<td><?php echo @$row['parent_name']; ?></td>
+								<td><?php echo @$row['org_name']; ?></td>
 								<td><?php echo @$row['description']; ?></td>
 								<td><?php echo @$row['create_date']==''?'':date('Y-m-d H:i',@$row['create_date']); ?></td>
 								<td><?php echo @$row['modify_date']==''?'':date('Y-m-d H:i',@$row['modify_date']); ?></td>

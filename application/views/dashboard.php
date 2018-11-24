@@ -51,6 +51,7 @@
 <script src="https://code.highcharts.com/highcharts.src.js"></script>
 <script>
 $(function(){
+	$('#menuDashboard').addClass('active');
 	
 Highcharts.chart('branch_1', {
 	credits: { enabled: false },

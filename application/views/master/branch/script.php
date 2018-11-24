@@ -1,6 +1,8 @@
 <script src="<?php echo base_url('assets'); ?>/bower_components/fastclick/lib/fastclick.js"></script>
 <script>
+var branch_id = 1;
 $(function(){
+	$('#menuBranch').addClass('active');
 	$('#thisDataTable').DataTable({
 		'paging'      : true,
 		'lengthChange': false,

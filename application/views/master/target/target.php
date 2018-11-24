@@ -28,8 +28,11 @@
 								<th>ID</th>
 								<th>ip_address</th>
 								<th>branch_name</th>
-								<th>address</th>
-								<th>phone</th>
+								<th>org_name</th>
+								<th>code</th>
+								<th>year</th>
+								<th>month</th>
+								<th>amount</th>
 								<th>Wkt Input</th>
 								<th>Wkt Update</th>
 								<th>Status</th>
@@ -39,17 +42,20 @@
 						<tbody>
 							<?php foreach($getAll as $row){ ?>
 							<tr>
-								<td><?php echo @$row['branch_id']; ?></td>
+								<td><?php echo @$row['target_id']; ?></td>
 								<td><?php echo @$row['ip_address']; ?></td>
 								<td><?php echo @$row['branch_name']; ?></td>
-								<td><?php echo @$row['address']; ?></td>
-								<td><?php echo @$row['phone']; ?></td>
+								<td><?php echo @$row['org_name']; ?></td>
+								<td><?php echo @$row['code']; ?></td>
+								<td><?php echo @$row['year']; ?></td>
+								<td><?php echo @$row['month']; ?></td>
+								<td align="right"><?php echo number_format(@$row['amount']); ?></td>
 								<td><?php echo @$row['create_date']==''?'':date('Y-m-d H:i',@$row['create_date']); ?></td>
 								<td><?php echo @$row['modify_date']==''?'':date('Y-m-d H:i',@$row['modify_date']); ?></td>
 								<td><?php echo @$row['sts_deleted']=='1'?'Pasif':'Aktif'; ?></td>
 								<td>
-									<a href="<?php echo site_url($thisUrl.'/detail/'.$row['branch_id']); ?>" class="btn btn-xs btn-info" title="Detail"><i class="fa fa-eye"></i></a>
-									<a href="<?php echo site_url($thisUrl.'/edit/'.$row['branch_id']); ?>" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-pencil"></i></a>
+									<a href="<?php echo site_url($thisUrl.'/detail/'.$row['target_id']); ?>" class="btn btn-xs btn-info" title="Detail"><i class="fa fa-eye"></i></a>
+									<a href="<?php echo site_url($thisUrl.'/edit/'.$row['target_id']); ?>" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-pencil"></i></a>
 								</td>
 							</tr>
 							<?php } ?>

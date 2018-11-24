@@ -20,6 +20,7 @@ class Target extends CI_Controller {
 			'thisUrl'	=> $this->thisUrl
 		);
 		$data['getAll'] = $this->target->getAll();
+		// print_r($data['getAll']); die();
 		
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
@@ -41,16 +42,16 @@ class Target extends CI_Controller {
 	function addProcess(){
 		$cdate = time();
 		$dataInsert = array(
-			'ip_address'	=> @$_POST['ip_address'],
-			'target_name'	=> @$_POST['target_name'],
-			'address'		=> @$_POST['address'],
-			'phone'			=> @$_POST['phone'],
+			'org_id'		=> @$_POST['org_id'],
+			'year'			=> @$_POST['year'],
+			'month'			=> @$_POST['month'],
+			'amount'		=> @$_POST['amount'],
 			'sts_deleted'	=> @$_POST['sts_deleted'],
 			'create_date'	=> $cdate,
 			'create_user'	=> 1,
 		);
 		
-		if($this->target->inserttarget($dataInsert)) {
+		if($this->target->insertTarget($dataInsert)) {
 			$target_id = $this->db->insert_id();
 			$data = array(
 				'status' => 1,
@@ -99,10 +100,10 @@ class Target extends CI_Controller {
 		$mdate = time();
 		$target_id = @$_POST['target_id'];
 		$dataUpdate = array(
-			'ip_address'	=> @$_POST['ip_address'],
-			'target_name'	=> @$_POST['target_name'],
-			'address'		=> @$_POST['address'],
-			'phone'			=> @$_POST['phone'],
+			'org_id'		=> @$_POST['org_id'],
+			'year'			=> @$_POST['year'],
+			'month'			=> @$_POST['month'],
+			'amount'		=> @$_POST['amount'],
 			'sts_deleted'	=> @$_POST['sts_deleted'],
 			'modify_date'	=> $mdate,
 			'modify_user'	=> 1,
@@ -112,7 +113,7 @@ class Target extends CI_Controller {
 			$dataUpdate['delete_user'] = 1;
 		}
 		
-		if($this->target->updatetarget($dataUpdate, array('target_id'=> $target_id))) {
+		if($this->target->updateTarget($dataUpdate, array('target_id'=> $target_id))) {
 			$data = array(
 				'status' => 1,
 				'message' => 'Berhasil',

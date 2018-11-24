@@ -35,6 +35,18 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label for="month" class="col-sm-2 control-label">month</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="month" placeholder="month" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="amount" class="col-sm-2 control-label">amount</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="amount" placeholder="amount" required>
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="sts_deleted" class="col-sm-2 control-label">sts_deleted</label>
 							<div class="col-sm-10">
 								<select name="sts_deleted" class="form-control" id="sts_deleted" required>
