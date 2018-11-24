@@ -42,6 +42,12 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label for="code" class="col-sm-2 control-label">code</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="code" placeholder="code" required>
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="org_name" class="col-sm-2 control-label">org_name</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="org_name" placeholder="org_name" required>

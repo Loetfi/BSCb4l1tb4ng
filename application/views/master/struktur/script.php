@@ -16,6 +16,7 @@ $(function(){
 	$('#addForm').submit(function(){
 		parent_id = $('#parent_id').val();
 		branch_id = $('#branch_id').val();
+		code = $('#code').val();
 		org_name = $('#org_name').val();
 		description = $('#description').val();
 		sts_deleted = $('#sts_deleted').val();
@@ -27,6 +28,7 @@ $(function(){
 			data : {
 				parent_id: parent_id,
 				branch_id: branch_id,
+				code: code,
 				org_name: org_name,
 				description: description,
 				sts_deleted: sts_deleted,
@@ -46,10 +48,11 @@ $(function(){
 		return false;
 	});
 	
-	$('#editBranchForm').submit(function(){
+	$('#editForm').submit(function(){
 		org_id = $('#org_id').val();
 		parent_id = $('#parent_id').val();
 		branch_id = $('#branch_id').val();
+		code = $('#code').val();
 		org_name = $('#org_name').val();
 		description = $('#description').val();
 		sts_deleted = $('#sts_deleted').val();
@@ -62,6 +65,7 @@ $(function(){
 				org_id: org_id,
 				parent_id: parent_id,
 				branch_id: branch_id,
+				code: code,
 				org_name: org_name,
 				description: description,
 				sts_deleted: sts_deleted,

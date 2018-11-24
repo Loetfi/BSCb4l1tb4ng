@@ -44,6 +44,7 @@ class Struktur extends CI_Controller {
 		$dataInsert = array(
 			'parent_id'		=> @$_POST['parent_id'],
 			'branch_id'		=> @$_POST['branch_id'],
+			'code'			=> @$_POST['code'],
 			'org_name'		=> @$_POST['org_name'],
 			'description'	=> @$_POST['description'],
 			'sts_deleted'	=> @$_POST['sts_deleted'],
@@ -90,6 +91,7 @@ class Struktur extends CI_Controller {
 			'thisUrl'	=> $this->thisUrl,
 			'detail'	=> $this->struktur->detail($id),
 		);
+		$data['branchAll'] = $this->branch->getAll();
 		
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
@@ -102,6 +104,7 @@ class Struktur extends CI_Controller {
 		$dataUpdate = array(
 			'parent_id'		=> @$_POST['parent_id'],
 			'branch_id'		=> @$_POST['branch_id'],
+			'code'			=> @$_POST['code'],
 			'org_name'		=> @$_POST['org_name'],
 			'description'	=> @$_POST['description'],
 			'sts_deleted'	=> @$_POST['sts_deleted'],
@@ -113,12 +116,12 @@ class Struktur extends CI_Controller {
 			$dataUpdate['delete_user'] = 1;
 		}
 		
-		if($this->struktur->updateStruktur($dataUpdate, array('struktur_id'=> $struktur_id))) {
+		if($this->struktur->updateStruktur($dataUpdate, array('org_id'=> $org_id))) {
 			$data = array(
 				'status' => 1,
 				'message' => 'Berhasil',
 				'data' => array(
-					'struktur_id' => $struktur_id,
+					'org_id' => $org_id,
 				)
 			);
 		} else {

@@ -28,8 +28,8 @@
 								<th>org_id</th>
 								<th>branch_id</th>
 								<th>parent_id</th>
+								<th>code</th>
 								<th>name</th>
-								<th>description</th>
 								<th>Wkt Input</th>
 								<th>Wkt Update</th>
 								<th>Status</th>
@@ -42,8 +42,8 @@
 								<td><?php echo @$row['org_id']; ?></td>
 								<td><?php echo @$row['branch_name']; ?></td>
 								<td><?php echo @$row['parent_name']; ?></td>
+								<td><?php echo @$row['code']; ?></td>
 								<td><?php echo @$row['org_name']; ?></td>
-								<td><?php echo @$row['description']; ?></td>
 								<td><?php echo @$row['create_date']==''?'':date('Y-m-d H:i',@$row['create_date']); ?></td>
 								<td><?php echo @$row['modify_date']==''?'':date('Y-m-d H:i',@$row['modify_date']); ?></td>
 								<td><?php echo @$row['sts_deleted']=='1'?'Pasif':'Aktif'; ?></td>

@@ -19,7 +19,7 @@
 				</div>
 				<!-- /.box-header -->
 				
-				<form action="#" method="POST" id="editBranchForm" class="form-horizontal">
+				<form action="#" method="POST" id="editForm" class="form-horizontal">
 					<input type="hidden" id="org_id" value="<?php echo @$detail['org_id']; ?>">
 					<div class="box-body">
 						<div class="form-group">
@@ -40,6 +40,12 @@
 									<option value="<?php echo $row['branch_id']; ?>" <?php echo $row['branch_id']==$detail['branch_id']?'selected':''; ?>><?php echo $row['branch_name'].' '.$row['ip_address']; ?></option>
 									<?php } ?>
 								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="code" class="col-sm-2 control-label">code</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="code" placeholder="code" value="<?php echo $detail['code']; ?>" required>
 							</div>
 						</div>
 						<div class="form-group">
