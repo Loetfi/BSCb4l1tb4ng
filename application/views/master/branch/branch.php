@@ -26,10 +26,10 @@
 						<thead>
 							<tr>
 								<th>ID</th>
-								<th>ip_address</th>
-								<th>branch_name</th>
-								<th>address</th>
-								<th>phone</th>
+								<th>IP Address</th>
+								<th>Unit Kerja</th>
+								<th>Alamat</th>
+								<th>Tlp</th>
 								<th>Wkt Input</th>
 								<th>Wkt Update</th>
 								<th>Status</th>

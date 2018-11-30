@@ -89,7 +89,7 @@
         </li>  
         <li id="menuBranch">
           <a href="<?php echo site_url('master/branch'); ?>">
-            <i class="fa fa-th"></i> <span>Master Branch</span>
+            <i class="fa fa-th"></i> <span>Master Unit Kerja</span>
           </a>
         </li>
 

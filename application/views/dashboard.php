@@ -8,6 +8,102 @@
 <!-- Main content -->
 <section class="content">
 	<div class="row">
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-aqua">
+				<div class="inner">
+					<h2 style="margin: 0; padding: 0; font-weight: bold;">Kontrak</h2>
+					<p style="">Tahun: 2018</p>
+					<table width="100%">
+						<tr>
+							<th>Jumlah</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai IDR</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai USD</th>
+							<td>asd</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-green">
+				<div class="inner">
+					<h2 style="margin: 0; padding: 0; font-weight: bold;">Invoice</h2>
+					<p style="">Tahun: 2018</p>
+					<table width="100%">
+						<tr>
+							<th>Jumlah</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai IDR</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai USD</th>
+							<td>asd</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-yellow">
+				<div class="inner">
+					<h2 style="margin: 0; padding: 0; font-weight: bold;">Job/LHU</h2>
+					<p style="">Tahun: 2018</p>
+					<table width="100%">
+						<tr>
+							<th>Jumlah</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai IDR</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai USD</th>
+							<td>asd</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-red">
+				<div class="inner">
+					<h2 style="margin: 0; padding: 0; font-weight: bold;">Invoice Terbayar</h2>
+					<p style="">Tahun: 2018</p>
+					<table width="100%">
+						<tr>
+							<th>Jumlah</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai IDR</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai USD</th>
+							<td>asd</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- ./col -->
+	</div>
+	  
+	<div class="row">
 		<div class="col-xs-12">
 			<div class="box">
 				<div class="box-header">
@@ -18,7 +114,7 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-					<div id="thisChart1"></div>
+					<div id="thisChart2"></div>
 				</div>
 			</div>
 			<!-- /.box --> 
@@ -56,10 +152,10 @@ $(function(){
 Highcharts.chart('branch_1', {
 	credits: { enabled: false },
 	chart: {
-        type: 'column'
+        type: 'line'
     },
     title: {
-        text: 'Pencapaian Branch 1'
+        text: 'Pencapaian Unit Kerja 1'
     },
     xAxis: {
         categories: [
@@ -79,8 +175,13 @@ Highcharts.chart('branch_1', {
     },
 	yAxis: [{
         title: {
-            text: 'Profit (millions)'
+            text: 'Nilai IDR'
         }
+    }, {
+        title: {
+            text: 'NIlai USD'
+        },
+		opposite: true,
     }],
 	legend: {
         shadow: false
@@ -89,24 +190,32 @@ Highcharts.chart('branch_1', {
         shared: true
     },
 	series: [{
-		type: 'column',
+		// type: 'column',
         name: 'Target',
-        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, null, null]
-
+        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
     }, {
-		type: 'column',
-        name: 'Pencapaian',
-        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, null, null]
+		// type: 'column',
+        name: 'Pendapatan IDR',
+        data: [2, 4, 16, 27, 39, 47, 55, 61, 67, 77, 81, 120]
+    }, {
+		// type: 'column',
+        name: 'Penerimaan IDR',
+        data: [2, 4, 16, 27, 39, 47, 55, 61, 67, 77, 81, 120]
+    }, {
+		// type: 'column',
+        name: 'Penerimaan USD',
+		yAxis: 1,
+        data: [0, 0, 10, 48, 50, 61, 63, 63, 63, 81, 81, 100]
 
     }]
 });
 Highcharts.chart('branch_2', {
 	credits: { enabled: false },
 	chart: {
-        type: 'column'
+        type: 'line'
     },
     title: {
-        text: 'Pencapaian Branch 2'
+        text: 'Pencapaian Unit Kerja 2'
     },
     xAxis: {
         categories: [
@@ -126,8 +235,13 @@ Highcharts.chart('branch_2', {
     },
 	yAxis: [{
         title: {
-            text: 'Profit (millions)'
+            text: 'Nilai IDR'
         }
+    }, {
+        title: {
+            text: 'NIlai USD'
+        },
+		opposite: true,
     }],
 	legend: {
         shadow: false
@@ -136,24 +250,32 @@ Highcharts.chart('branch_2', {
         shared: true
     },
 	series: [{
-		type: 'column',
+		// type: 'column',
         name: 'Target',
-        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, null, null]
-
+        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
     }, {
-		type: 'column',
-        name: 'Pencapaian',
-        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, null, null]
+		// type: 'column',
+        name: 'Pendapatan IDR',
+        data: [2, 4, 16, 27, 39, 47, 55, 61, 67, 77, 81, 120]
+    }, {
+		// type: 'column',
+        name: 'Penerimaan IDR',
+        data: [2, 4, 16, 27, 39, 47, 55, 61, 67, 77, 81, 120]
+    }, {
+		// type: 'column',
+        name: 'Penerimaan USD',
+		yAxis: 1,
+        data: [0, 0, 10, 48, 50, 61, 63, 63, 63, 81, 81, 100]
 
     }]
 });
 Highcharts.chart('branch_3', {
 	credits: { enabled: false },
 	chart: {
-        type: 'column'
+        type: 'line'
     },
     title: {
-        text: 'Pencapaian Branch 3'
+        text: 'Pencapaian Unit Kerja 3'
     },
     xAxis: {
         categories: [
@@ -173,8 +295,13 @@ Highcharts.chart('branch_3', {
     },
 	yAxis: [{
         title: {
-            text: 'Profit (millions)'
+            text: 'Nilai IDR'
         }
+    }, {
+        title: {
+            text: 'NIlai USD'
+        },
+		opposite: true,
     }],
 	legend: {
         shadow: false
@@ -183,19 +310,27 @@ Highcharts.chart('branch_3', {
         shared: true
     },
 	series: [{
-		type: 'column',
+		// type: 'column',
         name: 'Target',
-        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, null, null]
-
+        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
     }, {
-		type: 'column',
-        name: 'Pencapaian',
-        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, null, null]
+		// type: 'column',
+        name: 'Pendapatan IDR',
+        data: [2, 4, 16, 27, 39, 47, 55, 61, 67, 77, 81, 120]
+    }, {
+		// type: 'column',
+        name: 'Penerimaan IDR',
+        data: [2, 4, 16, 27, 39, 47, 55, 61, 67, 77, 81, 120]
+    }, {
+		// type: 'column',
+        name: 'Penerimaan USD',
+		yAxis: 1,
+        data: [0, 0, 10, 48, 50, 61, 63, 63, 63, 81, 81, 100]
 
     }]
 });
 
-Highcharts.chart('thisChart1', {
+/* Highcharts.chart('thisChart1', {
 	credits: { enabled: false },
     chart: {
         type: 'column'
@@ -250,6 +385,63 @@ Highcharts.chart('thisChart1', {
         // pointPlacement: 0.2,
     }]
 });
+*/
+
+Highcharts.chart('thisChart2', {
+	credits: { enabled: false },
+	chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Report Unit Kerja Tahun 2018'
+    },
+    xAxis: {
+        categories: [
+            'Unit 1',
+            'Unit 2',
+            'Unit 3',
+        ]
+    },
+	yAxis: [{
+        title: {
+            text: 'Nilai IDR'
+        }
+    }, {
+        title: {
+            text: 'NIlai USD'
+        },
+		opposite: true,
+    }],
+	legend: {
+        shadow: false
+    },
+	tooltip: {
+        shared: true
+    },
+	series: [{
+		// type: 'column',
+        name: 'Target',
+        data: [1000, 1200, 1000]
+
+    }, {
+		// type: 'column',
+        name: 'Pendapatan IDR',
+        data: [800, 1300, 500]
+
+    }, {
+		// type: 'column',
+        name: 'Penerimaan IDR',
+        data: [700, 1200, 400]
+
+    }, {
+		// type: 'column',
+        name: 'Penerimaan USD',
+		yAxis: 1,
+        data: [10, 20, 60]
+
+    }]
+});
+
 
 });
 </script>

@@ -17,13 +17,14 @@ class Struktur_model extends CI_Model {
 		$sql = "
 		SELECT 
 			a.*,
+			a.id org_id,
 			b.branch_name,
 			c.org_name parent_name
 		FROM ms_organization a
 		LEFT JOIN ms_branch b 
 			ON a.branch_id=b.branch_id
 		LEFT JOIN ms_organization c
-			ON a.parent_id=c.org_id and a.branch_id=c.branch_id
+			ON a.parent_id=c.id and a.branch_id=c.branch_id
 		";
 		$resutl = $this->db->query($sql)->result_array();
 		return $resutl;
@@ -43,6 +44,7 @@ class Struktur_model extends CI_Model {
 		$sql = "
 		SELECT 
 			a.*,
+			c.id org_id,
 			b.branch_name,
 			b.ip_address,
 			c.org_name parent_name
@@ -50,7 +52,7 @@ class Struktur_model extends CI_Model {
 		LEFT JOIN ms_branch b 
 			ON a.branch_id=b.branch_id
 		LEFT JOIN ms_organization c
-			ON a.parent_id=c.org_id and a.branch_id=c.branch_id
+			ON a.parent_id=c.id and a.branch_id=c.branch_id
 		WHERE a.org_id = '".$id."'
 		";
 		$resutl = $this->db->query($sql)->row_array();
@@ -122,7 +124,7 @@ class Struktur_model extends CI_Model {
 		
 		$myData = array();
 		
-		$sql = $this->db->query("select * from ms_organization where parent_id = 0 ".$where." order by org_id asc ")->result_array();
+		$sql = $this->db->query("select a.*, a.id org_id from ms_organization a where parent_id = 0 ".$where." order by id asc ")->result_array();
 		foreach($sql as $row){
 			$data = array();
 			$org_id = $row['org_id'];
@@ -155,7 +157,7 @@ class Struktur_model extends CI_Model {
 			$where .= " AND branch_id = '".$branch."' ";
 		
 		$myData = array();
-		$sql = $this->db->query("select * from ms_organization where parent_id = '".($org_id)."' order by org_id asc ")->result_array();
+		$sql = $this->db->query("select a.*, a.id org_id from ms_organization a where parent_id = '".($org_id)."' order by id asc ")->result_array();
 		if ($sql){
 			$status = true;
 			foreach($sql as $row){

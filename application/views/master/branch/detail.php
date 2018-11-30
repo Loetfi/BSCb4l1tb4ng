@@ -23,31 +23,31 @@
 					<div class="box-body">
 						<table class="table table-bordered table-strip">
 							<tr>
-								<th width="150px">ip_address</th>
+								<th width="150px">IP Address</th>
 								<td><?php echo @$detail['ip_address']; ?></td>
 							</tr>
 							<tr>
-								<th>branch_name</th>
+								<th>Unit Kerja</th>
 								<td><?php echo @$detail['branch_name']; ?></td>
 							</tr>
 							<tr>
-								<th>address</th>
+								<th>Alamat</th>
 								<td><?php echo @$detail['address']; ?></td>
 							</tr>
 							<tr>
-								<th>phone</th>
+								<th>Tlp</th>
 								<td><?php echo @$detail['phone']; ?></td>
 							</tr>
 							<tr>
-								<th>create_date</th>
+								<th>Wkt Input</th>
 								<td><?php echo @$detail['create_date']==''?'':date('Y-m-d H:i',@$detail['create_date']); ?></td>
 							</tr>
 							<tr>
-								<th>modify_date</th>
+								<th>Wkt Edit</th>
 								<td><?php echo @$detail['modify_date']==''?'':date('Y-m-d H:i',@$detail['modify_date']); ?></td>
 							</tr>
 							<tr>
-								<th>sts_deleted</th>
+								<th>Status</th>
 								<td><?php echo @$detail['sts_deleted']=='1'?'Aktif':'Pasif'; ?></td>
 							</tr>
 						</table>

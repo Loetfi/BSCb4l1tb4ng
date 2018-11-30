@@ -29,7 +29,7 @@ class Target_model extends CI_Model {
 		b.ip_address
 		from target t
 		left join ms_organization o
-			on t.org_id = o.org_id
+			on t.org_id = o.id
 		left join ms_branch b
 			on b.branch_id = o.branch_id
 		";
@@ -69,7 +69,7 @@ class Target_model extends CI_Model {
 		b.ip_address
 		from target t
 		left join ms_organization o
-			on t.org_id = o.org_id
+			on t.org_id = o.id
 		left join ms_branch b
 			on b.branch_id = o.branch_id
 		where t.target_id = '".$id."'

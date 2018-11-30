@@ -13,7 +13,7 @@ class Branch extends CI_Controller {
 	
 	public function index(){
 		$data = array(
-			'title' 	=> 'Master Cabang' ,
+			'title' 	=> 'Master Unit Kerja' ,
 			'page'		=> 'master/branch/branch',
 			'thisUrl'	=> $this->thisUrl
 		);
@@ -26,7 +26,7 @@ class Branch extends CI_Controller {
 	
 	function add(){
 		$data = array(
-			'title' => 'Tambah Master Cabang' ,
+			'title' => 'Tambah Master Unit Kerja' ,
 			'page'	=> 'master/branch/add',
 			'thisUrl'	=> $this->thisUrl
 		);
@@ -69,7 +69,7 @@ class Branch extends CI_Controller {
 	
 	function detail($id){
 		$data = array(
-			'title' 	=> 'Detail Master Branch',
+			'title' 	=> 'Detail Master Unit Kerja',
 			'page'		=> 'master/branch/detail',
 			'thisUrl'	=> $this->thisUrl,
 			'detail'	=> $this->branch->detail($id),
@@ -82,7 +82,7 @@ class Branch extends CI_Controller {
 	
 	function edit($id){
 		$data = array(
-			'title' 	=> 'Edit Master Branch',
+			'title' 	=> 'Edit Master Unit Kerja',
 			'page'		=> 'master/branch/edit',
 			'thisUrl'	=> $this->thisUrl,
 			'detail'	=> $this->branch->detail($id),

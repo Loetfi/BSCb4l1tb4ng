@@ -23,31 +23,31 @@
 					<input type="hidden" id="branch_id" value="<?php echo @$detail['branch_id']; ?>">
 					<div class="box-body">
 						<div class="form-group">
-							<label for="ip_address" class="col-sm-2 control-label">ip_address</label>
+							<label for="ip_address" class="col-sm-2 control-label">IP Address</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="ip_address" placeholder="ip_address" value="<?php echo @$detail['ip_address']; ?>" required>
+								<input type="text" class="form-control" id="ip_address" placeholder="IP Address" value="<?php echo @$detail['ip_address']; ?>" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="branch_name" class="col-sm-2 control-label">branch_name</label>
+							<label for="branch_name" class="col-sm-2 control-label">Unit Kerja</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="branch_name" placeholder="branch_name" value="<?php echo @$detail['branch_name']; ?>" required>
+								<input type="text" class="form-control" id="branch_name" placeholder="Unit Kerja" value="<?php echo @$detail['branch_name']; ?>" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="address" class="col-sm-2 control-label">address</label>
+							<label for="address" class="col-sm-2 control-label">Alamat</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="address" placeholder="address" value="<?php echo @$detail['address']; ?>" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="phone" class="col-sm-2 control-label">phone</label>
+							<label for="phone" class="col-sm-2 control-label">Tlp</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="phone" placeholder="phone" value="<?php echo @$detail['phone']; ?>" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="sts_deleted" class="col-sm-2 control-label">sts_deleted</label>
+							<label for="sts_deleted" class="col-sm-2 control-label">Status</label>
 							<div class="col-sm-10">
 								<select name="sts_deleted" class="form-control" id="sts_deleted" required>
 									<option value="0">Aktif</option>
