@@ -34,18 +34,14 @@
 								<input type="text" class="form-control" id="year" placeholder="year" required>
 							</div>
 						</div>
+						<?php for($i=1; $i<=12; $i++){ ?>
 						<div class="form-group">
-							<label for="month" class="col-sm-2 control-label">month</label>
+							<label for="month_<?php echo $i; ?>" class="col-sm-2 control-label">Bulan/Nominal <?php echo $i; ?></label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="month" placeholder="month" required>
+								<input type="text" class="form-control" id="amount_<?php echo $i; ?>" placeholder="Nominal Bulan <?php echo $i; ?>" required>
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="amount" class="col-sm-2 control-label">amount</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="amount" placeholder="amount" required>
-							</div>
-						</div>
+						<?php } ?>
 						<div class="form-group">
 							<label for="sts_deleted" class="col-sm-2 control-label">sts_deleted</label>
 							<div class="col-sm-10">
@@ -72,4 +68,7 @@
 		<!-- /.col -->
 	</div>
 </section>
+<script>
+var edited = 0;
+</script>
 <?php $this->load->view('master/target/script'); ?>

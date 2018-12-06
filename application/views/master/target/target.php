@@ -69,4 +69,7 @@
 		<!-- /.col -->
 	</div>
 </section>
+<script>
+var edited = 0;
+</script>
 <?php $this->load->view('master/target/script'); ?>

@@ -17,18 +17,30 @@ class Struktur extends CI_Controller {
 		$branch = @$_GET['branch_id'];
 		$parent_id = @$_GET['parent_id'];
 		$childOnly = @$_GET['childOnly'];
+		$edited = @$_GET['edited'];
+		// die($edited);
 		
 		$dataOrg = $this->struktur->getHead(@$branch);
 		
 		foreach($dataOrg as $rowHead){
 			if ($rowHead['group']){
 				if ($childOnly){}
-				else echo '<option value="'.@$rowHead['org_id'].'" '.($parent_id==@$rowHead['org_id']?'selected':'').'>'.@$rowHead['name'].'</option>';
+				else if ($edited){
+					if ($parent_id==@$rowHead['org_id'])
+						echo '<option value="'.@$rowHead['org_id'].'" '.($parent_id==@$rowHead['org_id']?'selected':'').'>'.@$rowHead['name'].'</option>';
+				}
+				else 
+					echo '<option value="'.@$rowHead['org_id'].'" '.($parent_id==@$rowHead['org_id']?'selected':'').'>'.@$rowHead['name'].'</option>';
 				
 				$this->getChildComboOrg(array($rowHead['name']), $rowHead['data']);
 			}
 			else {
-				echo '<option value="'.$rowHead['org_id'].'" '.($parent_id==$rowHead['org_id']?'selected':'').'>'.$rowHead['name'].' -> '.$rowHead['name'].'</option>';
+				if ($edited){
+					if ($parent_id==@$rowHead['org_id'])
+						echo '<option value="'.$rowHead['org_id'].'" '.($parent_id==$rowHead['org_id']?'selected':'').'>'.$rowHead['name'].' -> '.$rowHead['name'].'</option>';
+				}
+				else 
+					echo '<option value="'.$rowHead['org_id'].'" '.($parent_id==$rowHead['org_id']?'selected':'').'>'.$rowHead['name'].' -> '.$rowHead['name'].'</option>';
 			}
 		}
 		
@@ -37,6 +49,7 @@ class Struktur extends CI_Controller {
 	function getChildComboOrg($name, $data){
 		$parent_id = @$_GET['parent_id'];
 		$childOnly = @$_GET['childOnly'];
+		$edited = @$_GET['edited'];
 		$head = '';
 		foreach($name as $row){
 			$head .= $row.' -> ';
@@ -46,13 +59,22 @@ class Struktur extends CI_Controller {
 		foreach($data as $row){
 			if ($row['group']){
 				if ($childOnly){}
-				else echo '<option value="'.$row['data']['org_id'].'" '.($parent_id==$row['data']['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
+				else if ($edited)
+					if ($parent_id==$row['data']['org_id'])
+						echo '<option value="'.$row['data']['org_id'].'" '.($parent_id==$row['data']['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
+				else 
+					echo '<option value="'.$row['data']['org_id'].'" '.($parent_id==$row['data']['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
 				
 				$nameParent[] = $row['name'];
 				$this->getChildComboOrg($nameParent, $row['data']);
 			}
 			else{
-				echo '<option value="'.$row['data']['org_id'].'" '.($parent_id==$row['data']['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
+				if ($edited){
+					if ($parent_id==$row['data']['org_id'])
+						echo '<option value="'.$row['data']['org_id'].'" '.($parent_id==$row['data']['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
+				}
+				else 
+					echo '<option value="'.$row['data']['org_id'].'" '.($parent_id==$row['data']['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
 			}
 		}
 	}

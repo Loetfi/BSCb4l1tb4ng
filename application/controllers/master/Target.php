@@ -40,25 +40,30 @@ class Target extends CI_Controller {
 	}
 	
 	function addProcess(){
+		$return = true;
 		$cdate = time();
-		$dataInsert = array(
-			'org_id'		=> @$_POST['org_id'],
-			'year'			=> @$_POST['year'],
-			'month'			=> @$_POST['month'],
-			'amount'		=> @$_POST['amount'],
-			'sts_deleted'	=> @$_POST['sts_deleted'],
-			'create_date'	=> $cdate,
-			'create_user'	=> 1,
-		);
 		
-		if($this->target->insertTarget($dataInsert)) {
-			$target_id = $this->db->insert_id();
+		for($i=1; $i<=12; $i++){
+			$dataInsert = array(
+				'org_id'		=> @$_POST['org_id'],
+				'year'			=> @$_POST['year'],
+				'month'			=> @$i,
+				'amount'		=> @$_POST['amount_'.$i],
+				'sts_deleted'	=> @$_POST['sts_deleted'],
+				'create_date'	=> $cdate,
+				'create_user'	=> 1,
+			);
+			$cekInsert = $this->target->insertTarget($dataInsert);
+			
+			if (!$cekInsert) $return = false;
+		}
+		
+		if($return) {
+			// $target_id = $this->db->insert_id();
 			$data = array(
 				'status' => 1,
 				'message' => 'Berhasil',
-				'data' => array(
-					'target_id' => $target_id,
-				)
+				'data' => array()
 			);
 		} else {
 			$data = array(

@@ -5,8 +5,8 @@ $(function(){
 	$('#menuTarget').addClass('active');
 	$('#thisDataTable').DataTable({
 		'paging'      : true,
-		'lengthChange': false,
-		'searching'   : false,
+		'lengthChange': true,
+		'searching'   : true,
 		'ordering'    : true,
 		'info'        : true,
 		'autoWidth'   : false,
@@ -16,8 +16,7 @@ $(function(){
 	$('#addForm').submit(function(){
 		org_id = $('#org_id').val();
 		year = $('#year').val();
-		month = $('#month').val();
-		amount = $('#amount').val();
+		<?php for($i=1; $i<=12; $i++){ ?>amount_<?php echo $i; ?> = $('#amount_<?php echo $i; ?>').val();<?php } ?>
 		sts_deleted = $('#sts_deleted').val();
 		
 		$.ajax({
@@ -27,8 +26,7 @@ $(function(){
 			data : {
 				org_id: org_id,
 				year: year,
-				month: month,
-				amount: amount,
+				<?php for($i=1; $i<=12; $i++){ ?>amount_<?php echo $i; ?>: amount_<?php echo $i; ?>,<?php } ?>
 				sts_deleted: sts_deleted,
 			},
 			success: function(data){
@@ -97,6 +95,7 @@ $(function(){
 			branch_id: branch_id,
 			parent_id: '<?php echo @$detail['org_id']; ?>',
 			childOnly: 1,
+			edited: edited,
 		},
 		success: function(data){
 			data = '<option>Pilih</option>' + data;

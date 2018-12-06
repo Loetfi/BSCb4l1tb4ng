@@ -93,7 +93,7 @@ class Struktur_model extends CI_Model {
     }
 	function list_unit_all(){
 		$allArr = array();
-        $sql = "select * from ".$this->table." WHERE parent_id = 0 ORDER BY org_name ASC";
+        $sql = "select a.*, a.id org_id from ".$this->table." a WHERE parent_id = 0 ORDER BY org_name ASC";
         $query = $this->db->query($sql)->result_array();
         $i=0;
 		foreach($query as $row){

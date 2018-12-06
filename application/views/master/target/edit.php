@@ -32,13 +32,13 @@
 						<div class="form-group">
 							<label for="year" class="col-sm-2 control-label">year</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="year" placeholder="year" value="<?php echo @$detail['year']; ?>" required>
+								<input type="text" class="form-control" id="year" placeholder="year" value="<?php echo @$detail['year']; ?>" readonly required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="month" class="col-sm-2 control-label">month</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="month" placeholder="month" value="<?php echo @$detail['month']; ?>" required>
+								<input type="text" class="form-control" id="month" placeholder="month" value="<?php echo @$detail['month']; ?>" readonly required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -73,4 +73,7 @@
 		<!-- /.col -->
 	</div>
 </section>
+<script>
+var edited = 1;
+</script>
 <?php $this->load->view('master/target/script'); ?>
