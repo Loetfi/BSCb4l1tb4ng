@@ -52,7 +52,7 @@ class Struktur_model extends CI_Model {
 		$sql = "
 		SELECT 
 			a.*,
-			c.id org_id,
+			a.id org_id,
 			b.branch_name,
 			b.ip_address,
 			c.org_name parent_name
@@ -61,7 +61,7 @@ class Struktur_model extends CI_Model {
 			ON a.branch_id=b.branch_id
 		LEFT JOIN ms_organization c
 			ON a.parent_id=c.id and a.branch_id=c.branch_id
-		WHERE a.org_id = '".$id."'
+		WHERE a.id = '".$id."'
 		";
 		$resutl = $this->db->query($sql)->row_array();
 		return $resutl;
@@ -125,10 +125,12 @@ class Struktur_model extends CI_Model {
 	
 	
 	
-	function getHead($branch = null){
+	function getHead($branch = null, $editOrgId = null){
 		$where = '';
 		if ($branch !== null)
 			$where .= " AND branch_id = '".$branch."' ";
+		if ($editOrgId !== null)
+			$where .= " AND a.id <> '".$editOrgId."' AND a.parent_id <> '".$editOrgId."' ";
 		
 		$myData = array();
 		
@@ -139,7 +141,7 @@ class Struktur_model extends CI_Model {
 			$parent_id = $row['parent_id'];
 			$org_name = $row['org_name'];
 			
-			$getChild = $this->getChild($org_id, $branch);
+			$getChild = $this->getChild($org_id, $branch, $editOrgId);
 			if ($getChild['status']){
 				$data = $getChild['data'];
 				$group = true;
@@ -158,14 +160,16 @@ class Struktur_model extends CI_Model {
 		return ($myData);
 	}
 	
-	function getChild($org_id = array(), $branch = null){
+	function getChild($org_id = array(), $branch = null, $editOrgId = null){
 		
 		$where = '';
 		if ($branch !== null)
 			$where .= " AND branch_id = '".$branch."' ";
+		if ($editOrgId !== null)
+			$where .= " AND a.id <> '".$editOrgId."' AND a.parent_id <> '".$editOrgId."' ";
 		
 		$myData = array();
-		$sql = $this->db->query("select a.*, a.id org_id from ms_organization a where parent_id = '".($org_id)."' order by id asc ")->result_array();
+		$sql = $this->db->query("select a.*, a.id org_id from ms_organization a where parent_id = '".($org_id)."' ".$where." order by id asc ")->result_array();
 		if ($sql){
 			$status = true;
 			foreach($sql as $row){
@@ -174,7 +178,7 @@ class Struktur_model extends CI_Model {
 				$parent_id = $row['parent_id'];
 				$org_name = $row['org_name'];
 				
-				$getChild = $this->getChild($org_id);
+				$getChild = $this->getChild($org_id, $branch, $editOrgId);
 				if ($getChild['status']){
 					$data = $getChild['data'];
 					$group = true;
@@ -184,6 +188,7 @@ class Struktur_model extends CI_Model {
 				}
 				
 				$myData[] = array(
+					'org_id' => $parent_id,
 					'name' => $org_name,
 					'group'=> $group,
 					'data' => $data
