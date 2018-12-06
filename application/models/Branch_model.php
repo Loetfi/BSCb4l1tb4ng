@@ -10,6 +10,7 @@ class Branch_model extends CI_Model {
 	function getAll(){
 		$this->db->select('*');
 		$this->db->from($this->table);
+		$this->db->where('sts_deleted',0);
 		$resutl = $this->db->get()->result_array();
 		return $resutl;
 	}

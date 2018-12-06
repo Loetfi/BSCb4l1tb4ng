@@ -12,9 +12,9 @@
 <section class="content">
 	<div class="row">
 		<div class="col-xs-12">
-			<div class="box box-success">
+			<div class="box box-warning">
 				<div class="box-header"> 
-					<a href="<?php echo site_url('pengguna/add/') ?>" class="btn btn-success "><i class="fa fa-plus"></i> Tambah Pengguna</a>
+					<a href="<?php echo site_url('pengguna/add/') ?>" class="btn btn-warning "><i class="fa fa-plus"></i> Tambah Pengguna</a>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">

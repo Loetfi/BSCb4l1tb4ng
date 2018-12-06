@@ -10,6 +10,7 @@ class Pengguna extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->model('auth_model','auth');
     $this->load->model('pengguna_model');
+    $this->load->model('branch_model');
     check_login('dashboard');
   }
 
@@ -89,9 +90,7 @@ class Pengguna extends CI_Controller {
 
      $data = array(
       'title' => 'Ubah Pengguna' ,
-      'page'    => 'master/pengguna_add',
-      'unit'       => $this->front_model->get_all_unit()
-          // get detail by id pengguna
+      'page'    => 'master/pengguna/add'
     );
 
        // $data['tahun'] = $this->keg->getTahunKegiatan(); 
@@ -105,12 +104,11 @@ class Pengguna extends CI_Controller {
    public function add(){
 
      $data = array(
-      'title' => 'Tambah Pengguna' ,
-      'page'	=> 'master/pengguna_add',
-      'unit'       => $this->front_model->get_all_unit()
+      'title'     => 'Tambah Pengguna' ,
+      'page'	    => 'master/pengguna/add',
+      'branch'    => $this->branch_model->getAll()
     );
 
-     $data['tahun'] = $this->keg->getTahunKegiatan(); 
 
      $this->load->view('template/header', $data, FALSE);
      $this->load->view('template/content', $data, FALSE);
@@ -119,20 +117,21 @@ class Pengguna extends CI_Controller {
 
    public function add_proses(){
 
+    // print_r($_POST); die();
+
     $this->form_validation->set_rules('email', 'Email', 'trim|required');
     $this->form_validation->set_rules('password', 'Password', 'trim|required');
-    $this->form_validation->set_rules('grup_akses', 'Grup Akses', 'trim|required');
-    $this->form_validation->set_rules('unit', 'Unit', 'trim|required');
+    $this->form_validation->set_rules('branch', 'Branch', 'trim|required');
     $this->form_validation->set_rules('nama', 'Nama Pengguna', 'trim|required');
 
     if ($this->form_validation->run()==TRUE) {
 
       $parameter = array(
         'username'  => !empty($this->input->post('email')) ? $this->input->post('email') : 0,
+        'email'  => !empty($this->input->post('email')) ? $this->input->post('email') : 0,
         'password'  => !empty($this->input->post('password')) ? $this->input->post('password') : 0,
-        'id_flow'  => !empty($this->input->post('grup_akses')) ? $this->input->post('grup_akses') : 0,
-        'unit'  => !empty($this->input->post('unit')) ? $this->input->post('unit') : 0,
-        'name'  => !empty($this->input->post('nama')) ? $this->input->post('nama') : 0,
+        'branch_id'  => !empty($this->input->post('branch')) ? $this->input->post('branch') : 0,
+        'name'  => !empty($this->input->post('nama')) ? $this->input->post('nama') : 0
       );
         // print_r($this->pengguna_model->create_user($parameter)); die();
 

@@ -14,8 +14,7 @@ class Pengguna_model extends CI_Model {
                 'password' => sha1($parameter['password']), 
                 'status'    => 1,
                 'name' => $parameter['name'],
-                'sub_sector' => $parameter['unit'], 
-                'id_flow' => $parameter['id_flow'],
+                'branch_id' => $parameter['branch_id'], 
                 'email' => $parameter['username']
             );
             $this->db->insert('login', $insert);
