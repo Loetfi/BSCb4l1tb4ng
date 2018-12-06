@@ -79,19 +79,31 @@
          -->
         <li id="menuTarget">
           <a href="<?php echo site_url('master/target'); ?>">
-            <i class="fa fa-th"></i> <span>Master Target</span>
+            <i class="fa fa-rocket"></i> <span>Master Target</span>
           </a>
         </li>
         <li id="menuStruktur">
           <a href="<?php echo site_url('master/struktur'); ?>">
-            <i class="fa fa-th"></i> <span>Master Organisasi</span>
+            <i class="fa fa-sitemap"></i> <span>Master Organisasi</span>
           </a>
         </li>  
         <li id="menuBranch">
           <a href="<?php echo site_url('master/branch'); ?>">
-            <i class="fa fa-th"></i> <span>Master Unit Kerja</span>
+            <i class="fa fa-briefcase"></i> <span>Master Unit Kerja</span>
           </a>
         </li>
+
+        <li class="header">Pengaturan</li>
+           <li id="menuDashboard">
+          <a href="<?php echo site_url('dashboard'); ?>">
+            <i class="fa fa-users"></i> <span>Pengguna</span> 
+          </a>
+        </li>
+        <li id="menuDashboard">
+          <a href="<?php echo site_url('dashboard'); ?>">
+            <i class="fa fa-universal-access "></i> <span>Hak Akses</span> 
+          </a>
+        </li> 
 
       </ul>
     </section>

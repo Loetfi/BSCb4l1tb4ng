@@ -17,10 +17,8 @@ class Auth_model extends CI_Model {
 				'login_id'	=> $get_user['login_id'],
 				'username'	=> $get_user['username'],
 				'password'	=> $get_user['password'],
-				'direct_boss'	=> $get_user['direct_boss'],
-				'login_access_id'	=> $get_user['login_access_id'],
 				'name'	=> $get_user['name'],
-				'id_flow'	=> $get_user['id_flow']
+				'branch_id' => $get_user['branch_id']
 			); 
 			$this->session->set_userdata( $array );
 			/*end*/
