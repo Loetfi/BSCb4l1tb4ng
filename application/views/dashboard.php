@@ -121,7 +121,7 @@
 			</div>
 			<!-- /.box --> 
 		</div>
-		<div class="col-xs-6">
+		<div class="col-md-6 col-xs-12">
 			<div class="box box-warning">
 				<div class="box-header">
 					<div class="box-tools pull-right">
@@ -133,7 +133,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-6">
+		<div class="col-md-6 col-xs-12">
 			<div class="box box-warning">
 				<div class="box-header">
 					<div class="box-tools pull-right">
@@ -145,7 +145,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-6">
+		<div class="col-md-6 col-xs-12">
 			<div class="box box-warning">
 				<div class="box-header">
 					<div class="box-tools pull-right">
@@ -267,12 +267,21 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     <!-- <div id="thisChart2"></div> -->
-			<div id="GrafikTahunanSubUnit"></div>
-		</div>
-		<div class="col-xs-6">
-			<div id="GrafikBulananUnit"></div>
+					<div id="GrafikTahunanSubUnit"></div>
+				</div>
+			</div>
+			
+			<div class="box box-warning">
+                <div class="box-header">
+                    <h3 class="box-title">&nbsp;</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
                 </div>
-            </div>
+                <div class="box-body">
+					<div id="GrafikBulananUnit"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 	
@@ -292,6 +301,7 @@ Highcharts.chart('branch_1', {
         text: 'Pencapaian Unit Kerja 1'
     },
     xAxis: {
+		crosshair: true,
         categories: [
             'Jan',
             'Feb',
@@ -352,6 +362,7 @@ Highcharts.chart('branch_2', {
         text: 'Pencapaian Unit Kerja 2'
     },
     xAxis: {
+		crosshair: true,
         categories: [
             'Jan',
             'Feb',
@@ -412,6 +423,7 @@ Highcharts.chart('branch_3', {
         text: 'Pencapaian Unit Kerja 3'
     },
     xAxis: {
+		crosshair: true,
         categories: [
             'Jan',
             'Feb',
@@ -588,6 +600,7 @@ Highcharts.chart('GrafikTahunanSubUnit', {
 		// labels: {
 			// rotation: -45,
 		// },
+		crosshair: true,
         categories: <?php echo json_encode($categoriesStruktur); ?>
     },
 	yAxis: [{
@@ -620,6 +633,7 @@ Highcharts.chart('GrafikBulananUnit', {
 		// labels: {
 			// rotation: -45,
 		// },
+		crosshair: true,
         categories: <?php echo json_encode($categoriesBulanan); ?>
     },
 	yAxis: [{
