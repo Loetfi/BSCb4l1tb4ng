@@ -4,6 +4,7 @@
 		<?php echo @$title; ?>
 	</h1>
 </section>
+<!-- <?php print_r($this->session->all_userdata()); ?> -->
 
 <!-- Main content -->
 <section class="content">

@@ -2,11 +2,13 @@
   <div class="login-box">
     <center><img src="<?php echo base_url('assets/logo-esdm-kuning.png') ?>" width="100px" align="center"></center>
     <div class="login-logo">
-      <a href="<?php echo site_url();?>"><b>SIMOLEG</b></a>
+      <a href="<?php echo site_url();?>"><b>Balance Score Card</b></a>
+      <p style="font-size: 15px">Lembaga Minyak dan Gas Bumi</p>
+      <p style="font-size: 18px">Kementerian Energi dan Sumber Daya Mineral</p>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-      <p class="login-box-msg">Silahkan login untuk menggunakan sistem</p>
+      <p class="login-box-msg">Silahkan Login</p>
 
       <?php 
       echo $message;
