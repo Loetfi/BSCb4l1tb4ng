@@ -40,7 +40,8 @@ class Dashboard extends CI_Controller {
 		foreach($target as $row){
 			if ($row['sts_deleted'] == 0){
 				@$allTarget[$row['org_id']] += @$row['amount'];
-				@$allTargetBulanan[$row['org_id']][$row['month']] = @$row['amount'];
+				// @$allTargetBulanan[$row['org_id']][$row['month']] = @$row['amount'];
+				@$targetBulanan[$row['month']] += @$row['amount'];
 			}
 		}
 		
@@ -57,8 +58,27 @@ class Dashboard extends CI_Controller {
 		);
 		
 		
+		
+		
+		
+		
+		for($i=1; $i<=12; $i++){
+			$categoriesBulanan[] = date('M',strtotime('2019/'.$i.'/01'));
+		}
+		ksort($targetBulanan);
+		foreach($targetBulanan as $row){
+			$allTargetBulanan[] = $row;
+		}
+		
+		$data['categoriesBulanan'] = $categoriesBulanan;
+		$data['seriesDataTargetBulanan'] = array(
+			'name' => 'target',
+			'data' => $allTargetBulanan,
+		);
+		
 		// print_r($categoriesStruktur);
-		// print_r($dataTarget);
+		// print_r($categoriesBulanan);
+		// print_r($allTargetBulanan);
 		// die();
 		
 		// data getIssueGlobalTahunan

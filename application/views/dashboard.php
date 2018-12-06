@@ -256,7 +256,8 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12">
-			<div id="unit_1"></div>
+			<div id="GrafikTahunanSubUnit"></div>
+			<div id="GrafikBulananUnit"></div>
 		</div>
 	</div>
 	
@@ -560,7 +561,7 @@ Highcharts.chart('thisChart2', {
     }]
 });
 
-Highcharts.chart('unit_1', {
+Highcharts.chart('GrafikTahunanSubUnit', {
 	credits: { enabled: false },
 	chart: {
         type: 'column'
@@ -591,6 +592,38 @@ Highcharts.chart('unit_1', {
         shared: true
     },
 	series: [<?php echo json_encode($seriesDataTarget); ?>]
+});
+Highcharts.chart('GrafikBulananUnit', {
+	credits: { enabled: false },
+	chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Report Unit Kerja Tahun 2019'
+    },
+    xAxis: {
+		// labels: {
+			// rotation: -45,
+		// },
+        categories: <?php echo json_encode($categoriesBulanan); ?>
+    },
+	yAxis: [{
+        title: {
+            text: 'Nilai IDR'
+        }
+    }, {
+        title: {
+            text: 'NIlai USD'
+        },
+		opposite: true,
+    }],
+	legend: {
+        shadow: false
+    },
+	tooltip: {
+        shared: true
+    },
+	series: [<?php echo json_encode($seriesDataTargetBulanan); ?>]
 });
 
 
