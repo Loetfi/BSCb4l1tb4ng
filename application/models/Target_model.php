@@ -7,33 +7,45 @@ class Target_model extends CI_Model {
 		parent::__construct();
 		$this->table = "target";
 	}
-	function getAll(){
-		$sql = "SELECT
-		t.target_id,
-		t.org_id,
-		t.`year`,
-		t.`month`,
-		t.amount,
-		t.create_date,
-		t.create_user,
-		t.modify_date,
-		t.modify_user,
-		t.delete_date,
-		t.delete_user,
-		t.sts_deleted,
-		o.org_name,
-		o.description,
-		o.code,
-		o.branch_id,
-		b.branch_name,
-		b.ip_address
-		from target t
-		left join ms_organization o
-			on t.org_id = o.id
-		left join ms_branch b
-			on b.branch_id = o.branch_id
-		";
-		$resutl = $this->db->query($sql)->result_array();
+	function getAll($tahun='', $branchId=''){
+		
+		$where = '';
+		if($tahun != '') $where .= " AND t.`year` = '$tahun' ";
+		if($branchId != '') $where .= " AND o.branch_id='$branchId' ";
+		
+		try{
+			$sql = "SELECT
+			t.target_id,
+			t.org_id,
+			t.`year`,
+			t.`month`,
+			t.amount,
+			t.create_date,
+			t.create_user,
+			t.modify_date,
+			t.modify_user,
+			t.delete_date,
+			t.delete_user,
+			t.sts_deleted,
+			o.org_name,
+			o.description,
+			o.code,
+			o.branch_id,
+			b.branch_name,
+			b.ip_address
+			from target t
+			left join ms_organization o
+				on t.org_id = o.id
+			left join ms_branch b
+				on b.branch_id = o.branch_id
+			where 
+				1=1
+				".$where."
+			";
+			$resutl = $this->db->query($sql)->result_array();
+		} catch (Exception $e) {
+			$resutl = array();
+		}
 		return $resutl;
 	}
 	

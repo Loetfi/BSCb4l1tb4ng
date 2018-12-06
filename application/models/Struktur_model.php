@@ -8,25 +8,33 @@ class Struktur_model extends CI_Model {
 		$this->table = "ms_organization";
 	}
 	
-	function getAll(){
-		// $this->db->select('*');
-		// $this->db->from($this->table);
-		// $resutl = $this->db->get()->result_array();
-		// return $resutl;
+	function getAll($branchId='', $withoutParent=false){
 		
-		$sql = "
-		SELECT 
-			a.*,
-			a.id org_id,
-			b.branch_name,
-			c.org_name parent_name
-		FROM ms_organization a
-		LEFT JOIN ms_branch b 
-			ON a.branch_id=b.branch_id
-		LEFT JOIN ms_organization c
-			ON a.parent_id=c.id and a.branch_id=c.branch_id
-		";
-		$resutl = $this->db->query($sql)->result_array();
+		$where = '';
+		if($branchId != '') $where .= " AND a.branch_id='$branchId' ";
+		if($withoutParent === true) $where .= " AND a.parent_id > 0 ";
+		
+		try{
+			$sql = "
+			SELECT 
+				a.*,
+				a.id org_id,
+				b.branch_name,
+				c.org_name parent_name
+			FROM ms_organization a
+			LEFT JOIN ms_branch b 
+				ON a.branch_id=b.branch_id
+			LEFT JOIN ms_organization c
+				ON a.parent_id=c.id and a.branch_id=c.branch_id
+			WHERE
+				1=1
+				".$where."	
+			";
+			$resutl = $this->db->query($sql)->result_array();
+			
+		} catch (Exception $e) {
+			$resutl = array();
+		}
 		return $resutl;
 	}
 	

@@ -1,3 +1,4 @@
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
 <!-- Content Header (Page header) -->
 <section class="content-header">
 	<h1>
@@ -122,6 +123,11 @@
 		</div>
 		<div class="col-xs-6">
 			<div class="box">
+				<div class="box-header">
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+					</div>
+				</div>
 				<div class="box-body">
 					<div id="branch_1"></div>
 				</div>
@@ -129,6 +135,11 @@
 		</div>
 		<div class="col-xs-6">
 			<div class="box">
+				<div class="box-header">
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+					</div>
+				</div>
 				<div class="box-body">
 					<div id="branch_2"></div>
 				</div>
@@ -136,16 +147,26 @@
 		</div>
 		<div class="col-xs-6">
 			<div class="box">
+				<div class="box-header">
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+					</div>
+				</div>
 				<div class="box-body">
 					<div id="branch_3"></div>
 				</div>
 			</div>
 		</div>
 		<!-- /.col -->
+		<div class="col-xs-12">
+			<div id="unit_1"></div>
+			<?php echo json_encode($seriesDataTarget); ?>
+		</div>
 	</div>
+	
+	
 </section>
 
-<script src="https://code.highcharts.com/highcharts.src.js"></script>
 <script>
 $(function(){
 	$('#menuDashboard').addClass('active');
@@ -441,6 +462,39 @@ Highcharts.chart('thisChart2', {
         data: [10, 20, 60]
 
     }]
+});
+
+Highcharts.chart('unit_1', {
+	credits: { enabled: false },
+	chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Report Unit Kerja Tahun 2019'
+    },
+    xAxis: {
+		// labels: {
+			// rotation: -45,
+		// },
+        categories: <?php echo json_encode($categoriesStruktur); ?>
+    },
+	yAxis: [{
+        title: {
+            text: 'Nilai IDR'
+        }
+    }, {
+        title: {
+            text: 'NIlai USD'
+        },
+		opposite: true,
+    }],
+	legend: {
+        shadow: false
+    },
+	tooltip: {
+        shared: true
+    },
+	series: [<?php echo json_encode($seriesDataTarget); ?>]
 });
 
 
