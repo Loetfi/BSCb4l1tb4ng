@@ -1,6 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+function rupiah($nilai, $pecahan = 0) {
+    return number_format($nilai, $pecahan, ',', '.');
+}
+
 function branch_admin($branch_id= null , $branch_name = null)
 {
 	return $branch_id > 0 ? $branch_name : 'Administrator';

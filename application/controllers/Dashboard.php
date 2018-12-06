@@ -12,6 +12,8 @@ class Dashboard extends CI_Controller {
 		$this->load->model('Dashboard_model','dash');
 		$this->load->model('Struktur_model','struktur');
 		$this->load->model('Target_model','target');
+
+		$this->load->model('dashboard/kontrak_model','kontrak');
 		check_login('dashboard');
 	}
 
@@ -19,7 +21,10 @@ class Dashboard extends CI_Controller {
 	public function index(){
 		$data = array(
 			'title' => 'Dashboard' ,
-			'page'	=> 'dashboard'
+			'page'	=> 'dashboard',
+
+			// kontrak get 
+			'jumlah_kontrak'	=> $this->kontrak->jumlah()
 		);
 		
 		// all struktur

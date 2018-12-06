@@ -8,6 +8,7 @@
 <!-- <?php print_r($this->session->all_userdata()); ?> -->
 
 <!-- Main content -->
+
 <section class="content">
 	<div class="row">
 		<div class="col-lg-3 col-xs-6"> 
@@ -19,7 +20,7 @@
 					<table width="100%">
 						<tr>
 							<th>Jumlah</th>
-							<td>asd</td>
+							<td><?php echo @$jumlah_kontrak; ?></td>
 						</tr>
 						<tr>
 							<th>Nilai IDR</th>
