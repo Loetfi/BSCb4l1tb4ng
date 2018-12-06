@@ -10,7 +10,7 @@
 <!-- Main content -->
 <section class="content">
 	<div class="row">
-		<div class="col-lg-3 col-xs-6">
+		<div class="col-lg-3 col-xs-6"> 
 			<!-- small box -->
 			<div class="small-box bg-aqua">
 				<div class="inner">
@@ -106,7 +106,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12">
-			<div class="box">
+			<div class="box box-warning">
 				<div class="box-header">
 					<h3 class="box-title">&nbsp;</h3>
 					<div class="box-tools pull-right">
@@ -121,7 +121,7 @@
 			<!-- /.box --> 
 		</div>
 		<div class="col-xs-6">
-			<div class="box">
+			<div class="box box-warning">
 				<div class="box-header">
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -133,7 +133,7 @@
 			</div>
 		</div>
 		<div class="col-xs-6">
-			<div class="box">
+			<div class="box box-warning">
 				<div class="box-header">
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -145,7 +145,7 @@
 			</div>
 		</div>
 		<div class="col-xs-6">
-			<div class="box">
+			<div class="box box-warning">
 				<div class="box-header">
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -256,8 +256,20 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12">
+            <div class="box box-warning">
+                <div class="box-header">
+                    <h3 class="box-title">&nbsp;</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <!-- <div id="thisChart2"></div> -->
 			<div id="GrafikTahunanSubUnit"></div>
 			<div id="GrafikBulananUnit"></div>
+                </div>
+            </div>
 		</div>
 	</div>
 	
