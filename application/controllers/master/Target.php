@@ -44,16 +44,39 @@ class Target extends CI_Controller {
 		$cdate = time();
 		
 		for($i=1; $i<=12; $i++){
-			$dataInsert = array(
+			
+			$where = array(
 				'org_id'		=> @$_POST['org_id'],
 				'year'			=> @$_POST['year'],
 				'month'			=> @$i,
-				'amount'		=> @$_POST['amount_'.$i],
-				'sts_deleted'	=> @$_POST['sts_deleted'],
-				'create_date'	=> $cdate,
-				'create_user'	=> 1,
 			);
-			$cekInsert = $this->target->insertTarget($dataInsert);
+			$detail = $this->target->detailSearch($where);
+			if ($detail){
+				$dataUpdate = array(
+					'org_id'		=> @$detail['org_id'],
+					'year'			=> @$_POST['year'],
+					'month'			=> @$i,
+					'amount'		=> @$_POST['amount_'.$i],
+					'sts_deleted'	=> @$_POST['sts_deleted'],
+					'modify_date'	=> $cdate,
+					'modify_user'	=> 1,
+				);
+				$cekInsert = $this->target->updateTarget($dataUpdate, $where);
+				
+			} else {
+				$dataInsert = array(
+					'org_id'		=> @$_POST['org_id'],
+					'year'			=> @$_POST['year'],
+					'month'			=> @$i,
+					'amount'		=> @$_POST['amount_'.$i],
+					'sts_deleted'	=> @$_POST['sts_deleted'],
+					'create_date'	=> $cdate,
+					'create_user'	=> 1,
+				);
+				$cekInsert = $this->target->insertTarget($dataInsert);
+				
+			}
+			
 			
 			if (!$cekInsert) $return = false;
 		}

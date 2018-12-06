@@ -104,7 +104,6 @@
 		</div>
 		<!-- ./col -->
 	</div>
-	  
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="box">
@@ -158,9 +157,106 @@
 			</div>
 		</div>
 		<!-- /.col -->
+	</div>
+	
+	<div class="row">
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-aqua">
+				<div class="inner">
+					<h2 style="margin: 0; padding: 0; font-weight: bold;">Kontrak</h2>
+					<p style="">Tahun: 2018</p>
+					<table width="100%">
+						<tr>
+							<th>Jumlah</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai IDR</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai USD</th>
+							<td>asd</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-green">
+				<div class="inner">
+					<h2 style="margin: 0; padding: 0; font-weight: bold;">Invoice</h2>
+					<p style="">Tahun: 2018</p>
+					<table width="100%">
+						<tr>
+							<th>Jumlah</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai IDR</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai USD</th>
+							<td>asd</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-yellow">
+				<div class="inner">
+					<h2 style="margin: 0; padding: 0; font-weight: bold;">Job/LHU</h2>
+					<p style="">Tahun: 2018</p>
+					<table width="100%">
+						<tr>
+							<th>Jumlah</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai IDR</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai USD</th>
+							<td>asd</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-red">
+				<div class="inner">
+					<h2 style="margin: 0; padding: 0; font-weight: bold;">Invoice Terbayar</h2>
+					<p style="">Tahun: 2018</p>
+					<table width="100%">
+						<tr>
+							<th>Jumlah</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai IDR</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai USD</th>
+							<td>asd</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- ./col -->
+	</div>
+	<div class="row">
 		<div class="col-xs-12">
 			<div id="unit_1"></div>
-			<?php echo json_encode($seriesDataTarget); ?>
 		</div>
 	</div>
 	

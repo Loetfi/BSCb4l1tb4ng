@@ -90,6 +90,19 @@ class Target_model extends CI_Model {
 		return $resutl;
 	}
 	
+	function detailSearch($where){
+		try{
+			$this->db->select('*');
+			$this->db->from('target');
+			$this->db->where($where);
+			
+			$resutl = $this->db->get()->row_array();
+		} catch (Exception $e) {
+			$resutl = array();
+		}
+		return $resutl;
+	}
+	
 	function updateTarget($dataUpdate, $dataWhere){
 		$this->db->where($dataWhere);
 		$query = $this->db->update($this->table, $dataUpdate);
