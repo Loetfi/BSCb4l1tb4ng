@@ -18,9 +18,10 @@ class Struktur extends CI_Controller {
 		$parent_id = @$_GET['parent_id'];
 		$childOnly = @$_GET['childOnly'];
 		$edited = @$_GET['edited'];
+		$editOrgId = @$_GET['org_id'] != '' ? @$_GET['org_id'] : null;
 		// die($edited);
 		
-		$dataOrg = $this->struktur->getHead(@$branch);
+		$dataOrg = $this->struktur->getHead(@$branch, $editOrgId);
 		
 		foreach($dataOrg as $rowHead){
 			if ($rowHead['group']){
@@ -42,6 +43,7 @@ class Struktur extends CI_Controller {
 				else 
 					echo '<option value="'.$rowHead['org_id'].'" '.($parent_id==$rowHead['org_id']?'selected':'').'>'.$rowHead['name'].' -> '.$rowHead['name'].'</option>';
 			}
+			
 		}
 		
 	}
@@ -50,6 +52,9 @@ class Struktur extends CI_Controller {
 		$parent_id = @$_GET['parent_id'];
 		$childOnly = @$_GET['childOnly'];
 		$edited = @$_GET['edited'];
+		$thisVal = @$_GET['org_id'];
+		$editOrgId = @$_GET['org_id'] != '' ? @$_GET['org_id'] : null;
+		
 		$head = '';
 		foreach($name as $row){
 			$head .= $row.' -> ';
@@ -57,6 +62,7 @@ class Struktur extends CI_Controller {
 		}
 		
 		foreach($data as $row){
+			
 			if ($row['group']){
 				if ($childOnly){}
 				else if ($edited)
@@ -64,6 +70,10 @@ class Struktur extends CI_Controller {
 						echo '<option value="'.$row['data']['org_id'].'" '.($parent_id==$row['data']['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
 				else 
 					echo '<option value="'.$row['data']['org_id'].'" '.($parent_id==$row['data']['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
+				
+				
+				if ($childOnly){}
+				else echo '<option value="'.@$row['data'][0]['org_id'].'" '.(@$parent_id==@$row['data'][0]['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
 				
 				$nameParent[] = $row['name'];
 				$this->getChildComboOrg($nameParent, $row['data']);
@@ -73,9 +83,11 @@ class Struktur extends CI_Controller {
 					if ($parent_id==$row['data']['org_id'])
 						echo '<option value="'.$row['data']['org_id'].'" '.($parent_id==$row['data']['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
 				}
+				else if ($editOrgId == $row['data']['org_id']){}
 				else 
 					echo '<option value="'.$row['data']['org_id'].'" '.($parent_id==$row['data']['org_id']?'selected':'').'>'.$head.$row['name'].'</option>';
 			}
+			
 		}
 	}
 	

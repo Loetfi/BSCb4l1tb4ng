@@ -118,7 +118,7 @@ class Struktur extends CI_Controller {
 			$dataUpdate['delete_user'] = 1;
 		}
 		
-		if($this->struktur->updateStruktur($dataUpdate, array('org_id'=> $org_id))) {
+		if($this->struktur->updateStruktur($dataUpdate, array('id'=> $org_id))) {
 			$data = array(
 				'status' => 1,
 				'message' => 'Berhasil',

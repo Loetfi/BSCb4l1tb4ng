@@ -268,6 +268,8 @@
                 <div class="box-body">
                     <!-- <div id="thisChart2"></div> -->
 			<div id="GrafikTahunanSubUnit"></div>
+		</div>
+		<div class="col-xs-6">
 			<div id="GrafikBulananUnit"></div>
                 </div>
             </div>
@@ -609,7 +611,7 @@ Highcharts.chart('GrafikTahunanSubUnit', {
 Highcharts.chart('GrafikBulananUnit', {
 	credits: { enabled: false },
 	chart: {
-        type: 'column'
+        // type: 'column'
     },
     title: {
         text: 'Report Unit Kerja Tahun 2019'
@@ -636,7 +638,7 @@ Highcharts.chart('GrafikBulananUnit', {
 	tooltip: {
         shared: true
     },
-	series: [<?php echo json_encode($seriesDataTargetBulanan); ?>]
+	series: <?php echo json_encode($seriesDataTargetBulanan); ?>
 });
 
 

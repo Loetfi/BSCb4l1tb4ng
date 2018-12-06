@@ -2,11 +2,12 @@
 <script>
 var branch_id = 1;
 $(function(){
+	
 	$('#menuStruktur').addClass('active');
 	$('#thisDataTable').DataTable({
 		'paging'      : true,
 		'lengthChange': false,
-		'searching'   : false,
+		'searching'   : true,
 		'ordering'    : true,
 		'info'        : true,
 		'autoWidth'   : false,
@@ -103,6 +104,7 @@ $(function(){
 		url: "<?php echo site_url('api/Struktur/getComboOrg'); ?>",
 		data : {
 			branch_id: branch_id,
+			org_id: '<?php echo @$detail['org_id']; ?>',
 			parent_id: '<?php echo @$detail['parent_id']; ?>'
 		},
 		success: function(data){
