@@ -35,7 +35,7 @@ function check_login($referrer_url)
     	if ($ci->session->userdata('login_id')) {
     		return true; exit;
     	} else {
-    		redirect('backend/auth','refresh');
+    		redirect('auth','refresh');
     	}
     }
     return false;

@@ -94,16 +94,11 @@
         </li>
 
         <li class="header">Pengaturan</li>
-           <li id="menuDashboard">
-          <a href="<?php echo site_url('dashboard'); ?>">
+           <li class="<?php echo @$this->uri->segment(1) === 'pengguna' ? 'active' : '' ; ?>">
+          <a href="<?php echo site_url('pengguna'); ?>">
             <i class="fa fa-users"></i> <span>Pengguna</span> 
           </a>
         </li>
-        <li id="menuDashboard">
-          <a href="<?php echo site_url('dashboard'); ?>">
-            <i class="fa fa-universal-access "></i> <span>Hak Akses</span> 
-          </a>
-        </li> 
 
       </ul>
     </section>

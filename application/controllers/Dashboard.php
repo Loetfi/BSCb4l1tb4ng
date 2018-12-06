@@ -12,6 +12,7 @@ class Dashboard extends CI_Controller {
 		$this->load->model('Dashboard_model','dash');
 		$this->load->model('Struktur_model','struktur');
 		$this->load->model('Target_model','target');
+		check_login('dashboard');
 	}
 
 

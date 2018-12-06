@@ -9,7 +9,7 @@ class Kegiatan extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->library('form_validation');
 		$this->load->model('auth_model','auth');
-		// $this->load->model('kegiatan_model','keg');
+		check_login('dashboard');
 	}
 
 
