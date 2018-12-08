@@ -30,7 +30,7 @@ class Dashboard extends CI_Controller {
 		// all struktur
 		$allStruktur = array();
 		$branchId = '1';
-		$withoutParent = true;
+		$withoutParent = false;
 		$struktur = $this->struktur->getAll($branchId, $withoutParent);
 		foreach($struktur as $row){
 			if ($row['sts_deleted'] == 0){
