@@ -22,7 +22,9 @@ class Pengguna_reciever extends CI_Controller {
 					'modify_date' =>  $this->input->post('modify_date'),
 					'name' =>  $this->input->post('name'),
 					'email' =>  $this->input->post('email'),
-					'branch_id' =>  $this->input->post('branch_id')
+					'branch_id' =>  $this->input->post('branch_id'),
+					'login_id' =>  $id,
+
 				);
 				$this->db->insert('login', $insert);
 				admsapi(200 , 1, 'Berhasil', []);
