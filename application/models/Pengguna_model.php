@@ -7,10 +7,10 @@ class Pengguna_model extends CI_Model {
     function get_id($id = '')
     {
         try {
-            $id = (int) $id;
-            $check = $this->db->select('login_id')->from('login')->where('login_id',$id)->row();
+            $id = $id;
+            $check = $this->db->select('login_id')->from('login')->where('login_id',$id)->get()->row();
 
-            if (isset($check)) {
+            if (count($check->login_id) > 0) {
                 return true;
             } else {
                 return false;

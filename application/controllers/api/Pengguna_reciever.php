@@ -6,9 +6,11 @@ class Pengguna_reciever extends CI_Controller {
 	public function receiver()
 	{
 		try {
-			// cari id table login dahulu, jika ada maka insert tidak dilakukan
+			// cari id table login dahulu, jika tidak ada maka insert tidak dilakukan
 			$this->load->model('pengguna_model');
-			$id = $this->input->post('login_id');
+			$id = $this->input->post('login_id') ? $this->input->post('login_id') : 1;
+			// die();
+			// print_r($this->pengguna_model->get_id($id)); die();
 
 			if ($this->pengguna_model->get_id($id)==false) {
 
@@ -26,7 +28,7 @@ class Pengguna_reciever extends CI_Controller {
 				admsapi(200 , 1, 'Berhasil', []);
 
 			} else {
-				admsapi(400 , 0, 'Gagal', []);
+				admsapi(400 , 0, 'Gagal insert pada server '.site_url().' , karena data sudah ada', []);
 			}
 
 		} catch (Exception $e) {
