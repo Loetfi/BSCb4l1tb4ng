@@ -46,6 +46,8 @@ class Branch extends CI_Controller {
 			'create_user'	=> 1,
 		);
 		
+		$allBranch = $this->branch->getAll();
+		
 		if($this->branch->insertBranch($dataInsert)) {
 			$branch_id = $this->db->insert_id();
 			$data = array(
@@ -55,6 +57,16 @@ class Branch extends CI_Controller {
 					'branch_id' => $branch_id,
 				)
 			);
+			
+			## hit ke api masing2 branch
+			foreach($allBranch as $row){
+				$url = $row['ip_address'].'/index.php/api/branch/addProcess';
+				$dataInsert['branch_id'] = $branch_id;
+				$data = $dataInsert;
+				## hit
+				RestCurl::HitAPI($url , $data , 'POST');
+			}
+			
 		} else {
 			$data = array(
 				'status' => 0,

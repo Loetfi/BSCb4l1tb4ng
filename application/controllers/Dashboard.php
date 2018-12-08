@@ -27,9 +27,12 @@ class Dashboard extends CI_Controller {
 			'jumlah_kontrak'	=> $this->kontrak->jumlah()
 		);
 		
+		$branchId = 1;
+		$tahun = 2019;
+		$bulan = 12;
+		
 		// all struktur
 		$allStruktur = array();
-		$branchId = '1';
 		$withoutParent = false;
 		$struktur = $this->struktur->getAllHeadOnly($branchId);
 		foreach($struktur as $row){
@@ -42,7 +45,6 @@ class Dashboard extends CI_Controller {
 		
 		// all target
 		$allTarget = array();
-		$tahun = 2019;
 		$target = $this->target->getAll($tahun, $branchId);
 		foreach($target as $row){
 			if ($row['sts_deleted'] == 0){
@@ -67,7 +69,7 @@ class Dashboard extends CI_Controller {
 		
 		## target
 		for($i=1; $i<=12; $i++){
-			$categoriesBulanan[] = date('M',strtotime('2019/'.$i.'/01'));
+			$categoriesBulanan[] = date('M',strtotime($tahun.'/'.$i.'/01'));
 		}
 		ksort($targetBulanan);
 		$allTargetBulanan = array();
@@ -103,7 +105,6 @@ class Dashboard extends CI_Controller {
 		
 		## target bulan ini
 		$targetBulanIni = array();
-		$bulan = 12;
 		$thisBulanIni = $this->target->getAll($tahun,$branchId,$bulan);
 		foreach($thisBulanIni as $row){
 			$targetBulanIni[$row['org_id']] = $row['amount'];
