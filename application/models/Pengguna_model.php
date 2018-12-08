@@ -3,6 +3,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Pengguna_model extends CI_Model { 
 
+    /* keperluan reciever */
+    function get_id($id = '')
+    {
+        try {
+            $id = (int) $id;
+            $check = $this->db->select('login_id')->from('login')->where('login_id',$id)->row();
+
+            if (isset($check)) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception $e) {
+            
+        }
+    }
+
     // add pengguna 
 
     public function create_user($parameter=array())
