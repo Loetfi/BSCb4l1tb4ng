@@ -7,10 +7,9 @@ class Pengguna_reciever extends CI_Controller {
 	{
 		try {
 			// cari id table login dahulu, jika tidak ada maka insert tidak dilakukan
+			cekmethod('post');
 			$this->load->model('pengguna_model');
 			$id = $this->input->post('login_id') ? $this->input->post('login_id') : 1;
-			// die();
-			// print_r($this->pengguna_model->get_id($id)); die();
 
 			if ($this->pengguna_model->get_id($id)==false) {
 
