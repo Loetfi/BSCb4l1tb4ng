@@ -285,6 +285,84 @@
 		</div>
 	</div>
 	
+	<div class="row">
+		<div class="col-xs-12">
+            <div class="box box-warning">
+                <div class="box-header">
+                    <h3 class="box-title">&nbsp;</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+					
+					<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th rowspan="3">Unit Kerja</th>
+							<th rowspan="3">Target</th>
+							<th rowspan="3">Target Bulan Ini</th>
+							
+							<th colspan="3">Terkontrak</th>
+							<th colspan="2">Potensi</th>
+							<th>INV</th>
+							<th colspan="4">Tealisasi Penerimaan</th>
+							<th>Outstanding INV</th>
+							<th colspan="6">Target Bulanan</th>
+						</tr>
+						<tr>
+							<th rowspan="2">Luncuran</th>
+							<th rowspan="2">RP. M</th>
+							<th rowspan="2">PKT</th>
+							
+							<th rowspan="2">RP. M</th>
+							<th rowspan="2">PKT</th>
+							
+							<th rowspan="2">RP. M</th>
+							
+							<th>Luncuran</th>
+							<th>2018</th>
+							<th>Total</th>
+							<th rowspan="2">%</th>
+							
+							<th rowspan="2">RP. M</th>
+							
+							<th colspan="2">Oktober</th>
+							<th colspan="2">November</th>
+							<th colspan="2">Desember</th>
+						</tr>
+						<tr>
+							<th>RP. M</th>
+							<th>RP. M</th>
+							<th>RP. M</th>
+							
+							<th>%</th>
+							<th>RP</th>
+							<th>%</th>
+							<th>RP</th>
+							<th>%</th>
+							<th>RP</th>
+							
+						</tr>
+					</thead>
+					<?php 
+					$i=0;
+					foreach($allStruktur as $row){ 
+						$org_id = $row['org_id']; 
+						?>
+						<tr>
+							<td><?php echo 'BLM-'.$row['code']; ?></td>
+							<td align="right"><?php echo number_format(@$dataTargetOrg[$org_id]); ?></td>
+							<td align="right"><?php echo number_format(@$targetBulanIni[$org_id]); ?></td>
+						</tr>
+					<?php } ?>
+					</table>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
 	
 </section>
 

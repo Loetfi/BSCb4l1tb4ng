@@ -29,9 +29,10 @@ class Target extends CI_Controller {
 	
 	function add(){
 		$data = array(
-			'title' => 'Tambah Master Cabang' ,
-			'page'	=> 'master/target/add',
-			'thisUrl'	=> $this->thisUrl
+			'title' 	=> 'Tambah Master Target' ,
+			'page'		=> 'master/target/add',
+			'thisUrl'	=> $this->thisUrl,
+			'org'		=> $this->struktur->getAllHeadOnly(),
 		);
 		
 		$this->load->view('template/header', $data, FALSE);
@@ -113,10 +114,11 @@ class Target extends CI_Controller {
 	
 	function edit($id){
 		$data = array(
-			'title' 	=> 'Edit Master target',
+			'title' 	=> 'Edit Master Target',
 			'page'		=> 'master/target/edit',
 			'thisUrl'	=> $this->thisUrl,
 			'detail'	=> $this->target->detail($id),
+			'org'		=> $this->struktur->getAllHeadOnly(),
 		);
 		
 		$this->load->view('template/header', $data, FALSE);

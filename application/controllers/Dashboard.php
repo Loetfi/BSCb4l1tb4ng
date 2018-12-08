@@ -31,11 +31,12 @@ class Dashboard extends CI_Controller {
 		$allStruktur = array();
 		$branchId = '1';
 		$withoutParent = false;
-		$struktur = $this->struktur->getAll($branchId, $withoutParent);
+		$struktur = $this->struktur->getAllHeadOnly($branchId);
 		foreach($struktur as $row){
 			if ($row['sts_deleted'] == 0){
 				$allStruktur[$row['id']] = $row;
 				$categoriesStruktur[] = $row['code'].' '.$row['org_name'];
+				$categoriesStrukturCode[$row['id']] = 'BLM-'.$row['code'];
 			}
 		}
 		
@@ -54,9 +55,10 @@ class Dashboard extends CI_Controller {
 		foreach($allStruktur as $row){
 			$org_id = $row['id'];
 			$dataTarget[] = @$allTarget[$org_id];
+			$dataTargetOrg[$org_id] = @$allTarget[$org_id];
 		}
 		
-		$data['categoriesStruktur'] = $categoriesStruktur;
+		$data['categoriesStruktur'] = @$categoriesStruktur;
 		$data['seriesDataTarget'] = array(
 			'name' => 'target',
 			'data' => $dataTarget,
@@ -93,6 +95,29 @@ class Dashboard extends CI_Controller {
 			'name' => 'penerimaan',
 			'data' => $allPenerimaanBulanan,
 		);
+		
+		
+		
+		
+		
+		
+		## target bulan ini
+		$targetBulanIni = array();
+		$bulan = 12;
+		$thisBulanIni = $this->target->getAll($tahun,$branchId,$bulan);
+		foreach($thisBulanIni as $row){
+			$targetBulanIni[$row['org_id']] = $row['amount'];
+		}
+		
+		foreach($allStruktur as $row){
+			$org_id = $row['org_id'];
+			$blmOrg[] = 'BLM-'.$row['code'];
+			$targetOrg[] = @$dataTargetOrg[$org_id];
+			$targetBulanOrg[] = @$targetBulanIni[$org_id];
+		}
+		$data['allStruktur'] = @$allStruktur;
+		$data['dataTargetOrg'] = @$dataTargetOrg;
+		$data['targetBulanIni'] = @$targetBulanIni;
 		
 		// print_r($categoriesStruktur);
 		// print_r($categoriesBulanan);

@@ -25,6 +25,10 @@
 							<label for="org_id" class="col-sm-2 control-label">org_id</label>
 							<div class="col-sm-10">
 								<select id="org_id" class="form-control" required>
+									<option value="">Pilih</option>
+									<?php foreach($org as $row){ ?>
+									<option value="<?php echo $row['org_id']; ?>"><?php echo $row['branch_name'].' -> '.$row['org_name']; ?></option>
+									<?php } ?>
 								</select>
 							</div>
 						</div>

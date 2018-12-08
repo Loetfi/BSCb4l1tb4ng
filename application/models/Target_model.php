@@ -7,11 +7,12 @@ class Target_model extends CI_Model {
 		parent::__construct();
 		$this->table = "target";
 	}
-	function getAll($tahun='', $branchId=''){
+	function getAll($tahun='', $branchId='', $month=''){
 		
 		$where = '';
 		if($tahun != '') $where .= " AND t.`year` = '$tahun' ";
 		if($branchId != '') $where .= " AND o.branch_id='$branchId' ";
+		if($month != '') $where .= " AND t.`month`='$month' ";
 		
 		try{
 			$sql = "SELECT

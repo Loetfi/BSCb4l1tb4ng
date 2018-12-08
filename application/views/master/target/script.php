@@ -99,7 +99,7 @@ $(function(){
 		},
 		success: function(data){
 			data = '<option>Pilih</option>' + data;
-			$('#org_id').html(data);
+			$('#org_id_tmp').html(data);
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log(jqXHR);

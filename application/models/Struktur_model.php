@@ -122,7 +122,27 @@ class Struktur_model extends CI_Model {
     }
 	
 	
-	
+	function getAllHeadOnly($branchId = null){
+		$where = '';
+		if($branchId != '') $where .= " AND a.branch_id='$branchId' ";
+		
+		try{
+			$resutl = $this->db->query("
+			select 
+				a.*, 
+				a.id org_id,
+				b.branch_name,
+				b.ip_address
+			from ms_organization a 
+			LEFT JOIN ms_branch b on a.branch_id = b.branch_id
+			where parent_id = 0 
+				".$where." 
+			order by id asc ")->result_array();
+		} catch (Exception $e) {
+			$resutl = array();
+		}
+		return $resutl;
+	}
 	
 	
 	function getHead($branch = null, $editOrgId = null){
@@ -159,7 +179,6 @@ class Struktur_model extends CI_Model {
 		}
 		return ($myData);
 	}
-	
 	function getChild($org_id = array(), $branch = null, $editOrgId = null){
 		
 		$where = '';

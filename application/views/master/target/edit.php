@@ -26,6 +26,9 @@
 							<label for="org_id" class="col-sm-2 control-label">org_id</label>
 							<div class="col-sm-10">
 								<select id="org_id" class="form-control" required>
+									<?php foreach($org as $row){ if ($row['org_id']==$detail['org_id']){ ?>
+									<option value="<?php echo $row['org_id']; ?>" <?php echo $row['org_id']==$detail['org_id']?'selected':''; ?>><?php echo $row['branch_name'].' -> '.$row['org_name']; ?></option>
+									<?php } } ?>
 								</select>
 							</div>
 						</div>
