@@ -31,9 +31,9 @@
                 <img src="http://jdih.awanesia.com/logo-esdm-kuning.png" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  <?php echo @$this->session->userdata('name') ? $this->session->userdata('name') : 'Undefined'; ?>
                 </p>
+                <p><?php echo @$this->session->userdata('branch_name'); ?></p>
               </li>
               <!-- Menu Body --> 
               <!-- Menu Footer-->

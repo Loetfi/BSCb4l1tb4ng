@@ -9,7 +9,8 @@ class Auth_model extends CI_Model {
 		$username = $parameter['username'];
 		$password = sha1($parameter['password']); // encrypt type sha1
 
-		$get_user = $this->db->select('*')->from('login')->where('username',$username)->where('password',$password)->get()->row_array();
+		$get_user = $this->db->select('a.* , b.branch_name')->from('login a')->join('ms_branch b','a.branch_id = b.branch_id','LEFT')->where('a.username',$username)->where('a.password',$password)->get()->row_array();
+
 
 		if (isset($get_user['username'])) {
 			/*add login data*/
@@ -18,7 +19,8 @@ class Auth_model extends CI_Model {
 				'username'	=> $get_user['username'],
 				'password'	=> $get_user['password'],
 				'name'	=> $get_user['name'],
-				'branch_id' => $get_user['branch_id']
+				'branch_id' => $get_user['branch_id'],
+				'branch_name' => branch_admin($get_user['branch_id'], $get_user['branch_name'])
 			); 
 			$this->session->set_userdata( $array );
 			/*end*/
