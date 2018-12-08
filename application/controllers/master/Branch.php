@@ -7,6 +7,7 @@ class Branch extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->model('branch_model','branch');
+		$this->thisUrl = $this->uri->segment(1).'/'.$this->uri->segment(2);
 	}
 	
 	public function index(){
@@ -50,13 +51,6 @@ class Branch extends CI_Controller {
 		
 		if($this->branch->insertBranch($dataInsert)) {
 			$branch_id = $this->db->insert_id();
-			$data = array(
-				'status' => 1,
-				'message' => 'Berhasil',
-				'data' => array(
-					'branch_id' => $branch_id,
-				)
-			);
 			
 			## hit ke api masing2 branch
 			foreach($allBranch as $row){
@@ -64,8 +58,17 @@ class Branch extends CI_Controller {
 				$dataInsert['branch_id'] = $branch_id;
 				$data = $dataInsert;
 				## hit
-				RestCurl::HitAPI($url , $data , 'POST');
+				$coba[] = RestCurl::HitAPI($url , $data , 'POST');
 			}
+			$data = array(
+				'status' => 1,
+				'message' => 'Berhasil',
+				'data' => array(
+					'branch_id' => $branch_id,
+					'cek' => $coba
+				)
+			);
+			echo json_encode($data);
 			
 		} else {
 			$data = array(
@@ -73,8 +76,8 @@ class Branch extends CI_Controller {
 				'message' => 'Gagal Insert',
 				'data' => array()
 			);
+			echo json_encode($data);
 		}
-		echo json_encode($data);
 	}
 	
 	function detail($id){

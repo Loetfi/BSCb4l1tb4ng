@@ -30,11 +30,12 @@ $(function(){
 				address: address,
 				phone: phone,
 				sts_deleted: sts_deleted,
+				'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
 			},
 			success: function(data){
-				if (data.status){
-					window.location.href = "<?php echo site_url($thisUrl); ?>";
-				}
+				// if (data.status){
+					// window.location.href = "<?php echo site_url($thisUrl); ?>";
+				// }
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log(jqXHR);
