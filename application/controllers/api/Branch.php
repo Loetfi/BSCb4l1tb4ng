@@ -9,31 +9,6 @@ class Branch extends CI_Controller {
 		$this->load->model('branch_model','branch');
 	}
 	
-	public function index(){
-		$data = array(
-			'title' 	=> 'Master Unit Kerja' ,
-			'page'		=> 'master/branch/branch',
-			'thisUrl'	=> $this->thisUrl
-		);
-		$data['getAll'] = $this->branch->getAll();
-		
-		$this->load->view('template/header', $data, FALSE);
-		$this->load->view('template/content', $data, FALSE);
-		$this->load->view('template/footer', $data, FALSE);
-	}
-	
-	function add(){
-		$data = array(
-			'title' => 'Tambah Master Unit Kerja' ,
-			'page'	=> 'master/branch/add',
-			'thisUrl'	=> $this->thisUrl
-		);
-		
-		$this->load->view('template/header', $data, FALSE);
-		$this->load->view('template/content', $data, FALSE);
-		$this->load->view('template/footer', $data, FALSE);
-	}
-	
 	function addProcess(){
 		$cdate = time();
 		$dataInsert = array(
@@ -63,32 +38,6 @@ class Branch extends CI_Controller {
 			);
 		}
 		echo json_encode($data);
-	}
-	
-	function detail($id){
-		$data = array(
-			'title' 	=> 'Detail Master Unit Kerja',
-			'page'		=> 'master/branch/detail',
-			'thisUrl'	=> $this->thisUrl,
-			'detail'	=> $this->branch->detail($id),
-		);
-		
-		$this->load->view('template/header', $data, FALSE);
-		$this->load->view('template/content', $data, FALSE);
-		$this->load->view('template/footer', $data, FALSE);
-	}
-	
-	function edit($id){
-		$data = array(
-			'title' 	=> 'Edit Master Unit Kerja',
-			'page'		=> 'master/branch/edit',
-			'thisUrl'	=> $this->thisUrl,
-			'detail'	=> $this->branch->detail($id),
-		);
-		
-		$this->load->view('template/header', $data, FALSE);
-		$this->load->view('template/content', $data, FALSE);
-		$this->load->view('template/footer', $data, FALSE);
 	}
 	
 	function editProcess(){
@@ -125,5 +74,6 @@ class Branch extends CI_Controller {
 		}
 		echo json_encode($data);
 	}
+	
 	
 }
