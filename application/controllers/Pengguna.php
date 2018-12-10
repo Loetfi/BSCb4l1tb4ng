@@ -137,17 +137,18 @@ class Pengguna extends CI_Controller {
       );
         // print_r($this->pengguna_model->create_user($parameter)); die();
       
-      if ($this->pengguna_model->create_user($parameter) > 0) {
+      $hasil = $this->pengguna_model->create_user($parameter);
+      if ($hasil > 0) {
         // print_r($this->pengguna_model->create_user($parameter));
         $url = getenv("URL_BSC").'api/pengguna';
         $data = array_merge($parameter , array(
-          'login_id' => $this->pengguna_model->create_user($parameter),
+          'login_id' => $hasil,
           'status'  => 1,
           'create_date' => date('Y-m-d H:i:s'),
           'modify_date' => date('Y-m-d H:i:s')
         ));
         $res = RestCurl::HitAPI($url , $data , 'POST');
-      print_r($res); die();
+      // print_r($res); die();
 
         $this->session->set_flashdata('message', '<div class="alert alert-info"> Berhasil tambah pengguna </div>');
 
