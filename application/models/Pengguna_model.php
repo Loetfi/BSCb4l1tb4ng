@@ -10,7 +10,7 @@ class Pengguna_model extends CI_Model {
             $id = $id;
             $check = $this->db->select('login_id')->from('login')->where('login_id',$id)->get()->row();
 
-            if (count($check->login_id) > 0) {
+            if (@$check->login_id > 0) {
                 return true;
             } else {
                 return false;
@@ -33,11 +33,13 @@ class Pengguna_model extends CI_Model {
                 'status'    => 1,
                 'name' => $parameter['name'],
                 'branch_id' => $parameter['branch_id'], 
-                'email' => $parameter['username']
+                'email' => $parameter['username'],
+                'create_date' => date('Y-m-d H:i:s'),
+                'modify_date' => date('Y-m-d H:i:s')
             );
             $this->db->insert('login', $insert);
             if ($this->db->affected_rows()) {
-                return true;
+                return $this->db->insert_id();
             } else {
                 return false;
             }

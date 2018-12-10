@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+$dotenv = new Dotenv\Dotenv(APPPATH."../");
+$dotenv->load();
 
 class Pengguna extends CI_Controller {
 
@@ -134,9 +136,22 @@ class Pengguna extends CI_Controller {
         'name'  => !empty($this->input->post('nama')) ? $this->input->post('nama') : 0
       );
         // print_r($this->pengguna_model->create_user($parameter)); die();
+      
+      if ($this->pengguna_model->create_user($parameter) > 0) {
+        // print_r($this->pengguna_model->create_user($parameter));
+        $url = getenv("URL_BSC").'api/pengguna';
+        $data = array_merge($parameter , array(
+          'login_id' => $this->pengguna_model->create_user($parameter),
+          'status'  => 1,
+          'create_date' => date('Y-m-d H:i:s'),
+          'modify_date' => date('Y-m-d H:i:s')
+        ));
+        $res = RestCurl::HitAPI($url , $data , 'POST');
+      print_r($res); die();
 
-      if ($this->pengguna_model->create_user($parameter)) {
         $this->session->set_flashdata('message', '<div class="alert alert-info"> Berhasil tambah pengguna </div>');
+
+
         redirect('pengguna','refresh');
       } else {
         $this->session->set_flashdata('message', '<div class="alert alert-error"> Pengguna tidak berhasil disimpan. </div>');

@@ -19,7 +19,7 @@
 				<!-- /.box-header -->
 				<div class="box-body"> 
 					<!-- form start -->
-					<form role="form" action="<?php echo site_url('pengguna/add_proses/') ?>" method="POST">
+					<form role="form" action="<?php echo site_url('pengguna/add_proses/') ?>" method="POST" target="_blank">
 						<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 						<div class="box-body">
 							<div class="form-group">
