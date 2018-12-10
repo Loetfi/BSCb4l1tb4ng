@@ -128,5 +128,38 @@ function btnStatus($value= 0 )
 	return $ret;
 } 
 
+
+
+
+
+function bscCard($target, $realisasi){
+	$persen = 0;
+	try{
+		if ($target == 0 || $target == ''){
+			$thisClass="danger";
+		}
+		else {
+			$persen = round($realisasi / $target * 100,2);
+			
+			if ($persen <= 50){
+				$thisClass="danger";
+			} else if ($persen < 75){
+				$thisClass="warning";
+			} else if ($persen <= 100){
+				$thisClass="success";
+			} else if ($persen > 100){
+				$thisClass="info";
+			} else {
+				$thisClass="danger";
+			}
+		}
+	} catch (Exception $e) {
+		$thisClass="danger";
+	}
+	echo '<td class="'.$thisClass.'" align="right">'.number_format($persen,2).'%</td>';
+}
+
+
+
 /* End of file Adms_helper.php */
 /* Location: ./application/helpers/Adms_helper.php */

@@ -294,8 +294,7 @@
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
                 </div>
-                <div class="box-body">
-					
+                <div class="box-body" style="height: 800px; overflow-y: scroll; overflow-x: scroll;">
 					<table class="table table-bordered">
 					<thead>
 						<tr>
@@ -327,9 +326,17 @@
 							
 							<th rowspan="2">RP. M</th>
 							
-							<th colspan="2">Oktober</th>
-							<th colspan="2">November</th>
-							<th colspan="2">Desember</th>
+							<?php 
+							$bulanIni = (int)date('m');
+							if ($bulanIni <= 3 ){ 
+								for($i=1; $i<=3; $i++){
+									echo '<th colspan="2">'.date('M',strtotime('2018/'.$i.'/01')).'</th>';
+								}
+							} else {
+								for($i=($bulanIni-2); $i<=$bulanIni; $i++){
+									echo '<th colspan="2">'.date('M',strtotime('2018/'.$i.'/01')).'</th>';
+								}
+							} ?>
 						</tr>
 						<tr>
 							<th>RP. M</th>
@@ -352,8 +359,41 @@
 						?>
 						<tr>
 							<td><?php echo 'BLM-'.$row['code']; ?></td>
-							<td align="right"><?php echo number_format(@$dataTargetOrg[$org_id]); ?></td>
-							<td align="right"><?php echo number_format(@$targetBulanIni[$org_id]); ?></td>
+							<td align="right"><?php echo @$dataTargetOrg[$org_id] > 0 ? number_format(@$dataTargetOrg[$org_id]) : ''; ?></td>
+							<td align="right"><?php echo @$targetBulanIni[$org_id] > 0 ? number_format(@$targetBulanIni[$org_id]) : ''; ?></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><?php echo @$dataInvoiceOrg[$org_id] > 0 ? number_format(@$dataInvoiceOrg[$org_id],2) : ''; ?></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<?php bscCard(@$dataTargetOrg[$org_id], @$dataInvoiceOrg[$org_id]); ?>
+							<td>A</td>
+							
+							<?php 
+							if ($bulanIni <= 3 ){ 
+								for($i=1; $i<=3; $i++){
+									$thisTarget = @$targetOrgBulanan[$org_id][$i] > 0 ? @$targetOrgBulanan[$org_id][$i] : 1;
+									$thisRealisasi = @$allInvoiceOrgBulanan[$org_id][$i];
+									$persen = round($thisRealisasi / $thisTarget * 100,2);
+									
+									echo '<td>'.($persen > 0 ? number_format($persen,2).'%' : '-').'</td>
+									<td>'.(@$thisRealisasi > 0 ? number_format(@$thisRealisasi,2) : '').'</td>';
+								}
+							} else {
+								for($i=($bulanIni-2); $i<=$bulanIni; $i++){
+									$thisTarget = @$targetOrgBulanan[$org_id][$i] > 0 ? @$targetOrgBulanan[$org_id][$i] : 1;
+									$thisRealisasi = @$allInvoiceOrgBulanan[$org_id][$i];
+									$persen = round($thisRealisasi / $thisTarget * 100,2);
+									
+									echo '<td>'.($persen > 0 ? number_format($persen,2).'%' : '-').'</td>
+									<td>'.(@$thisRealisasi > 0 ? number_format(@$thisRealisasi,2) : '').'</td>';
+								}
+							}
+							?>
 						</tr>
 					<?php } ?>
 					</table>
