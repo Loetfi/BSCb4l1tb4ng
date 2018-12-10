@@ -9,7 +9,7 @@
 <section class="content">
 	<div class="row">
 		<div class="col-xs-12">
-			<div class="box">
+			<div class="box box-warning">
 				<div class="box-header">
 					<h3 class="box-title">&nbsp;</h3>
 					<div class="box-tools pull-right">
@@ -22,7 +22,7 @@
 				<form action="#" method="POST" id="addForm" class="form-horizontal">
 					<div class="box-body">
 						<div class="form-group">
-							<label for="parent_id" class="col-sm-2 control-label">parent_id</label>
+							<label for="parent_id" class="col-sm-2 control-label">Parent</label>
 							<div class="col-sm-10">
 								<select class="form-control" id="parent_id" placeholder="parent_id" required>
 									<option value="">Pilih Parent</option>
@@ -31,7 +31,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="branch_id" class="col-sm-2 control-label">branch_id</label>
+							<label for="branch_id" class="col-sm-2 control-label">Nama Branch</label>
 							<div class="col-sm-10">
 								<select class="form-control" id="branch_id" placeholder="branch_id" required>
 									<option value="">Pilih Cabang</option>
@@ -42,13 +42,13 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="code" class="col-sm-2 control-label">code</label>
+							<label for="code" class="col-sm-2 control-label">Kode</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="code" placeholder="code" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="type" class="col-sm-2 control-label">Type</label>
+							<label for="type" class="col-sm-2 control-label">Tipe</label>
 							<div class="col-sm-10">
 								<select class="form-control" id="type" required>
 									<option value="">Pilih Type</option>
@@ -59,19 +59,19 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="org_name" class="col-sm-2 control-label">org_name</label>
+							<label for="org_name" class="col-sm-2 control-label">Nama Organisasi</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="org_name" placeholder="org_name" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="description" class="col-sm-2 control-label">description</label>
+							<label for="description" class="col-sm-2 control-label">Deskripsi</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="description" placeholder="description" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="sts_deleted" class="col-sm-2 control-label">sts_deleted</label>
+							<label for="sts_deleted" class="col-sm-2 control-label">Status</label>
 							<div class="col-sm-10">
 								<select name="sts_deleted" class="form-control" id="sts_deleted" required>
 									<option value="0">Aktif</option>

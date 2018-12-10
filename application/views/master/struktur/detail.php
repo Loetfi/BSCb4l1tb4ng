@@ -23,31 +23,31 @@
 					<div class="box-body">
 						<table class="table table-bordered table-strip">
 							<tr>
-								<th width="150px">parent_name</th>
+								<th width="150px">Nama Parent</th>
 								<td><?php echo @$detail['parent_name']; ?></td>
 							</tr>
 							<tr>
-								<th>branch_name</th>
+								<th>Nama Branch</th>
 								<td><?php echo @$detail['branch_name']; ?></td>
 							</tr>
 							<tr>
-								<th>org_name</th>
+								<th>Nama Organisasi</th>
 								<td><?php echo @$detail['org_name']; ?></td>
 							</tr>
 							<tr>
-								<th>description</th>
+								<th>Deskripsi</th>
 								<td><?php echo @$detail['description']; ?></td>
 							</tr>
 							<tr>
-								<th>create_date</th>
+								<th>Dibuat pada tanggal</th>
 								<td><?php echo @$detail['create_date']==''?'':date('Y-m-d H:i',@$detail['create_date']); ?></td>
 							</tr>
 							<tr>
-								<th>modify_date</th>
+								<th>Diubah pada tanggal</th>
 								<td><?php echo @$detail['modify_date']==''?'':date('Y-m-d H:i',@$detail['modify_date']); ?></td>
 							</tr>
 							<tr>
-								<th>sts_deleted</th>
+								<th>Status</th>
 								<td><?php echo @$detail['sts_deleted']=='1'?'Aktif':'Pasif'; ?></td>
 							</tr>
 						</table>

@@ -9,7 +9,7 @@
 <section class="content">
 	<div class="row">
 		<div class="col-xs-12">
-			<div class="box">
+			<div class="box box-warning">
 				<div class="box-header">
 					<h3 class="box-title">&nbsp;</h3>
 					<div class="box-tools pull-right">
