@@ -12,9 +12,9 @@
 <section class="content">
 	<div class="row">
 		<div class="col-xs-12">
-			<div class="box">
+			<div class="box box-warning">
 				<div class="box-header">
-					<a href="<?php echo site_url($thisUrl.'/add'); ?>" class="btn btn-success" id="btnTambah"><i class="fa fa-plus"></i> Tambah <?php echo @$title; ?></a>
+					<a href="<?php echo site_url($thisUrl.'/add'); ?>" class="btn btn-warning" id="btnTambah"><i class="fa fa-plus"></i> Tambah <?php echo @$title; ?></a>
 					
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>

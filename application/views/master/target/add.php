@@ -9,7 +9,7 @@
 <section class="content">
 	<div class="row">
 		<div class="col-xs-12">
-			<div class="box">
+			<div class="box box-warning">
 				<div class="box-header">
 					<h3 class="box-title">&nbsp;</h3>
 					<div class="box-tools pull-right">
@@ -22,7 +22,7 @@
 				<form action="#" method="POST" id="addForm" class="form-horizontal">
 					<div class="box-body">
 						<div class="form-group">
-							<label for="org_id" class="col-sm-2 control-label">org_id</label>
+							<label for="org_id" class="col-sm-2 control-label">Organisasi</label>
 							<div class="col-sm-10">
 								<select id="org_id" class="form-control" required>
 									<option value="">Pilih</option>
@@ -33,7 +33,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="year" class="col-sm-2 control-label">year</label>
+							<label for="year" class="col-sm-2 control-label">Tahun</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="year" placeholder="year" required>
 							</div>
@@ -47,7 +47,7 @@
 						</div>
 						<?php } ?>
 						<div class="form-group">
-							<label for="sts_deleted" class="col-sm-2 control-label">sts_deleted</label>
+							<label for="sts_deleted" class="col-sm-2 control-label">Status</label>
 							<div class="col-sm-10">
 								<select name="sts_deleted" class="form-control" id="sts_deleted" required>
 									<option value="0">Aktif</option>

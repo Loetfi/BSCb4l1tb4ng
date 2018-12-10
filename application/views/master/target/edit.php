@@ -23,7 +23,7 @@
 					<input type="hidden" id="target_id" value="<?php echo @$detail['target_id']; ?>">
 					<div class="box-body">
 						<div class="form-group">
-							<label for="org_id" class="col-sm-2 control-label">org_id</label>
+							<label for="org_id" class="col-sm-2 control-label">Nama Organisasi</label>
 							<div class="col-sm-10">
 								<select id="org_id" class="form-control" required>
 									<?php foreach($org as $row){ if ($row['org_id']==$detail['org_id']){ ?>
@@ -33,25 +33,25 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="year" class="col-sm-2 control-label">year</label>
+							<label for="year" class="col-sm-2 control-label">Tahun</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="year" placeholder="year" value="<?php echo @$detail['year']; ?>" readonly required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="month" class="col-sm-2 control-label">month</label>
+							<label for="month" class="col-sm-2 control-label">Bulan</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="month" placeholder="month" value="<?php echo @$detail['month']; ?>" readonly required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="amount" class="col-sm-2 control-label">amount</label>
+							<label for="amount" class="col-sm-2 control-label">Total Nominal</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="amount" placeholder="amount" value="<?php echo @$detail['amount']; ?>" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="sts_deleted" class="col-sm-2 control-label">sts_deleted</label>
+							<label for="sts_deleted" class="col-sm-2 control-label">Status</label>
 							<div class="col-sm-10">
 								<select name="sts_deleted" class="form-control" id="sts_deleted" required>
 									<option value="0">Aktif</option>
