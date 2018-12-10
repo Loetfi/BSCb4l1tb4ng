@@ -12,6 +12,7 @@ class Dashboard extends CI_Controller {
 		$this->load->model('Dashboard_model','dash');
 		$this->load->model('Struktur_model','struktur');
 		$this->load->model('Target_model','target');
+		$this->load->model('Jlt_model','jlt');
 
 		$this->load->model('dashboard/kontrak_model','kontrak');
 		check_login('dashboard');
@@ -43,6 +44,13 @@ class Dashboard extends CI_Controller {
 			}
 		}
 		
+		## all invoice Tahunan
+		$allInvoice = array();
+		$inv = $this->jlt->invoiceSubUnitTahunan('2018', $branchId);
+		foreach($inv as $row){
+			$allInvoice[$row['org_id']] = $row;
+		}
+		
 		// all target
 		$allTarget = array();
 		$target = $this->target->getAll($tahun, $branchId);
@@ -58,18 +66,32 @@ class Dashboard extends CI_Controller {
 			$org_id = $row['id'];
 			$dataTarget[] = @$allTarget[$org_id];
 			$dataTargetOrg[$org_id] = @$allTarget[$org_id];
+			$dataInvoice[] = @$allInvoice[$org_id]['terhitung'] > 0 ? floatval(@$allInvoice[$org_id]['terhitung']) : null;
 		}
 		
 		$data['categoriesStruktur'] = @$categoriesStruktur;
-		$data['seriesDataTarget'] = array(
+		$data['seriesReport'][] = array(
 			'name' => 'target',
 			'data' => $dataTarget,
 		);
+		$data['seriesReport'][] = array(
+			'name' => 'Invoice',
+			'data' => $dataInvoice,
+		);
 		
+		
+		
+		## all invoice bulanan
+		$allInvoiceBulanan = array();
+		$inv = $this->jlt->invoiceUnitBulanan('2018', $branchId);
+		foreach($inv as $row){
+			$allInvoiceBulanan[$row['bulan']] = @$row['terhitung'] > 0 ? floatval(@$row['terhitung']) : null;
+		}
 		
 		## target
 		for($i=1; $i<=12; $i++){
 			$categoriesBulanan[] = date('M',strtotime($tahun.'/'.$i.'/01'));
+			$invoiceBulanan[] = @$allInvoiceBulanan[$i];
 		}
 		ksort($targetBulanan);
 		$allTargetBulanan = array();
@@ -84,18 +106,13 @@ class Dashboard extends CI_Controller {
 			'name' => 'target',
 			'data' => $allTargetBulanan,
 		);
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		$data['seriesDataTargetBulanan'][] = array(
 			'name' => 'penerimaan',
 			'data' => $allPenerimaanBulanan,
+		);
+		$data['seriesDataTargetBulanan'][] = array(
+			'name' => 'Invoice',
+			'data' => $invoiceBulanan,
 		);
 		
 		
@@ -115,6 +132,7 @@ class Dashboard extends CI_Controller {
 			$blmOrg[] = 'BLM-'.$row['code'];
 			$targetOrg[] = @$dataTargetOrg[$org_id];
 			$targetBulanOrg[] = @$targetBulanIni[$org_id];
+			$invoiceBulananOrg[] = @$allInvoice[$org_id]['terhitung'] > 0 ? floatval(@$allInvoice[$org_id]['terhitung']) : null;
 		}
 		$data['allStruktur'] = @$allStruktur;
 		$data['dataTargetOrg'] = @$dataTargetOrg;

@@ -697,7 +697,7 @@ Highcharts.chart('GrafikTahunanSubUnit', {
 	tooltip: {
         shared: true
     },
-	series: [<?php echo json_encode($seriesDataTarget); ?>]
+	series: <?php echo json_encode(@$seriesReport); ?>
 });
 Highcharts.chart('GrafikBulananUnit', {
 	credits: { enabled: false },
@@ -730,7 +730,7 @@ Highcharts.chart('GrafikBulananUnit', {
 	tooltip: {
         shared: true
     },
-	series: <?php echo json_encode($seriesDataTargetBulanan); ?>
+	series: <?php echo json_encode(@$seriesDataTargetBulanan); ?>
 });
 
 

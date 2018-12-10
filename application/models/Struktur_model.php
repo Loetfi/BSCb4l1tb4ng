@@ -29,6 +29,7 @@ class Struktur_model extends CI_Model {
 			WHERE
 				1=1
 				".$where."	
+			ORDER BY code ASC 
 			";
 			$resutl = $this->db->query($sql)->result_array();
 			
@@ -137,7 +138,7 @@ class Struktur_model extends CI_Model {
 			LEFT JOIN ms_branch b on a.branch_id = b.branch_id
 			where parent_id = 0 
 				".$where." 
-			order by id asc ")->result_array();
+			ORDER BY a.code ASC  ")->result_array();
 		} catch (Exception $e) {
 			$resutl = array();
 		}
