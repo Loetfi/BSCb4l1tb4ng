@@ -362,22 +362,22 @@
 							<td align="right"><?php echo @$dataTargetOrg[$org_id] > 0 ? number_format(@$dataTargetOrg[$org_id]) : ''; ?></td>
 							<td align="right"><?php echo @$targetBulanIni[$org_id] > 0 ? number_format(@$targetBulanIni[$org_id]) : ''; ?></td>
 							<td></td>
-							<td></td>
+							<td><?php echo @$dataAgreementOrg[$org_id] > 0 ? number_format(@$dataAgreementOrg[$org_id],2) : ''; ?></td>
 							<td></td>
 							<td></td>
 							<td></td>
 							<td><?php echo @$dataInvoiceOrg[$org_id] > 0 ? number_format(@$dataInvoiceOrg[$org_id],2) : ''; ?></td>
 							<td></td>
+							<td><?php echo @$dataPaymentOrg[$org_id] > 0 ? number_format(@$dataPaymentOrg[$org_id],2) : ''; ?></td>
 							<td></td>
+							<?php bscCard(@$dataTargetOrg[$org_id], @$dataPaymentOrg[$org_id]); ?>
 							<td></td>
-							<?php bscCard(@$dataTargetOrg[$org_id], @$dataInvoiceOrg[$org_id]); ?>
-							<td>A</td>
 							
 							<?php 
 							if ($bulanIni <= 3 ){ 
 								for($i=1; $i<=3; $i++){
 									$thisTarget = @$targetOrgBulanan[$org_id][$i] > 0 ? @$targetOrgBulanan[$org_id][$i] : 1;
-									$thisRealisasi = @$allInvoiceOrgBulanan[$org_id][$i];
+									$thisRealisasi = @$allPaymentOrgBulanan[$org_id][$i];
 									$persen = round($thisRealisasi / $thisTarget * 100,2);
 									
 									echo '<td>'.($persen > 0 ? number_format($persen,2).'%' : '-').'</td>
@@ -386,7 +386,7 @@
 							} else {
 								for($i=($bulanIni-2); $i<=$bulanIni; $i++){
 									$thisTarget = @$targetOrgBulanan[$org_id][$i] > 0 ? @$targetOrgBulanan[$org_id][$i] : 1;
-									$thisRealisasi = @$allInvoiceOrgBulanan[$org_id][$i];
+									$thisRealisasi = @$allPaymentOrgBulanan[$org_id][$i];
 									$persen = round($thisRealisasi / $thisTarget * 100,2);
 									
 									echo '<td>'.($persen > 0 ? number_format($persen,2).'%' : '-').'</td>

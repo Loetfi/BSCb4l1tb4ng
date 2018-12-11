@@ -47,11 +47,25 @@ class Dashboard extends CI_Controller {
 		#########################################################################################################
 		#########################################################################################################
 		
-		## all invoice Tahunan
+		## all Agreement org Tahunan
+		$allAgrement = array();
+		$agreement = $this->jlt->agreementSubUnitTahunan('2018', $branchId);
+		foreach($agreement as $row){
+			$allAgrement[$row['org_id']] = $row;
+		}
+		
+		## all invoice org Tahunan
 		$allInvoice = array();
 		$inv = $this->jlt->invoiceSubUnitTahunan('2018', $branchId);
 		foreach($inv as $row){
 			$allInvoice[$row['org_id']] = $row;
+		}
+		
+		## all payment org Tahunan
+		$allPayment = array();
+		$payment = $this->jlt->paymentSubUnitTahunan('2018', $branchId);
+		foreach($payment as $row){
+			$allPayment[$row['org_id']] = $row;
 		}
 		
 		// all target
@@ -76,6 +90,12 @@ class Dashboard extends CI_Controller {
 			
 			$dataInvoice[] = @$allInvoice[$org_id]['terhitung'] > 0 ? floatval(@$allInvoice[$org_id]['terhitung']) : null;
 			$dataInvoiceOrg[$org_id] = @$allInvoice[$org_id]['terhitung'] > 0 ? floatval(@$allInvoice[$org_id]['terhitung']) : null;
+			
+			$dataAgreement[] = @$allAgrement[$org_id]['terhitung'] > 0 ? floatval(@$allAgrement[$org_id]['terhitung']) : null;
+			$dataAgreementOrg[$org_id] = @$allAgrement[$org_id]['terhitung'] > 0 ? floatval(@$allAgrement[$org_id]['terhitung']) : null;
+			
+			$dataPayment[] = @$allPayment[$org_id]['terhitung'] > 0 ? floatval(@$allPayment[$org_id]['terhitung']) : null;
+			$dataPaymentOrg[$org_id] = @$allPayment[$org_id]['terhitung'] > 0 ? floatval(@$allPayment[$org_id]['terhitung']) : null;
 		}
 		
 		$data['categoriesStruktur'] = @$categoriesStruktur;
@@ -87,11 +107,28 @@ class Dashboard extends CI_Controller {
 			'name' => 'Invoice',
 			'data' => $dataInvoice,
 		);
+		$data['seriesReport'][] = array(
+			'name' => 'Agreement',
+			'data' => $dataAgreement,
+		);
+		$data['seriesReport'][] = array(
+			'name' => 'Payment',
+			'data' => $dataPayment,
+		);
 		
 		$data['dataInvoiceOrg'] = @$dataInvoiceOrg;
+		$data['dataAgreementOrg'] = @$dataAgreementOrg;
+		$data['dataPaymentOrg'] = @$dataPaymentOrg;
 		#########################################################################################################
 		#########################################################################################################
 		
+		
+		## all Agreement bulanan
+		$allInvoiceBulanan = array();
+		$agreement = $this->jlt->agreementUnitBulanan('2018', $branchId);
+		foreach($agreement as $row){
+			$allAgrementBulanan[$row['bulan']] = @$row['terhitung'] > 0 ? floatval(@$row['terhitung']) : null;
+		}
 		
 		## all invoice bulanan
 		$allInvoiceBulanan = array();
@@ -100,10 +137,19 @@ class Dashboard extends CI_Controller {
 			$allInvoiceBulanan[$row['bulan']] = @$row['terhitung'] > 0 ? floatval(@$row['terhitung']) : null;
 		}
 		
+		## all payment bulanan
+		$allInvoiceBulanan = array();
+		$payment = $this->jlt->paymentUnitBulanan('2018', $branchId);
+		foreach($payment as $row){
+			$allPaymentBulanan[$row['bulan']] = @$row['terhitung'] > 0 ? floatval(@$row['terhitung']) : null;
+		}
+		
 		## target
 		for($i=1; $i<=12; $i++){
 			$categoriesBulanan[] = date('M',strtotime($tahun.'/'.$i.'/01'));
 			$invoiceBulanan[] = @$allInvoiceBulanan[$i];
+			$agreementBulanan[] = @$allAgrementBulanan[$i];
+			$paymentBulanan[] = @$allPaymentBulanan[$i];
 		}
 		ksort($targetBulanan);
 		$allTargetBulanan = array();
@@ -119,12 +165,16 @@ class Dashboard extends CI_Controller {
 			'data' => $allTargetBulanan,
 		);
 		$data['seriesDataTargetBulanan'][] = array(
-			'name' => 'penerimaan',
-			'data' => $allPenerimaanBulanan,
+			'name' => 'Payment',
+			'data' => $paymentBulanan,
 		);
 		$data['seriesDataTargetBulanan'][] = array(
 			'name' => 'Invoice',
 			'data' => $invoiceBulanan,
+		);
+		$data['seriesDataTargetBulanan'][] = array(
+			'name' => 'Agreement',
+			'data' => $agreementBulanan,
 		);
 		
 		
@@ -145,6 +195,7 @@ class Dashboard extends CI_Controller {
 			$targetOrg[] = @$dataTargetOrg[$org_id];
 			$targetBulanOrg[] = @$targetBulanIni[$org_id];
 			$invoiceBulananOrg[] = @$allInvoice[$org_id]['terhitung'] > 0 ? floatval(@$allInvoice[$org_id]['terhitung']) : null;
+			$agreementBulananOrg[] = @$allAgrement[$org_id]['terhitung'] > 0 ? floatval(@$allAgrement[$org_id]['terhitung']) : null;
 		}
 		$data['allStruktur'] = @$allStruktur;
 		$data['dataTargetOrg'] = @$dataTargetOrg;
@@ -154,7 +205,16 @@ class Dashboard extends CI_Controller {
 		#########################################################################################################
 		#########################################################################################################
 		
-		## invice org bulanan
+		## agreement org bulanan
+		$allAgrementOrgBulanan = array();
+		$agreement = $this->jlt->agreementSubUnitBulanan('2018', $branchId);
+		foreach($agreement as $row){
+			$org_id = $row['org_id'];
+			$allAgrementOrgBulanan[$org_id][$row['bulan']] = $row['terhitung'];
+		}
+		$data['allAgrementOrgBulanan'] = $allAgrementOrgBulanan;
+		
+		## invoice org bulanan
 		$allInvoiceOrgBulanan = array();
 		$inv = $this->jlt->invoiceSubUnitBulanan('2018', $branchId);
 		foreach($inv as $row){
@@ -162,6 +222,15 @@ class Dashboard extends CI_Controller {
 			$allInvoiceOrgBulanan[$org_id][$row['bulan']] = $row['terhitung'];
 		}
 		$data['allInvoiceOrgBulanan'] = $allInvoiceOrgBulanan;
+		
+		## payment org bulanan
+		$allInvoiceOrgBulanan = array();
+		$payment = $this->jlt->paymentSubUnitBulanan('2018', $branchId);
+		foreach($payment as $row){
+			$org_id = $row['org_id'];
+			$allPaymentOrgBulanan[$org_id][$row['bulan']] = $row['terhitung'];
+		}
+		$data['allPaymentOrgBulanan'] = $allPaymentOrgBulanan;
 		
 		## invoice 
 		// print_r($categoriesStruktur);
