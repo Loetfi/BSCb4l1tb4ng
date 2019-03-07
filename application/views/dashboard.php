@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class="col-lg-3 col-xs-6"> 
 			<!-- small box -->
-			<div class="small-box bg-aqua">
+			<div class="small-box bg-red">
 				<div class="inner">
 					<h2 style="margin: 0; padding: 0; font-weight: bold;">Kontrak</h2>
 					<p style="">Tahun: 2018</p>
@@ -21,29 +21,6 @@
 						<tr>
 							<th>Jumlah</th>
 							<td><?php echo @$jumlah_kontrak; ?></td>
-						</tr>
-						<tr>
-							<th>Nilai IDR</th>
-							<td>asd</td>
-						</tr>
-						<tr>
-							<th>Nilai USD</th>
-							<td>asd</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-3 col-xs-6">
-			<!-- small box -->
-			<div class="small-box bg-green">
-				<div class="inner">
-					<h2 style="margin: 0; padding: 0; font-weight: bold;">Invoice</h2>
-					<p style="">Tahun: 2018</p>
-					<table width="100%">
-						<tr>
-							<th>Jumlah</th>
-							<td>asd</td>
 						</tr>
 						<tr>
 							<th>Nilai IDR</th>
@@ -82,7 +59,30 @@
 		</div>
 		<div class="col-lg-3 col-xs-6">
 			<!-- small box -->
-			<div class="small-box bg-red">
+			<div class="small-box bg-green">
+				<div class="inner">
+					<h2 style="margin: 0; padding: 0; font-weight: bold;">Invoice</h2>
+					<p style="">Tahun: 2018</p>
+					<table width="100%">
+						<tr>
+							<th>Jumlah</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai IDR</th>
+							<td>asd</td>
+						</tr>
+						<tr>
+							<th>Nilai USD</th>
+							<td>asd</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-aqua">
 				<div class="inner">
 					<h2 style="margin: 0; padding: 0; font-weight: bold;">Invoice Terbayar</h2>
 					<p style="">Tahun: 2018</p>
@@ -158,249 +158,6 @@
 			</div>
 		</div>
 		<!-- /.col -->
-	</div>
-	
-	<div class="row">
-		<div class="col-lg-3 col-xs-6">
-			<!-- small box -->
-			<div class="small-box bg-aqua">
-				<div class="inner">
-					<h2 style="margin: 0; padding: 0; font-weight: bold;">Kontrak</h2>
-					<p style="">Tahun: 2018</p>
-					<table width="100%">
-						<tr>
-							<th>Jumlah</th>
-							<td>asd</td>
-						</tr>
-						<tr>
-							<th>Nilai IDR</th>
-							<td>asd</td>
-						</tr>
-						<tr>
-							<th>Nilai USD</th>
-							<td>asd</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-3 col-xs-6">
-			<!-- small box -->
-			<div class="small-box bg-green">
-				<div class="inner">
-					<h2 style="margin: 0; padding: 0; font-weight: bold;">Invoice</h2>
-					<p style="">Tahun: 2018</p>
-					<table width="100%">
-						<tr>
-							<th>Jumlah</th>
-							<td>asd</td>
-						</tr>
-						<tr>
-							<th>Nilai IDR</th>
-							<td>asd</td>
-						</tr>
-						<tr>
-							<th>Nilai USD</th>
-							<td>asd</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-3 col-xs-6">
-			<!-- small box -->
-			<div class="small-box bg-yellow">
-				<div class="inner">
-					<h2 style="margin: 0; padding: 0; font-weight: bold;">Job/LHU</h2>
-					<p style="">Tahun: 2018</p>
-					<table width="100%">
-						<tr>
-							<th>Jumlah</th>
-							<td>asd</td>
-						</tr>
-						<tr>
-							<th>Nilai IDR</th>
-							<td>asd</td>
-						</tr>
-						<tr>
-							<th>Nilai USD</th>
-							<td>asd</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-3 col-xs-6">
-			<!-- small box -->
-			<div class="small-box bg-red">
-				<div class="inner">
-					<h2 style="margin: 0; padding: 0; font-weight: bold;">Invoice Terbayar</h2>
-					<p style="">Tahun: 2018</p>
-					<table width="100%">
-						<tr>
-							<th>Jumlah</th>
-							<td>asd</td>
-						</tr>
-						<tr>
-							<th>Nilai IDR</th>
-							<td>asd</td>
-						</tr>
-						<tr>
-							<th>Nilai USD</th>
-							<td>asd</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-		<!-- ./col -->
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-            <div class="box box-warning">
-                <div class="box-header">
-                    <h3 class="box-title">&nbsp;</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    </div>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <!-- <div id="thisChart2"></div> -->
-					<div id="GrafikTahunanSubUnit"></div>
-				</div>
-			</div>
-			
-			<div class="box box-warning">
-                <div class="box-header">
-                    <h3 class="box-title">&nbsp;</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    </div>
-                </div>
-                <div class="box-body">
-					<div id="GrafikBulananUnit"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-12">
-            <div class="box box-warning">
-                <div class="box-header">
-                    <h3 class="box-title">&nbsp;</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    </div>
-                </div>
-                <div class="box-body" style="height: 800px; overflow-y: scroll; overflow-x: scroll;">
-					<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th rowspan="3">Unit Kerja</th>
-							<th rowspan="3">Target</th>
-							<th rowspan="3">Target Bulan Ini</th>
-							
-							<th colspan="3">Terkontrak</th>
-							<th colspan="2">Potensi</th>
-							<th>INV</th>
-							<th colspan="4">Tealisasi Penerimaan</th>
-							<th>Outstanding INV</th>
-							<th colspan="6">Target Bulanan</th>
-						</tr>
-						<tr>
-							<th rowspan="2">Luncuran</th>
-							<th rowspan="2">RP. M</th>
-							<th rowspan="2">PKT</th>
-							
-							<th rowspan="2">RP. M</th>
-							<th rowspan="2">PKT</th>
-							
-							<th rowspan="2">RP. M</th>
-							
-							<th>Luncuran</th>
-							<th>2018</th>
-							<th>Total</th>
-							<th rowspan="2">%</th>
-							
-							<th rowspan="2">RP. M</th>
-							
-							<?php 
-							$bulanIni = (int)date('m');
-							if ($bulanIni <= 3 ){ 
-								for($i=1; $i<=3; $i++){
-									echo '<th colspan="2">'.date('M',strtotime('2018/'.$i.'/01')).'</th>';
-								}
-							} else {
-								for($i=($bulanIni-2); $i<=$bulanIni; $i++){
-									echo '<th colspan="2">'.date('M',strtotime('2018/'.$i.'/01')).'</th>';
-								}
-							} ?>
-						</tr>
-						<tr>
-							<th>RP. M</th>
-							<th>RP. M</th>
-							<th>RP. M</th>
-							
-							<th>%</th>
-							<th>RP</th>
-							<th>%</th>
-							<th>RP</th>
-							<th>%</th>
-							<th>RP</th>
-							
-						</tr>
-					</thead>
-					<?php 
-					$i=0;
-					foreach($allStruktur as $row){ 
-						$org_id = $row['org_id']; 
-						?>
-						<tr>
-							<td><?php echo 'BLM-'.$row['code']; ?></td>
-							<td align="right"><?php echo @$dataTargetOrg[$org_id] > 0 ? number_format(@$dataTargetOrg[$org_id]) : ''; ?></td>
-							<td align="right"><?php echo @$targetBulanIni[$org_id] > 0 ? number_format(@$targetBulanIni[$org_id]) : ''; ?></td>
-							<td></td>
-							<td><?php echo @$dataAgreementOrg[$org_id] > 0 ? number_format(@$dataAgreementOrg[$org_id],2) : ''; ?></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td><?php echo @$dataInvoiceOrg[$org_id] > 0 ? number_format(@$dataInvoiceOrg[$org_id],2) : ''; ?></td>
-							<td></td>
-							<td><?php echo @$dataPaymentOrg[$org_id] > 0 ? number_format(@$dataPaymentOrg[$org_id],2) : ''; ?></td>
-							<td></td>
-							<?php bscCard(@$dataTargetOrg[$org_id], @$dataPaymentOrg[$org_id]); ?>
-							<td></td>
-							
-							<?php 
-							if ($bulanIni <= 3 ){ 
-								for($i=1; $i<=3; $i++){
-									$thisTarget = @$targetOrgBulanan[$org_id][$i] > 0 ? @$targetOrgBulanan[$org_id][$i] : 1;
-									$thisRealisasi = @$allPaymentOrgBulanan[$org_id][$i];
-									$persen = round($thisRealisasi / $thisTarget * 100,2);
-									
-									echo '<td>'.($persen > 0 ? number_format($persen,2).'%' : '-').'</td>
-									<td>'.(@$thisRealisasi > 0 ? number_format(@$thisRealisasi,2) : '').'</td>';
-								}
-							} else {
-								for($i=($bulanIni-2); $i<=$bulanIni; $i++){
-									$thisTarget = @$targetOrgBulanan[$org_id][$i] > 0 ? @$targetOrgBulanan[$org_id][$i] : 1;
-									$thisRealisasi = @$allPaymentOrgBulanan[$org_id][$i];
-									$persen = round($thisRealisasi / $thisTarget * 100,2);
-									
-									echo '<td>'.($persen > 0 ? number_format($persen,2).'%' : '-').'</td>
-									<td>'.(@$thisRealisasi > 0 ? number_format(@$thisRealisasi,2) : '').'</td>';
-								}
-							}
-							?>
-						</tr>
-					<?php } ?>
-					</table>
-				</div>
-			</div>
-			
-		</div>
 	</div>
 	
 	

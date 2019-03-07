@@ -6,6 +6,7 @@ class Dashboard_model extends CI_Model {
 	public function __construct(){
 		parent::__construct();
 		$this->table = "target";
+        $this->bsc_only = $this->load->database('bsc_only', TRUE);
 	}
 
 	function getIssueGlobalTahunan($tahun='', $branch_id=''){
@@ -46,6 +47,17 @@ class Dashboard_model extends CI_Model {
 		return $resutl;
 	}
 	
+    function highLevel(){
+        $sql = "select * 
+            from global_report_1 
+            where (instansi = 'lemigas' AND tahun='".date('Y')."' AND (jenis='target' OR jenis='realisasi'))
+            OR  (instansi = 'lemigas' AND tahun='". (date('Y')-1) ."' AND jenis='realisasi')
+            OR  (instansi = 'lemigas' AND tahun='". (date('Y')-2) ."' AND jenis='realisasi')
+            ORDER BY tahun, jenis, bulan
+        ";
+        $query = $this->bsc_only->query($sql);
+		return $query->result_array();
+    }
 	
 }
 

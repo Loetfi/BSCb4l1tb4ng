@@ -60,23 +60,53 @@
             <i class="fa fa-dashboard"></i> <span>Dashboard</span> 
           </a>
         </li> 
-       <!--  <li class="treeview">
+        <li id="MenuUnitKerja" class="treeview">
           <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>Layout Options</span>
+            <i class="fa fa-share"></i> <span>Unit Kerja</span>
             <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+            <li id="MenuUnitKerjaLemigas" class="treeview">
+              <a href="#"><i class="fa fa-circle-o"></i> Lemigas
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li id="unitKerjaLemigas-Lemigas"><a href="<?php echo site_url('dashboard/lemigas'); ?>"><i class="fa fa-circle-o"></i> Lemigas</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-1</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-3</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-4</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-5</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-6</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-7</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-8</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-9</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-10</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-circle-o"></i> Tekmira
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-1</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-2</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-3</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-4</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-5</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-6</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-7</a></li>
+              </ul>
+            </li>
           </ul>
         </li>
         
-         -->
+        <li class="header">Data Master</li>
         <li id="menuTarget">
           <a href="<?php echo site_url('master/target'); ?>">
             <i class="fa fa-rocket"></i> <span>Master Target</span>
