@@ -59,6 +59,17 @@ class Dashboard_model extends CI_Model {
 		return $query->result_array();
     }
 	
+	function form_a(){
+        $sql = "select * 
+            from global_report_1 
+            where (instansi = 'lemigas' AND tahun='".date('Y')."' AND (jenis='target' OR jenis='realisasi'))
+            OR  (instansi = 'lemigas' AND tahun='". (date('Y')-1) ."' AND jenis='realisasi')
+            ORDER BY tahun, jenis, bulan
+        ";
+        $query = $this->bsc_only->query($sql);
+		return $query->result_array();
+    }
+	
 }
 
 /* End of file Auth_model.php */
