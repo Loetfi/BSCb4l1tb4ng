@@ -8,14 +8,14 @@ class Dashboard extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->library('form_validation');
-		$this->load->model('auth_model','auth');
-		$this->load->model('Dashboard_model','dash');
-		$this->load->model('Struktur_model','struktur');
-		$this->load->model('Target_model','target');
-		$this->load->model('Jlt_model','jlt');
+		// $this->load->model('auth_model','auth');
+		// $this->load->model('Dashboard_model','dash');
+		// $this->load->model('Struktur_model','struktur');
+		// $this->load->model('Target_model','target');
+		// $this->load->model('Jlt_model','jlt');
 
-		$this->load->model('dashboard/kontrak_model','kontrak');
-		check_login('dashboard');
+		// $this->load->model('dashboard/kontrak_model','kontrak');
+		// check_login('dashboard');
 		
 		$this->pembagi = 1000000000;
 		$this->satuan = ' M';
@@ -581,6 +581,29 @@ class Dashboard extends CI_Controller {
 		$this->load->view('template/footer', $data, FALSE);
         
 	}
+	public function form_c($satKer = 'p3tek'){
+		$data['title'] = 'Table Detail '.strtoupper($satKer).' ('.date('d F Y').')-Form C';
+		$data['page'] = 'form_c';
+		$data['satKer'] = $satKer;
+		
+		$data['pembagi'] = $this->pembagi;
+		$data['satuan'] = $this->satuan;
+		
+        for($i=1; $i<=12; $i++) 
+			$bulanan[] = date('M', strtotime($i.'/20/2019'));
+		$data['bulanan'] = $bulanan;
+		
+		$data['getRekap_form_a'] = $this->getRekap_form_a($satKer);
+		$data['getGrafik_form_a'] = $this->getGrafik_form_a($satKer);
+		$data['getRekap_form_c'] = $this->getRekap_form_c($satKer);
+		$data['pembagi'] = $this->pembagi;
+		$data['satuan'] = $this->satuan;
+		
+		$this->load->view('template/header', $data, FALSE);
+		$this->load->view('template/content', $data, FALSE);
+		$this->load->view('template/footer', $data, FALSE);
+        
+	}
 	
 	function getDataSatker(){
 		$rekap = $this->getRekap_form_b('p3tek');
@@ -618,6 +641,7 @@ class Dashboard extends CI_Controller {
 			$targetSatker = 1980000000;
 			$targetBulan =   400000000;
 			$url 				= 'http://suvisanusi.com/bscp3tek/forma/rekap.php?tahun=2019';
+			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/forma/rekap.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -678,8 +702,11 @@ class Dashboard extends CI_Controller {
 		$data = array();
 		$dataSeries = array();
 		if ($satKer == 'All' || $satKer == 'p3tek'){
+			$AkumulasiRealiasi = null;
+			$AkumulasiRealiasiTahunLalu = null;
 			## p3tek
 			$url 				= 'http://suvisanusi.com/bscp3tek/forma/grafik.php?tahun=2019';
+			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/forma/grafik.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -694,12 +721,21 @@ class Dashboard extends CI_Controller {
 				if (@$dataSatker[$i]['realisasi'] > 0)			@$data['realisasi'][$i-1] 			+= @$dataSatker[$i]['realisasi'];
 				if (@$dataSatker[$i]['nilaiKontrak'] > 0)		@$data['nilaiKontrak'][$i-1] 		+= @$dataSatker[$i]['nilaiKontrak'];
 				if (@$dataSatker[$i]['realiasiTahunLalu'] > 0)	@$data['realiasiTahunLalu'][$i-1] 	+= @$dataSatker[$i]['realiasiTahunLalu'];
+				
+				$AkumulasiRealiasi += @$dataSatker[$i]['realisasi'];
+				@$data['AkumulasiRealiasi'][$i-1] 	+= $AkumulasiRealiasi;
+				
+				$AkumulasiRealiasiTahunLalu += @$dataSatker[$i]['realiasiTahunLalu'];
+				@$data['AkumulasiRealiasiTahunLalu'][$i-1] 	+= $AkumulasiRealiasiTahunLalu;
 			}
 		}
 		
 		if ($satKer == 'All' || $satKer == 'lemigas'){
+			$AkumulasiRealiasi = null;
+			$AkumulasiRealiasiTahunLalu = null;
 			## BLM
 			$url 				= 'http://suvisanusi.com/bscp3tek/forma/grafik.php?tahun=2019';
+			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/forma/grafik.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -714,6 +750,12 @@ class Dashboard extends CI_Controller {
 				if (@$dataSatker[$i]['realisasi'] > 0)			@$data['realisasi'][$i-1] 			+= @$dataSatker[$i]['realisasi'];
 				if (@$dataSatker[$i]['nilaiKontrak'] > 0)		@$data['nilaiKontrak'][$i-1] 		+= @$dataSatker[$i]['nilaiKontrak'];
 				if (@$dataSatker[$i]['realiasiTahunLalu'] > 0)	@$data['realiasiTahunLalu'][$i-1] 	+= @$dataSatker[$i]['realiasiTahunLalu'];
+				
+				$AkumulasiRealiasi += @$dataSatker[$i]['realisasi'];
+				@$data['AkumulasiRealiasi'][$i-1] 	+= $AkumulasiRealiasi;
+				
+				$AkumulasiRealiasiTahunLalu += @$dataSatker[$i]['realiasiTahunLalu'];
+				@$data['AkumulasiRealiasiTahunLalu'][$i-1] 	+= $AkumulasiRealiasiTahunLalu;
 			}
 		}
 		
@@ -723,7 +765,9 @@ class Dashboard extends CI_Controller {
 		$dataSeries[] = array( 'name' => 'target', 'data' => @$data['target'] );
 		$dataSeries[] = array( 'name' => 'potensi', 'data' => @$data['potensi'] );
 		$dataSeries[] = array( 'name' => 'realisasi', 'data' => @$data['realisasi'] );
+		$dataSeries[] = array( 'name' => 'Akumulasi Realiasi', 'data' => @$data['AkumulasiRealiasi'] );
 		$dataSeries[] = array( 'name' => 'realiasi TahunLalu', 'data' => @$data['realiasiTahunLalu'] );
+		$dataSeries[] = array( 'name' => 'realiasi Akumulasi Lalu', 'data' => @$data['AkumulasiRealiasiTahunLalu'] );
 		
 		$dataReturn = array(
 			'table' => @$data,
@@ -738,6 +782,7 @@ class Dashboard extends CI_Controller {
 		
 		if ($satker != ""){
 			$url 				= 'http://suvisanusi.com/bscp3tek/formb/table.php?tahun=2019';
+			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -755,6 +800,35 @@ class Dashboard extends CI_Controller {
 					'Sisa(%)'			=> null,
 				);
 			}
+		}
+		return $dataReturn;
+	}
+	function getRekap_form_c($satker){
+		$dataReturn = array();
+		$pembagi = $this->pembagi;
+		$satuan = $this->satuan;
+		
+		if ($satker != ""){
+			$arrKp3 = array();
+			$url 				= 'http://suvisanusi.com/bscp3tek/formb/table.php?tahun=2019';
+			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formc/table.php?tahun=2019';
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow 			= @$responRow['data'];
+			
+			foreach($dataRow as $row){
+				$kp3 = strtoupper($row['kp3']);
+				$bulan = (int)$row['bulan'];
+				if(!in_array($kp3, $arrKp3))
+					$arrKp3[] = $kp3;
+				
+				$dataTable[$kp3][$bulan] = $row;
+			}
+			$dataReturn = array(
+				'dataTable' => $dataTable,
+				'arrKp3' 	=> $arrKp3,
+			);
 		}
 		return $dataReturn;
 	}
