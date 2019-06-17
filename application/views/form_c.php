@@ -172,9 +172,9 @@
 
 <script>
 $(function(){
-	$('#MenuUnitKerja').addClass('active').addClass('menu-open');
-	$('#MenuUnitKerjaLemigas').addClass('active').addClass('menu-open');
-	$('#unitKerjaLemigas-Lemigas').addClass('active');
+	// $('#MenuUnitKerja').addClass('active').addClass('menu-open');
+	// $('#MenuUnitKerjaLemigas').addClass('active').addClass('menu-open');
+	// $('#unitKerjaLemigas-Lemigas').addClass('active');
 
 $('#satKer').change(function(){
 	val = $(this).val();
