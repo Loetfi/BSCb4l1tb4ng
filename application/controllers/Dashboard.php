@@ -810,7 +810,7 @@ class Dashboard extends CI_Controller {
 		
 		if ($satker != ""){
 			$arrKp3 = array();
-			$url 				= 'http://suvisanusi.com/bscp3tek/formb/table.php?tahun=2019';
+			$url 				= 'http://suvisanusi.com/bscp3tek/formc/table.php?tahun=2019';
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formc/table.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
