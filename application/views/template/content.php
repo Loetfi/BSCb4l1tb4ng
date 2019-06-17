@@ -129,6 +129,10 @@
             <i class="fa fa-users"></i> <span>Pengguna</span> 
           </a>
         </li>
+		<li class="header">Form Laporan</li>
+        <li class=""><a href="<?php echo site_url('dashboard/form_a'); ?>"><span>Form A</span></a></li>
+        <li class=""><a href="<?php echo site_url('dashboard/form_b'); ?>"><span>Form B</span></a></li>
+        <li class=""><a href="<?php echo site_url('dashboard/form_c'); ?>"><span>Form C</span></a></li>
 
       </ul>
     </section>
