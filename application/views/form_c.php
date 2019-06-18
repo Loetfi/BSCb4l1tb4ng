@@ -150,7 +150,7 @@
 									if (@$dataTable[$kp3][$bulan]['realisasi'] > 0){
 										$nilai = number_format(@$dataTable[$kp3][$bulan]['realisasi'] / $pembagi ,4);
 										$persen = number_format(rand(1,80),2);
-										$akumulasi[$kp3] += @$dataTable[$kp3][$bulan]['realisasi'];
+										@$akumulasi[$kp3] += @$dataTable[$kp3][$bulan]['realisasi'];
 									}
 								
 								?>
