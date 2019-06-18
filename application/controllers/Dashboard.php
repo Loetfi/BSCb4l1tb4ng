@@ -606,10 +606,10 @@ class Dashboard extends CI_Controller {
 	}
 	
 	function getDataSatker(){
-		$rekap = $this->getRekap_form_b('p3tek');
+		$rekap = $this->getRekap_form_b('tekmira');
 		print_r($rekap);
 		echo "\n";
-		echo "#############################################";
+		// echo "#############################################";
 		die();
 		$rekap = $this->getRekap_form_a();
 		print_r($rekap);
@@ -694,7 +694,7 @@ class Dashboard extends CI_Controller {
 			'persenTarget'		=> $persenTarget.' %',
 			'realisasi' 		=> number_format(@$realisasi/$pembagi,2).$satuan,
 			'persenRealisasi'	=> $persenBulanIni.' %',
-			'dataSatker'		=> $dataSatker
+			'dataSatker'		=> @$dataSatker
 		);
 		return $dataReturn;
 	}
@@ -780,7 +780,7 @@ class Dashboard extends CI_Controller {
 		$pembagi = $this->pembagi;
 		$satuan = $this->satuan;
 		
-		if ($satker != ""){
+		if ($satker == "p3tek" || $satker == "lemigas"){
 			$url 				= 'http://suvisanusi.com/bscp3tek/formb/table.php?tahun=2019';
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'GET';
@@ -792,6 +792,29 @@ class Dashboard extends CI_Controller {
 				$dataReturn[] = array(
 					'Unit Kerja'		=> $row['kp3'],
 					'Target'			=> $row['target'],
+					'Target Bulan Ini'	=> $row['targetBulanIni'],
+					'Target (%)'		=> null,
+					'Realisasi'			=> number_format($realisasiKp3/$pembagi,2).$satuan,
+					'Realisasi(%)'		=> null,
+					'Sisa'				=> null,
+					'Sisa(%)'			=> null,
+				);
+			}
+		}
+		else if ($satker == "tekmira"){
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_kiri';
+			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
+			$method 			= 'POST';
+			$responsedet 		= ngeCurl($url, array('tahun' => 2019), $method);
+			$responsedet['response'] = str_replace('{"kp3":"PEMANFAATAN ASET","target":"700000000","targetBulanIni":0,"realisasi":"261.468.000"}','',$responsedet['response']);
+			$responsedet['response'] = str_replace('},]}','}]}',$responsedet['response']);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow 			= @$responRow['data'];
+			foreach($dataRow as $row){
+				$realisasiKp3 	= str_replace('.','',@$row['realisasi']);
+				$dataReturn[] = array(
+					'Unit Kerja'		=> $row['kp3'],
+					'Target'			=> number_format($row['target']/$pembagi,2).$satuan,
 					'Target Bulan Ini'	=> $row['targetBulanIni'],
 					'Target (%)'		=> null,
 					'Realisasi'			=> number_format($realisasiKp3/$pembagi,2).$satuan,

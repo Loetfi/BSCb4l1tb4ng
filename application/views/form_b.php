@@ -18,6 +18,7 @@
 			<select class="form-control" id="satKer">
 				<option value="p3tek" <?php echo $satKer == 'p3tek' ? 'selected' : ''; ?>>P3TEK</option>
 				<option value="lemigas" <?php echo $satKer == 'lemigas' ? 'selected' : ''; ?>>LEMIGAS</option>
+				<option value="tekmira" <?php echo $satKer == 'tekmira' ? 'selected' : ''; ?>>tekMIRA</option>
 			</select>
 			<br>
 		</div>
@@ -104,7 +105,7 @@
 					</div>
 				</div>
 				<!-- /.box-header -->
-				<div class="box-body">
+				<div class="box-body" style="height: 100%; overflow-y: auto; overflow-x: auto;">
 					<table class="table table-bordered">
 						<tr>
 							<th rowspan="2">Unit Kerja</th>
@@ -114,11 +115,11 @@
 							<th colspan="2">Sisa</th>
 						</tr>
 						<tr>
-							<th>Rp M</th>
+							<th>Rp.M</th>
 							<th>%</th>
-							<th>Rp M</th>
+							<th>Rp.M</th>
 							<th>%</th>
-							<th>Rp M</th>
+							<th>Rp.M</th>
 							<th>%</th>
 						</tr>
 						<?php foreach($getRekap_form_b as $row){ ?>
