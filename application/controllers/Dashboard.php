@@ -8,6 +8,22 @@ class Dashboard extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->library('form_validation');
+		// $this->load->model('auth_model','auth');
+		// $this->load->model('Dashboard_model','dash');
+		// $this->load->model('Struktur_model','struktur');
+		// $this->load->model('Target_model','target');
+		// $this->load->model('Jlt_model','jlt');
+
+		// $this->load->model('dashboard/kontrak_model','kontrak');
+		// check_login('dashboard');
+		
+		$this->pembagi = 1000000000;
+		$this->satuan = ' M';
+	}
+
+
+	public function index(){
+		$this->load->library('form_validation');
 		$this->load->model('auth_model','auth');
 		$this->load->model('Dashboard_model','dash');
 		$this->load->model('Struktur_model','struktur');
@@ -17,12 +33,6 @@ class Dashboard extends CI_Controller {
 		$this->load->model('dashboard/kontrak_model','kontrak');
 		check_login('dashboard');
 		
-		$this->pembagi = 1000000000;
-		$this->satuan = ' M';
-	}
-
-
-	public function index(){
 		$data = array(
 			'title' => 'Dashboard' ,
 			'page'	=> 'dashboard',
@@ -252,6 +262,15 @@ class Dashboard extends CI_Controller {
 	}
 	
     public function lemigas(){
+		$this->load->library('form_validation');
+		$this->load->model('auth_model','auth');
+		$this->load->model('Dashboard_model','dash');
+		$this->load->model('Struktur_model','struktur');
+		$this->load->model('Target_model','target');
+		$this->load->model('Jlt_model','jlt');
+
+		$this->load->model('dashboard/kontrak_model','kontrak');
+		check_login('dashboard');
 		$data = array(
 			'title' => 'Dashboard Lemigas' ,
 			'page'	=> 'dashboard_lemigas',
