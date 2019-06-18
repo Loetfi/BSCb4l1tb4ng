@@ -110,8 +110,8 @@
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Invoice</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Realisasi</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Sisa Kontrak</th>
-							<th rowspan="3" style="vertical-align: middle; text-align:center;">Capaian Realisasi</th>
-							<th colspan="36"style="vertical-align: middle; text-align:center; width: 2400px;">Target Bulan</th>
+							<th rowspan="3" style="vertical-align: middle; text-align:center;">Capaian Realisasi <br>%</th>
+							<th colspan="36"style="vertical-align: middle; text-align:center; width: 2400px;">Realisasi Bulanan</th>
 						</tr>
 						<tr>
 							<?php for($i=1; $i<=12; $i++){ ?>
@@ -128,7 +128,7 @@
 						</thead>
 						<tbody>
 							<?php 
-							$akumulasi = 0;
+							// $akumulasi = 0;
 							$dataTable = $getRekap_form_c['dataTable'];
 							$arrKp3 = $getRekap_form_c['arrKp3'];
 							for($i=0; $i<count($arrKp3); $i++){ 
@@ -148,15 +148,15 @@
 									$nilai = '-';
 									$persen = '-';
 									if (@$dataTable[$kp3][$bulan]['realisasi'] > 0){
-										$nilai = number_format(@$dataTable[$kp3][$bulan]['realisasi'] / $pembagi ,2);
+										$nilai = number_format(@$dataTable[$kp3][$bulan]['realisasi'] / $pembagi ,4);
 										$persen = number_format(rand(1,80),2);
-										$akumulasi += @$dataTable[$kp3][$bulan]['realisasi'];
+										$akumulasi[$kp3] += @$dataTable[$kp3][$bulan]['realisasi'];
 									}
 								
 								?>
 								<td align="right"><?php echo @$persen; ?></td>
 								<td align="right"><?php echo @$nilai; ?></td>
-								<td align="right"><?php echo number_format(@$akumulasi / $pembagi,2); ?></td>
+								<td align="right"><?php echo number_format(@$akumulasi[$kp3] / $pembagi,4); ?></td>
 								<?php } ?>
 							</tr>
 							<?php } ?>

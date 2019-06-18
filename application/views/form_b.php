@@ -111,7 +111,7 @@
 							<th rowspan="2">Unit Kerja</th>
 							<th rowspan="2">Target</th>
 							<th colspan="2">Target Bulan Ini</th>
-							<th colspan="2">Realisasi</th>
+							<th colspan="2">Realisasi s.d <?php echo date('d m Y'); ?></th>
 							<th colspan="2">Sisa</th>
 						</tr>
 						<tr>
@@ -175,7 +175,7 @@
 							<?php } ?>
 						</tr>
 						<tr>
-							<th>Realisasi</th>
+							<th>Realisasi Penerimaan</th>
 							<?php for($i=1; $i<=12; $i++){ ?>
 							<td align="right"><?php echo @$getGrafik_form_a['table']['realisasi'][$i-1] > 0 ? number_format($getGrafik_form_a['table']['realisasi'][$i-1]/$pembagi,2).$satuan : '-'; ?></td>
 							<?php } ?>
@@ -187,7 +187,7 @@
 							<?php } ?>
 						</tr>
 						<tr>
-							<th>Realisasi</th>
+							<th>Realisasi Tahun Lalu</th>
 							<?php for($i=1; $i<=12; $i++){ ?>
 							<td align="right"><?php echo @$getGrafik_form_a['table']['realiasiTahunLalu'][$i-1] > 0 ? number_format($getGrafik_form_a['table']['realiasiTahunLalu'][$i-1]/$pembagi,2).$satuan : '-'; ?></td>
 							<?php } ?>
