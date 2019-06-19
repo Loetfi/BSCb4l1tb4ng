@@ -18,7 +18,10 @@ class Dashboard extends CI_Controller {
 		check_login('dashboard');
 		
 		$this->pembagi = 1000000000;
+		// $this->pembagi = 1;
 		$this->satuan = ' M';
+		$this->thisYear = date('Y');
+		$this->lastYear = date('Y')-1;
 	}
 
 
@@ -649,7 +652,7 @@ class Dashboard extends CI_Controller {
 			## p3tek
 			$targetSatker = 1980000000;
 			$targetBulan =   400000000;
-			$url 				= 'http://suvisanusi.com/bscp3tek/forma/rekap.php?tahun=2019';
+			$url 				= 'http://suvisanusi.com/bscp3tek/forma/rekap.php?tahun='.$this->thisYear;
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/forma/rekap.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
@@ -673,8 +676,8 @@ class Dashboard extends CI_Controller {
 			## BLM
 			$targetSatker = 187333000000;
 			$targetBulan =   27000000000;
-			$url 				= 'http://34.80.224.123/json/payment?year=2019&group=organization&time=yearly&source=organization';
-			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/forma/rekap.php?tahun=2019';
+			
+			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=organization&time=yearly&source=organization';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -713,13 +716,14 @@ class Dashboard extends CI_Controller {
 		return $dataReturn;
 	}
 	function getGrafik_form_a($satKer = 'All'){
+		$AkumulasiRealiasi = null;
+		$AkumulasiRealiasiTahunLalu = null;
+		
 		$data = array();
 		$dataSeries = array();
 		if ($satKer == 'All' || $satKer == 'p3tek'){
-			$AkumulasiRealiasi = null;
-			$AkumulasiRealiasiTahunLalu = null;
 			## p3tek
-			$url 				= 'http://suvisanusi.com/bscp3tek/forma/grafik.php?tahun=2019';
+			$url 				= 'http://suvisanusi.com/bscp3tek/forma/grafik.php?tahun='.$this->thisYear;
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/forma/grafik.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
@@ -730,11 +734,11 @@ class Dashboard extends CI_Controller {
 				$dataSatker[$bulan] = $row;
 			}
 			for($i=1; $i<=12; $i++){
-				if (@$dataSatker[$i]['target'] > 0) 			{ @$data['target'][$i-1] 				+= @$dataSatker[$i]['target'];            } else { @$data['target'][$i-1]				= null; }
-				if (@$dataSatker[$i]['potensi'] > 0)			{ @$data['potensi'][$i-1] 				+= @$dataSatker[$i]['potensi'];           } else { @$data['potensi'][$i-1]				= null; }
-				if (@$dataSatker[$i]['realisasi'] > 0)			{ @$data['realisasi'][$i-1] 			+= @$dataSatker[$i]['realisasi'];         } else { @$data['realisasi'][$i-1]			= null; }
-				if (@$dataSatker[$i]['nilaiKontrak'] > 0)		{ @$data['nilaiKontrak'][$i-1] 			+= @$dataSatker[$i]['nilaiKontrak'];      } else { @$data['nilaiKontrak'][$i-1]			= null; }
-				if (@$dataSatker[$i]['realiasiTahunLalu'] > 0)	{ @$data['realiasiTahunLalu'][$i-1] 	+= @$dataSatker[$i]['realiasiTahunLalu']; } else { @$data['realiasiTahunLalu'][$i-1]	= null; }
+				if (@$dataSatker[$i]['target'] > 0) 			{ @$data['target'][$i-1] 				+= @$dataSatker[$i]['target'];            } else { @$data['target'][$i-1]				+= null; }
+				if (@$dataSatker[$i]['potensi'] > 0)			{ @$data['potensi'][$i-1] 				+= @$dataSatker[$i]['potensi'];           } else { @$data['potensi'][$i-1]				+= null; }
+				if (@$dataSatker[$i]['realisasi'] > 0)			{ @$data['realisasi'][$i-1] 			+= @$dataSatker[$i]['realisasi'];         } else { @$data['realisasi'][$i-1]			+= null; }
+				if (@$dataSatker[$i]['nilaiKontrak'] > 0)		{ @$data['nilaiKontrak'][$i-1] 			+= @$dataSatker[$i]['nilaiKontrak'];      } else { @$data['nilaiKontrak'][$i-1]			+= null; }
+				if (@$dataSatker[$i]['realiasiTahunLalu'] > 0)	{ @$data['realiasiTahunLalu'][$i-1] 	+= @$dataSatker[$i]['realiasiTahunLalu']; } else { @$data['realiasiTahunLalu'][$i-1]	+= null; }
 				
 				$AkumulasiRealiasi += @$dataSatker[$i]['realisasi'];
 				@$data['AkumulasiRealiasi'][$i-1] 	+= $AkumulasiRealiasi;
@@ -745,10 +749,19 @@ class Dashboard extends CI_Controller {
 		}
 		
 		if ($satKer == 'All' || $satKer == 'lemigas'){
-			$AkumulasiRealiasi = null;
-			$AkumulasiRealiasiTahunLalu = null;
-			## BLM
-			$url 				= 'http://34.80.224.123/json/payment?year=2019&group=group&time=monthly&source=organization';
+			## kontrak
+			$url 				= 'http://34.80.224.123/json/agreement?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow 			= @$responRow['data'];
+			foreach($dataRow as $row){
+				$bulan = (int)@$row['month'];
+				$KontrakSatker[$bulan] = @$row;
+			}
+			
+			## Pencapaian this year
+			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/forma/grafik.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
@@ -758,21 +771,32 @@ class Dashboard extends CI_Controller {
 				$bulan = (int)@$row['month'];
 				$dataSatker[$bulan] = @$row;
 			}
+			## Pencapaian last year
+			$url 				= 'http://34.80.224.123/json/payment?year='.$this->lastYear.'&group=group&time=monthly&source=organization';
+			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/forma/grafik.php?tahun=2019';
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow 			= @$responRow['data'];
+			foreach($dataRow as $row){
+				$bulan = (int)@$row['month'];
+				$dataLastYear[$bulan] = @$row;
+			}
+			
 			for($i=1; $i<=12; $i++){
-				if (@$dataSatker[$i]['target'] > 0) 			{ @$data['target'][$i-1] 				+= @$dataSatker[$i]['target'];            } else { @$data['target'][$i-1]				= null; }
-				if (@$dataSatker[$i]['potensi'] > 0)			{ @$data['potensi'][$i-1] 				+= @$dataSatker[$i]['potensi'];           } else { @$data['potensi'][$i-1]				= null; }
-				if (@$dataSatker[$i]['value_casted'] > 0)		{ @$data['realisasi'][$i-1] 			+= @$dataSatker[$i]['value_casted'];      } else { @$data['realisasi'][$i-1]			= null; }
-				if (@$dataSatker[$i]['nilaiKontrak'] > 0)		{ @$data['nilaiKontrak'][$i-1] 			+= @$dataSatker[$i]['nilaiKontrak'];      } else { @$data['nilaiKontrak'][$i-1]			= null; }
-				if (@$dataSatker[$i]['realiasiTahunLalu'] > 0)	{ @$data['realiasiTahunLalu'][$i-1] 	+= @$dataSatker[$i]['realiasiTahunLalu']; } else { @$data['realiasiTahunLalu'][$i-1]	= null; }
+				if (@$dataSatker[$i]['target'] > 0) 			{ @$data['target'][$i-1] 				+= @$dataSatker[$i]['target'];            } else { @$data['target'][$i-1]				+= null; }
+				if (@$dataSatker[$i]['potensi'] > 0)			{ @$data['potensi'][$i-1] 				+= @$dataSatker[$i]['potensi'];           } else { @$data['potensi'][$i-1]				+= null; }
+				if (@$dataSatker[$i]['value_casted'] > 0)		{ @$data['realisasi'][$i-1] 			+= @$dataSatker[$i]['value_casted'];      } else { @$data['realisasi'][$i-1]			+= null; }
+				if (@$KontrakSatker[$i]['value_casted'] > 0)	{ @$data['nilaiKontrak'][$i-1] 			+= @$KontrakSatker[$i]['value_casted'];   } else { @$data['nilaiKontrak'][$i-1]			+= null; }
+				if (@$dataLastYear[$i]['value_casted'] > 0)		{ @$data['realiasiTahunLalu'][$i-1] 	+= @$dataLastYear[$i]['value_casted'];    } else { @$data['realiasiTahunLalu'][$i-1]	+= null; }
 				
 				$AkumulasiRealiasi += @$dataSatker[$i]['value_casted'];
 				@$data['AkumulasiRealiasi'][$i-1] 	+= $AkumulasiRealiasi;
 				
-				$AkumulasiRealiasiTahunLalu += @$dataSatker[$i]['realiasiTahunLalu'];
+				$AkumulasiRealiasiTahunLalu += @$dataLastYear[$i]['value_casted'];
 				@$data['AkumulasiRealiasiTahunLalu'][$i-1] 	+= $AkumulasiRealiasiTahunLalu;
 			}
 		}
-		
 		
 		
 		## olah grafik
@@ -796,7 +820,7 @@ class Dashboard extends CI_Controller {
 		$satuan = $this->satuan;
 		
 		if ($satker == "p3tek"){
-			$url 				= 'http://suvisanusi.com/bscp3tek/formb/table.php?tahun=2019';
+			$url 				= 'http://suvisanusi.com/bscp3tek/formb/table.php?tahun='.$this->thisYear;
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
@@ -817,7 +841,7 @@ class Dashboard extends CI_Controller {
 			}
 		}
 		else if ($satker == "lemigas"){
-			$url 				= 'http://34.80.224.123/json/payment?year=2019&group=group&time=monthly&source=organization';
+			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
@@ -852,7 +876,7 @@ class Dashboard extends CI_Controller {
 			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_kiri';
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'POST';
-			$responsedet 		= ngeCurl($url, array('tahun' => 2019), $method);
+			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
 			$responsedet['response'] = str_replace('{"kp3":"PEMANFAATAN ASET","target":"700000000","targetBulanIni":0,"realisasi":"261.468.000"}','',$responsedet['response']);
 			$responsedet['response'] = str_replace('},]}','}]}',$responsedet['response']);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -880,13 +904,22 @@ class Dashboard extends CI_Controller {
 		
 		if ($satker == "p3tek"){
 			$arrKp3 = array();
-			$url 				= 'http://suvisanusi.com/bscp3tek/formc/table.php?tahun=2019';
+			$url 				= 'http://suvisanusi.com/bscp3tek/formc/table.php?tahun='.$this->thisYear;
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formc/table.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
 			$dataRow 			= @$responRow['data'];
 			
+			foreach($dataRow as $row){
+				$kp3 = strtoupper($row['kp3']);
+				if(!in_array($kp3, $arrKp3))
+					$arrKp3[] = $kp3;
+				
+				@$tableRekap[$kp3]['terkontrak'] 	+= $row['realisasiKontrak'];
+				@$tableRekap[$kp3]['inv'] 			+= $row['invoice'];
+				@$tableRekap[$kp3]['realisasi'] 	+= $row['realisasi'];
+			}
 			foreach($dataRow as $row){
 				$kp3 = strtoupper($row['kp3']);
 				$bulan = (int)$row['bulan'];
@@ -896,19 +929,60 @@ class Dashboard extends CI_Controller {
 				$dataTable[$kp3][$bulan] = $row;
 			}
 			$dataReturn = array(
+				'tableRekap' => $tableRekap,
 				'dataTable' => $dataTable,
 				'arrKp3' 	=> $arrKp3,
 			);
 		}
 		else if ($satker == "lemigas"){
+			
 			$arrKp3 = array();
-			$url 				= 'http://34.80.224.123/json/payment?year=2019&group=group&time=monthly&source=organization';
-			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formc/table.php?tahun=2019';
+			## rekap kontrak
+			$url 				= 'http://34.80.224.123/json/agreement?year='.$this->thisYear.'&group=group&time=yearly&source=organization';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
-			$dataRow 			= @$responRow['data'];
+			$dataRow			= $responRow['data'];
+			foreach($dataRow as $row){
+				$kp3 = strtoupper($row['name']);
+				if(!in_array($kp3, $arrKp3))
+					$arrKp3[] = $kp3;
+				
+				$tableRekap[$kp3]['terkontrak'] = @$row['value_casted'];
+			}
 			
+			## rekap invoice
+			$url 				= 'http://34.80.224.123/json/issue?year='.$this->thisYear.'&group=group&time=yearly&source=organization';
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow			= $responRow['data'];
+			foreach($dataRow as $row){
+				$kp3 = strtoupper($row['name']);
+				if(!in_array($kp3, $arrKp3))
+					$arrKp3[] = $kp3;
+				
+				$tableRekap[$kp3]['inv'] = @$row['value_casted'];
+			}
+			## rekap invoice
+			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=group&time=yearly&source=organization';
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow			= $responRow['data'];
+			foreach($dataRow as $row){
+				$kp3 = strtoupper($row['name']);
+				if(!in_array($kp3, $arrKp3))
+					$arrKp3[] = $kp3;
+				
+				$tableRekap[$kp3]['realisasi'] = @$row['value_casted'];
+			}
+			
+			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow			= $responRow['data'];
 			foreach($dataRow as $row){
 				$kp3 = strtoupper($row['name']);
 				$bulan = (int)$row['month'];
@@ -924,6 +998,7 @@ class Dashboard extends CI_Controller {
 				);
 			}
 			$dataReturn = array(
+				'tableRekap' => @$tableRekap,
 				'dataTable' => $dataTable,
 				'arrKp3' 	=> $arrKp3,
 			);

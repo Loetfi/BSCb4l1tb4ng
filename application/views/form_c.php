@@ -106,10 +106,10 @@
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">No</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Unit Kerja</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Target</th>
-							<th rowspan="3" style="vertical-align: middle; text-align:center;">Terkontrak</th>
-							<th rowspan="3" style="vertical-align: middle; text-align:center;">Invoice</th>
-							<th rowspan="3" style="vertical-align: middle; text-align:center;">Realisasi</th>
-							<th rowspan="3" style="vertical-align: middle; text-align:center;">Sisa Kontrak</th>
+							<th rowspan="3" style="vertical-align: middle; text-align:center;">Terkontrak [Rp.M]</th>
+							<th rowspan="3" style="vertical-align: middle; text-align:center;">Invoice [Rp.M]</th>
+							<th rowspan="3" style="vertical-align: middle; text-align:center;">Realisasi [Rp.M]</th>
+							<th rowspan="3" style="vertical-align: middle; text-align:center;">Sisa Kontrak [Rp.M]</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Capaian Realisasi <br>%</th>
 							<th colspan="36"style="vertical-align: middle; text-align:center; width: 2400px;">Realisasi Bulanan</th>
 						</tr>
@@ -129,6 +129,7 @@
 						<tbody>
 							<?php 
 							// $akumulasi = 0;
+							$tableRekap = $getRekap_form_c['tableRekap'];
 							$dataTable = $getRekap_form_c['dataTable'];
 							$arrKp3 = $getRekap_form_c['arrKp3'];
 							for($i=0; $i<count($arrKp3); $i++){ 
@@ -138,11 +139,11 @@
 								<td><?php echo $i+1; ?></td>
 								<td><?php echo $kp3; ?></td>
 								<td>Target</td>
-								<td>Terkontrak</td>
-								<td>Invoice</td>
-								<td>Realisasi</td>
-								<td>Sisa Kontrak</td>
-								<td>Capaian Realisasi</td>
+								<td align="right"><?php echo number_format(@$tableRekap[$kp3]['terkontrak'] / $pembagi ,4); ?></td>
+								<td align="right"><?php echo number_format(@$tableRekap[$kp3]['inv'] / $pembagi ,4); ?></td>
+								<td align="right"><?php echo number_format(@$tableRekap[$kp3]['realisasi'] / $pembagi ,4); ?></td>
+								<td align="right"><?php echo number_format(((@$tableRekap[$kp3]['terkontrak'] - @$tableRekap[$kp3]['realisasi']) / $pembagi),4); ?></td>
+								<td align="right"><?php echo number_format((@$tableRekap[$kp3]['realisasi'] / @$tableRekap[$kp3]['terkontrak'] * 100),2) ?></td>
 								<?php 
 								for($bulan=1; $bulan<=12; $bulan++){ 
 									$nilai = '-';
