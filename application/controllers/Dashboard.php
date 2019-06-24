@@ -877,8 +877,8 @@ class Dashboard extends CI_Controller {
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'POST';
 			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
-			$responsedet['response'] = str_replace('{"kp3":"PEMANFAATAN ASET","target":"700000000","targetBulanIni":0,"realisasi":"261.468.000"}','',$responsedet['response']);
-			$responsedet['response'] = str_replace('},]}','}]}',$responsedet['response']);
+			// $responsedet['response'] = str_replace('{"kp3":"PEMANFAATAN ASET","target":"700000000","targetBulanIni":0,"realisasi":"261.468.000"}','',$responsedet['response']);
+			// $responsedet['response'] = str_replace('},]}','}]}',$responsedet['response']);
 			$responRow	 		= json_decode($responsedet['response'],true);
 			$dataRow 			= @$responRow['data'];
 			foreach($dataRow as $row){
