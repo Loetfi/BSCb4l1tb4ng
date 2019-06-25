@@ -1062,6 +1062,35 @@ class Dashboard extends CI_Controller {
 		echo json_encode($return);
 	}
 	
+	public function detailRealisasi(){
+		$rows = array();
+		$thisKey = @$_POST['thisKey'] ?: 0;
+		$thisYear = @$_POST['thisYear'] ?: 0;
+		$satker = $_POST['thisSatker'] ?: 0;
+		if ($satker == "lemigas"){
+			$url 				= 'http://34.80.224.123/json/income?organization_id='.$thisKey.'&year='.$this->thisYear;
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			foreach($responRow as $row){
+				if ($row['payment_value_casted'] > 0)
+				$rows[] = array(
+					'judul'			=> $row['agreement_title'],
+					'noKontrak'		=> $row['agreement_number'],
+					'pelanggan'		=> $row['client_name'],
+					'nilaiRealisasi'=> number_format($row['payment_value_casted'],2),
+				);
+			}
+		} else {
+			
+		}
+		$return = array(
+			'data' => @$rows
+		);
+		header('Content-Type: application/json');
+		echo json_encode($return);
+	}
+	
 	
 }
 

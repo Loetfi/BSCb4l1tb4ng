@@ -156,7 +156,11 @@
 									</button>
 								</td>
 								<td align="right"><?php echo number_format(@$tableRekap[$kp3]['inv'] / $pembagi ,4); ?></td>
-								<td align="right"><?php echo number_format(@$tableRekap[$kp3]['realisasi'] / $pembagi ,4); ?></td>
+								<td align="right">
+									<button class="btn btn-link btnRealisasi" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
+										<?php echo number_format(@$tableRekap[$kp3]['realisasi'] / $pembagi ,4); ?>
+									</button>
+								</td>
 								<td align="right"><?php echo number_format(((@$tableRekap[$kp3]['terkontrak'] - @$tableRekap[$kp3]['realisasi']) / $pembagi),4); ?></td>
 								<td align="right"><?php echo number_format((@$tableRekap[$kp3]['realisasi'] / @$tableRekap[$kp3]['terkontrak'] * 100),2) ?></td>
 								<?php 
@@ -185,7 +189,7 @@
 	</div>
 	
 </section>
-<div class="modal fade" id="modal-default">
+<div class="modal fade" id="modal-default-terkontrak">
   <div class="modal-dialog modal-lg">
 	<div class="modal-content">
 	  <div class="modal-header">
@@ -194,7 +198,7 @@
 		<h4 class="modal-title"></h4>
 	  </div>
 	  <div class="modal-body">
-	    <table id="tableadms" class="table table-bordered table-striped">
+	    <table id="nTableKontrak" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>No</th>
@@ -209,7 +213,37 @@
 	  </div>
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-		<!-- button type="button" class="btn btn-primary">Save changes</button ==>
+	  </div>
+	</div>
+	<!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-default-realisasi">
+  <div class="modal-dialog modal-lg">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title"></h4>
+	  </div>
+	  <div class="modal-body">
+	    <table id="nTableRealisasi" class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th>Nama Kontrak</th>
+					<th>No Kontrak</th>
+					<th>Pelanggan</th>
+					<th>Nilai Kontrak</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
 	  </div>
 	</div>
 	<!-- /.modal-content -->
@@ -228,16 +262,22 @@ $('#satKer').change(function(){
 	window.location.href="<?php echo site_url('dashboard/form_c'); ?>/"+val;
 });
 
-var nTableKontrak = $('#tableadms').dataTable();
+var nTableKontrak = $('#nTableKontrak').dataTable();
+var nTableRealisasi = $('#nTableRealisasi').dataTable();
 
 $('.btnTerkontrak').click(function(){
 	thisKp3 = $(this).attr('this_kp3');
 	thisKey = $(this).attr('this_key');
 	thisYear = $(this).attr('this_year');
 	$.ajax({
-		method: 'GET',
+		method: 'POST',
 		type: 'json',
-		url: '<?php echo site_url('dashboard/detailTerkontrak'); ?>?thisKey='+thisKey+'&thisYear='+thisYear+'&thisSatker=<?php echo $satKer; ?>', 
+		url: '<?php echo site_url('api/dashboard/detailTerkontrak'); ?>', 
+		data: {
+			thisKey: thisKey, 
+			thisYear : thisYear, 
+			thisSatker : '<?php echo $satKer; ?>', 
+		},
 		beforeSend: function( ) {
 		},
 		success: function(thisData) {
@@ -259,7 +299,47 @@ $('.btnTerkontrak').click(function(){
 		},
 		complete: function(){
 			$('.modal-title').text(thisKp3);
-			$('#modal-default').modal('show');
+			$('#modal-default-terkontrak').modal('show');
+		}
+	});
+	
+});
+
+$('.btnRealisasi').click(function(){
+	thisKp3 = $(this).attr('this_kp3');
+	thisKey = $(this).attr('this_key');
+	thisYear = $(this).attr('this_year');
+	$.ajax({
+		method: 'POST',
+		type: 'json',
+		url: '<?php echo site_url('api/dashboard/detailRealisasi'); ?>', 
+		data: {
+			thisKey: thisKey, 
+			thisYear : thisYear, 
+			thisSatker : '<?php echo $satKer; ?>', 
+		},
+		beforeSend: function( ) {
+		},
+		success: function(thisData) {
+			console.log(thisData.data.length);
+			nTableRealisasi.fnClearTable(); 
+			for(i = 0; i < thisData.data.length; i++){
+				row = thisData.data[i];
+				nTableRealisasi.fnAddData([ 
+					(i+1),
+					row.judul,
+					row.noKontrak,
+					row.pelanggan,
+					row.nilaiRealisasi
+				]);
+			} 
+		},
+		error: function() {
+			alert('Ada opsi yang belum terpilih atau refresh halaman, dan coba lagi.');
+		},
+		complete: function(){
+			$('.modal-title').text(thisKp3);
+			$('#modal-default-realisasi').modal('show');
 		}
 	});
 	
