@@ -629,7 +629,7 @@ class Dashboard extends CI_Controller {
 	
 	function getDataSatker(){
 		// http://localhost:55/04.Project/ESDM/BSCb4l1tb4ng/index.php/dashboard/getDataSatker
-		$rekap = $this->getRekap_form_c('lemigas');
+		$rekap = $this->detailTerkontrak('lemigas');
 		print_r($rekap);
 		echo "\n";
 		echo "#############################################";
@@ -643,6 +643,7 @@ class Dashboard extends CI_Controller {
 	
 	function getRekap_form_a($satKer = 'All'){
 		$realisasi 		= 0;
+		$kontrakSatker 	= 0;
 		$targetSatker 	= 1;
 		$targetBulan  	= 1;
 		$pembagi 		= $this->pembagi;
@@ -676,6 +677,14 @@ class Dashboard extends CI_Controller {
 			## BLM
 			$targetSatker = 187333000000;
 			$targetBulan =   27000000000;
+			
+			// kontrak
+			$url 				= 'http://34.80.224.123/json/agreement?year='.$this->thisYear.'&group=organization&time=yearly&source=organization';
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow 			= @$responRow['data'];
+			$kontrakSatker 		= @$dataRow['value_casted'];
 			
 			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=organization&time=yearly&source=organization';
 			$method 			= 'GET';
@@ -711,9 +720,10 @@ class Dashboard extends CI_Controller {
 			'persenTarget'		=> $persenTarget.' %',
 			'realisasi' 		=> number_format(@$realisasi/$pembagi,2).$satuan,
 			'persenRealisasi'	=> $persenBulanIni.' %',
-			'dataSatker'		=> @$dataSatker
+			'dataSatker'		=> @$dataSatker,
+			'kontrakSatker'		=> number_format(@$kontrakSatker/$pembagi,2).$satuan,
 		);
-		return $dataReturn;
+		return @$dataReturn;
 	}
 	function getGrafik_form_a($satKer = 'All'){
 		$AkumulasiRealiasi = null;
@@ -898,6 +908,7 @@ class Dashboard extends CI_Controller {
 		return $dataReturn;
 	}
 	function getRekap_form_c($satker){
+		$arrOrgId = array();
 		$dataReturn = array();
 		$pembagi = $this->pembagi;
 		$satuan = $this->satuan;
@@ -932,10 +943,10 @@ class Dashboard extends CI_Controller {
 				'tableRekap' => $tableRekap,
 				'dataTable' => $dataTable,
 				'arrKp3' 	=> $arrKp3,
+				'arrOrgId' 	=> @$arrOrgId,
 			);
 		}
 		else if ($satker == "lemigas"){
-			
 			$arrKp3 = array();
 			## rekap kontrak
 			$url 				= 'http://34.80.224.123/json/agreement?year='.$this->thisYear.'&group=group&time=yearly&source=organization';
@@ -945,8 +956,10 @@ class Dashboard extends CI_Controller {
 			$dataRow			= $responRow['data'];
 			foreach($dataRow as $row){
 				$kp3 = strtoupper($row['name']);
-				if(!in_array($kp3, $arrKp3))
+				if(!in_array($kp3, $arrKp3)){
 					$arrKp3[] = $kp3;
+					$arrOrgId[$kp3] = $row['organization_id'];
+				}
 				
 				$tableRekap[$kp3]['terkontrak'] = @$row['value_casted'];
 			}
@@ -959,8 +972,10 @@ class Dashboard extends CI_Controller {
 			$dataRow			= $responRow['data'];
 			foreach($dataRow as $row){
 				$kp3 = strtoupper($row['name']);
-				if(!in_array($kp3, $arrKp3))
+				if(!in_array($kp3, $arrKp3)){
 					$arrKp3[] = $kp3;
+					$arrOrgId[$kp3] = $row['organization_id'];
+				}
 				
 				$tableRekap[$kp3]['inv'] = @$row['value_casted'];
 			}
@@ -972,8 +987,10 @@ class Dashboard extends CI_Controller {
 			$dataRow			= $responRow['data'];
 			foreach($dataRow as $row){
 				$kp3 = strtoupper($row['name']);
-				if(!in_array($kp3, $arrKp3))
+				if(!in_array($kp3, $arrKp3)){
 					$arrKp3[] = $kp3;
+					$arrOrgId[$kp3] = $row['organization_id'];
+				}
 				
 				$tableRekap[$kp3]['realisasi'] = @$row['value_casted'];
 			}
@@ -986,8 +1003,10 @@ class Dashboard extends CI_Controller {
 			foreach($dataRow as $row){
 				$kp3 = strtoupper($row['name']);
 				$bulan = (int)$row['month'];
-				if(!in_array($kp3, $arrKp3))
+				if(!in_array($kp3, $arrKp3)){
 					$arrKp3[] = $kp3;
+					$arrOrgId[$kp3] = $row['organization_id'];
+				}
 				
 				$dataTable[$kp3][$bulan] = array(
 					'kp3' => $row['name'],
@@ -1001,9 +1020,38 @@ class Dashboard extends CI_Controller {
 				'tableRekap' => @$tableRekap,
 				'dataTable' => $dataTable,
 				'arrKp3' 	=> $arrKp3,
+				'arrOrgId' 	=> @$arrOrgId,
 			);
 		}
 		return $dataReturn;
+	}
+	
+	public function detailTerkontrak(){
+		$rows = array();
+		$thisKey = @$_POST['thisKey'];
+		$thisYear = @$_POST['thisYear'];
+		$satker = $_POST['thisSatker'];
+		if ($satker == "lemigas"){
+			## rekap kontrak
+			$url 				= 'http://34.80.224.123/json/income?organization_id='.$thisKey.'&year='.$this->thisYear;
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			foreach($responRow as $row){
+				$rows[] = array(
+					'judul'			=> $row['agreement_title'],
+					'noKontrak'		=> $row['agreement_number'],
+					'pelanggan'		=> $row['client_name'],
+					'nilaiKontrak'	=> number_format($row['agreement_value_casted'],2),
+				);
+			}
+		} else {
+			
+		}
+		$return = array(
+			'data' => $rows
+		);
+		json_encode($return);
 	}
 }
 

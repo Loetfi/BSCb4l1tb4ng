@@ -26,6 +26,15 @@
 					<i class="ion ion-aperture"></i>
 				</div>
 			</div>
+			<div class="small-box bg-red">
+				<div class="inner">
+					<h3><?php echo @$getRekap_form_a['kontrakSatker']; ?></h3>
+					<p>Kontrak</p>
+				</div>
+				<div class="icon">
+					<i class="ion ion-aperture"></i>
+				</div>
+			</div>
 		</div>
 		
 		<div class="col-lg-4 col-xs-4">

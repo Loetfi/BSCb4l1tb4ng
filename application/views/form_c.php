@@ -30,6 +30,15 @@
 					<i class="ion ion-aperture"></i>
 				</div>
 			</div>
+			<div class="small-box bg-red">
+				<div class="inner">
+					<h3><?php echo @$getRekap_form_a['kontrakSatker']; ?></h3>
+					<p>Kontrak</p>
+				</div>
+				<div class="icon">
+					<i class="ion ion-aperture"></i>
+				</div>
+			</div>
 		</div>
 		
 		<div class="col-lg-4 col-xs-4">
@@ -132,14 +141,20 @@
 							$tableRekap = $getRekap_form_c['tableRekap'];
 							$dataTable = $getRekap_form_c['dataTable'];
 							$arrKp3 = $getRekap_form_c['arrKp3'];
+							$arrOrgId = $getRekap_form_c['arrOrgId'];
 							for($i=0; $i<count($arrKp3); $i++){ 
 								$kp3 = strtoupper($arrKp3[$i]);
+								$org = @$arrOrgId[$kp3];
 							?>
 							<tr>
 								<td><?php echo $i+1; ?></td>
 								<td><?php echo $kp3; ?></td>
 								<td>Target</td>
-								<td align="right"><?php echo number_format(@$tableRekap[$kp3]['terkontrak'] / $pembagi ,4); ?></td>
+								<td align="right">
+									<button class="btn btn-link btnTerkontrak" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>">
+										<?php echo number_format(@$tableRekap[$kp3]['terkontrak'] / $pembagi ,4); ?>
+									</button>
+								</td>
 								<td align="right"><?php echo number_format(@$tableRekap[$kp3]['inv'] / $pembagi ,4); ?></td>
 								<td align="right"><?php echo number_format(@$tableRekap[$kp3]['realisasi'] / $pembagi ,4); ?></td>
 								<td align="right"><?php echo number_format(((@$tableRekap[$kp3]['terkontrak'] - @$tableRekap[$kp3]['realisasi']) / $pembagi),4); ?></td>
@@ -170,7 +185,37 @@
 	</div>
 	
 </section>
-
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog modal-lg">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title"></h4>
+	  </div>
+	  <div class="modal-body">
+	    <table id="tableadms" class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th>Nama Kontrak</th>
+					<th>No Kontrak</th>
+					<th>Pelanggan</th>
+					<th>Nilai Kontrak</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+		<!-- button type="button" class="btn btn-primary">Save changes</button ==>
+	  </div>
+	</div>
+	<!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 <script>
 $(function(){
 	// $('#MenuUnitKerja').addClass('active').addClass('menu-open');
@@ -182,5 +227,45 @@ $('#satKer').change(function(){
 	// alert(val);
 	window.location.href="<?php echo site_url('dashboard/form_c'); ?>/"+val;
 });
+
+var nTableKontrak = $('#tableadms').dataTable();
+
+$('.btnTerkontrak').click(function(){
+	thisKey = $(this).attr('this_key');
+	thisYear = $(this).attr('this_year');
+	$.ajax({
+		method: 'POST',
+		// type: 'json',
+		url: '<?php echo site_url('dashboard/detailTerkontrak'); ?>', 
+		data: {
+			thisKey: thisKey, 
+			thisYear : thisYear, 
+			thisSatker : '<?php echo $satKer; ?>', 
+		},
+		beforeSend: function( ) {
+		},
+		success: function(thisData) {
+			nTableKontrak.fnClearTable(); 
+			for(i = 0; i < thisData.data.length; i++){
+				row = thisData.data[i];
+				nTableKontrak.fnAddData([ 
+					(i+1),
+					row.judul,
+					row.noKontrak,
+					row.pelanggan,
+					row.nilaiKontrak
+				]);
+			} 
+		},
+		error: function() {
+			alert('Ada opsi yang belum terpilih atau refresh halaman, dan coba lagi.');
+		},
+		complete: function(){
+			$('#modal-default').modal('show');
+		}
+	});
+	
+});
+
 });
 </script>
