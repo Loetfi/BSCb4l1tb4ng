@@ -15,7 +15,10 @@ class Dashboard extends CI_Controller {
 		$this->load->model('Jlt_model','jlt');
 
 		$this->load->model('dashboard/kontrak_model','kontrak');
-		check_login('dashboard');
+
+		if (!$_POST) {
+			check_login('dashboard');	
+		}
 		
 		$this->pembagi = 1000000000;
 		// $this->pembagi = 1;
@@ -24,6 +27,9 @@ class Dashboard extends CI_Controller {
 		$this->lastYear = date('Y')-1;
 	}
 
+
+
+	
 
 	public function index(){
 		$this->load->library('form_validation');
@@ -264,7 +270,7 @@ class Dashboard extends CI_Controller {
 		$this->load->view('template/footer', $data, FALSE);
 	}
 	
-    public function lemigas(){
+	public function lemigas(){
 		$this->load->library('form_validation');
 		$this->load->model('auth_model','auth');
 		$this->load->model('Dashboard_model','dash');
@@ -495,72 +501,72 @@ class Dashboard extends CI_Controller {
 		// data getIssueGlobalTahunan
 		// $getIssueGlobalTahunan = $this->dash->getIssueGlobalTahunan();
 		
-        
-        
+
+
         ##########################################
-        $arrNamaBulan = array();
-        $arrNamaSeries = array();
+		$arrNamaBulan = array();
+		$arrNamaSeries = array();
 		$highLevel = $this->dash->highLevel();
-        foreach($highLevel as $row){
-            
-            $namaBulan = date('M',strtotime($row['bulan'].'/15/2019'));
-            if(!in_array($namaBulan, $arrNamaBulan))
-                $arrNamaBulan[] = $namaBulan;
-            
-            
-            
-            if (strtolower($row['jenis']) == 'realisasi'){
-                if(!in_array($row['tahun'], $arrNamaSeries))
-                    $arrNamaSeries[] = $row['tahun'];
-                
-                $dataSeries[$row['tahun']][] = floatval(number_format($row['nilai'],2));
-            }
-            else if (strtolower($row['jenis']) == 'target'){
-                if(!in_array(ucfirst($row['jenis']), $arrNamaSeries))
-                    $arrNamaSeries[] = 'Target';
-                $dataSeries['Target'][] = floatval(number_format($row['nilai'],2));
-            }
-        }
-        
-        foreach($arrNamaSeries as $row){
-            $namaSeries = $row;
-            $data['seriesGlobalBulanan'][] = array(
-                'name' => $namaSeries,
-                'data' => $dataSeries[$namaSeries],
-            );
-        }
-        $data['CategoriesGlobalBulanan'] = $arrNamaBulan;
-        
-        
-        $data['CategoriesGlobalKp3'] = ['BLM-1','BLM-3', 'BLM-4', 'BLM-5', 'BLM-6', 'BLM-7', 'BLM-8', 'BLM-9', 'BLM-10'];
-        $data['SeriesGlobalKp3'] = array(
-            array(
-                'name' => 'Target',
-                'data' => [8 ,3.16 ,1.3 ,30 ,60.83 ,22.16 ,34.35 ,27.33 ,0.2]
-            ),
-            array(
-                'name' => 'Kontrak',
-                'data' => [0 ,0.1276 ,0 ,5.764274575 ,4.021498029 ,1.136854154 ,4.304551298 ,7.58624295 ,0]
-            ),
-            array(
-                'name' => 'LHU',
-                'data' => [0 ,0.0631 ,0 ,0.469845725 ,3.655962543 ,1.612311249 ,1.399855866 ,0.7438965 ,0]
-            ),
-            array(
-                'name' => 'INV',
-                'data' => [0.511268646,0.096 ,0 ,0.780030479 ,4.273126543 ,1.957855749 ,4.303947181 ,0.8715678 ,0]
-            ),
-            array(
-                'name' => 'Terbayar',
-                'data' => [0.511268646,0.0329 ,0 ,0.492263569 ,3.124429908 ,2.759134743 ,3.249917315 ,0.6219923 ,0 ]
-            ),
-        );
+		foreach($highLevel as $row){
+
+			$namaBulan = date('M',strtotime($row['bulan'].'/15/2019'));
+			if(!in_array($namaBulan, $arrNamaBulan))
+				$arrNamaBulan[] = $namaBulan;
+
+
+
+			if (strtolower($row['jenis']) == 'realisasi'){
+				if(!in_array($row['tahun'], $arrNamaSeries))
+					$arrNamaSeries[] = $row['tahun'];
+
+				$dataSeries[$row['tahun']][] = floatval(number_format($row['nilai'],2));
+			}
+			else if (strtolower($row['jenis']) == 'target'){
+				if(!in_array(ucfirst($row['jenis']), $arrNamaSeries))
+					$arrNamaSeries[] = 'Target';
+				$dataSeries['Target'][] = floatval(number_format($row['nilai'],2));
+			}
+		}
+
+		foreach($arrNamaSeries as $row){
+			$namaSeries = $row;
+			$data['seriesGlobalBulanan'][] = array(
+				'name' => $namaSeries,
+				'data' => $dataSeries[$namaSeries],
+			);
+		}
+		$data['CategoriesGlobalBulanan'] = $arrNamaBulan;
+
+
+		$data['CategoriesGlobalKp3'] = ['BLM-1','BLM-3', 'BLM-4', 'BLM-5', 'BLM-6', 'BLM-7', 'BLM-8', 'BLM-9', 'BLM-10'];
+		$data['SeriesGlobalKp3'] = array(
+			array(
+				'name' => 'Target',
+				'data' => [8 ,3.16 ,1.3 ,30 ,60.83 ,22.16 ,34.35 ,27.33 ,0.2]
+			),
+			array(
+				'name' => 'Kontrak',
+				'data' => [0 ,0.1276 ,0 ,5.764274575 ,4.021498029 ,1.136854154 ,4.304551298 ,7.58624295 ,0]
+			),
+			array(
+				'name' => 'LHU',
+				'data' => [0 ,0.0631 ,0 ,0.469845725 ,3.655962543 ,1.612311249 ,1.399855866 ,0.7438965 ,0]
+			),
+			array(
+				'name' => 'INV',
+				'data' => [0.511268646,0.096 ,0 ,0.780030479 ,4.273126543 ,1.957855749 ,4.303947181 ,0.8715678 ,0]
+			),
+			array(
+				'name' => 'Terbayar',
+				'data' => [0.511268646,0.0329 ,0 ,0.492263569 ,3.124429908 ,2.759134743 ,3.249917315 ,0.6219923 ,0 ]
+			),
+		);
 
         // print_r($data['CategoriesGlobalKp3']);
         // print_r($data['SeriesGlobalKp3']);
         // print_r($dataSeries);
         // die();
-        
+
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
@@ -570,7 +576,7 @@ class Dashboard extends CI_Controller {
 		$data['title'] = 'Realisasi Penerimaan VS Target PNBP BLU ('.date('d F Y').')-Form A';
 		$data['page'] = 'form_a';
 		
-        for($i=1; $i<=12; $i++) 
+		for($i=1; $i<=12; $i++) 
 			$bulanan[] = date('M', strtotime($i.'/20/2019'));
 		$data['bulanan'] = $bulanan;
 		
@@ -588,7 +594,7 @@ class Dashboard extends CI_Controller {
 		$data['page'] = 'form_b';
 		$data['satKer'] = $satKer;
 		
-        for($i=1; $i<=12; $i++) 
+		for($i=1; $i<=12; $i++) 
 			$bulanan[] = date('M', strtotime($i.'/20/2019'));
 		$data['bulanan'] = $bulanan;
 		
@@ -601,7 +607,7 @@ class Dashboard extends CI_Controller {
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
-        
+
 	}
 	public function form_c($satKer = 'p3tek'){
 		$data['title'] = 'Table Detail '.strtoupper($satKer).' ('.date('d F Y').')-Form C';
@@ -611,7 +617,7 @@ class Dashboard extends CI_Controller {
 		$data['pembagi'] = $this->pembagi;
 		$data['satuan'] = $this->satuan;
 		
-        for($i=1; $i<=12; $i++) 
+		for($i=1; $i<=12; $i++) 
 			$bulanan[] = date('M', strtotime($i.'/20/2019'));
 		$data['bulanan'] = $bulanan;
 		
@@ -624,7 +630,7 @@ class Dashboard extends CI_Controller {
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
-        
+
 	}
 	
 	function getDataSatker(){
@@ -1025,12 +1031,13 @@ class Dashboard extends CI_Controller {
 		}
 		return $dataReturn;
 	}
-	
+
+
 	public function detailTerkontrak(){
 		$rows = array();
-		$thisKey = @$_GET['thisKey'];
-		$thisYear = @$_GET['thisYear'];
-		$satker = $_GET['thisSatker'];
+		$thisKey = @$_POST['thisKey'] ?: 0;
+		$thisYear = @$_POST['thisYear'] ?: 0;
+		$satker = $_POST['thisSatker'] ?: 0;
 		if ($satker == "lemigas"){
 			## rekap kontrak
 			$url 				= 'http://34.80.224.123/json/income?organization_id='.$thisKey.'&year='.$this->thisYear;
@@ -1049,11 +1056,13 @@ class Dashboard extends CI_Controller {
 			
 		}
 		$return = array(
-			'data' => $rows
+			'data' => @$rows
 		);
-		echo json_encode($return);
 		header('Content-Type: application/json');
+		echo json_encode($return);
 	}
+	
+	
 }
 
 /* End of file Kegiatan.php */
