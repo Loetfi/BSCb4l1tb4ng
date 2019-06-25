@@ -1028,9 +1028,9 @@ class Dashboard extends CI_Controller {
 	
 	public function detailTerkontrak(){
 		$rows = array();
-		$thisKey = @$_POST['thisKey'];
-		$thisYear = @$_POST['thisYear'];
-		$satker = $_POST['thisSatker'];
+		$thisKey = @$_GET['thisKey'];
+		$thisYear = @$_GET['thisYear'];
+		$satker = $_GET['thisSatker'];
 		if ($satker == "lemigas"){
 			## rekap kontrak
 			$url 				= 'http://34.80.224.123/json/income?organization_id='.$thisKey.'&year='.$this->thisYear;
@@ -1051,7 +1051,8 @@ class Dashboard extends CI_Controller {
 		$return = array(
 			'data' => $rows
 		);
-		json_encode($return);
+		echo json_encode($return);
+		header('Content-Type: application/json');
 	}
 }
 

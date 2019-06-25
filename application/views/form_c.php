@@ -151,7 +151,7 @@
 								<td><?php echo $kp3; ?></td>
 								<td>Target</td>
 								<td align="right">
-									<button class="btn btn-link btnTerkontrak" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>">
+									<button class="btn btn-link btnTerkontrak" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
 										<?php echo number_format(@$tableRekap[$kp3]['terkontrak'] / $pembagi ,4); ?>
 									</button>
 								</td>
@@ -231,20 +231,17 @@ $('#satKer').change(function(){
 var nTableKontrak = $('#tableadms').dataTable();
 
 $('.btnTerkontrak').click(function(){
+	thisKp3 = $(this).attr('this_kp3');
 	thisKey = $(this).attr('this_key');
 	thisYear = $(this).attr('this_year');
 	$.ajax({
-		method: 'POST',
-		// type: 'json',
-		url: '<?php echo site_url('dashboard/detailTerkontrak'); ?>', 
-		data: {
-			thisKey: thisKey, 
-			thisYear : thisYear, 
-			thisSatker : '<?php echo $satKer; ?>', 
-		},
+		method: 'GET',
+		type: 'json',
+		url: '<?php echo site_url('dashboard/detailTerkontrak'); ?>?thisKey='+thisKey+'&thisYear='+thisYear+'&thisSatker=<?php echo $satKer; ?>', 
 		beforeSend: function( ) {
 		},
 		success: function(thisData) {
+			console.log(thisData.data.length);
 			nTableKontrak.fnClearTable(); 
 			for(i = 0; i < thisData.data.length; i++){
 				row = thisData.data[i];
@@ -261,6 +258,7 @@ $('.btnTerkontrak').click(function(){
 			alert('Ada opsi yang belum terpilih atau refresh halaman, dan coba lagi.');
 		},
 		complete: function(){
+			$('.modal-title').text(thisKp3);
 			$('#modal-default').modal('show');
 		}
 	});
