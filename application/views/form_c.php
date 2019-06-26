@@ -12,6 +12,7 @@
 		<div class="col-lg-12 col-xs-12">
 			<select class="form-control" id="satKer">
 				<option value="p3tek" <?php echo $satKer == 'p3tek' ? 'selected' : ''; ?>>P3TEK</option>
+				<option value="tekmira" <?php echo $satKer == 'tekmira' ? 'selected' : ''; ?>>TERKMIRA</option>
 				<option value="lemigas" <?php echo $satKer == 'lemigas' ? 'selected' : ''; ?>>LEMIGAS</option>
 			</select>
 			<br>
@@ -46,7 +47,7 @@
 				<!-- small box -->
 				<div class="small-box bg-green">
 					<div class="inner">
-						<h3><?php echo $getRekap_form_a['targetBulanIni']; ?></h3>
+						<h3><?php echo $getRekap_form_a['targetBulanIni']; ?>(<?php echo $getRekap_form_a['persenTarget']; ?>)</h3>
 						<p>Target Bulan Ini</p>
 					</div>
 					<div class="icon">
@@ -55,12 +56,10 @@
 				</div>
 			</div>
 			<div class="col-lg-12 col-xs-12">
-				<!-- small box -->
-				<div class="small-box bg-green">
+				<div class="small-box bg-aqua">
 					<div class="inner">
-						<!-- h3>14.38<sup style="font-size: 20px">%</sup></h3 -->
-						<h3><?php echo $getRekap_form_a['persenTarget']; ?></h3>
-						<p>Target Bulan Ini</p>
+						<h3><?php echo 'xxx'; ?></h3>
+						<p>Invoice</p>
 					</div>
 					<div class="icon">
 						<i class="ion ion-arrow-graph-up-right"></i>
@@ -71,10 +70,9 @@
 		
 		<div class="col-lg-4 col-xs-4">
 			<div class="col-lg-12 col-xs-12">
-				<!-- small box -->
 				<div class="small-box bg-yellow">
 					<div class="inner">
-						<h3><?php echo $getRekap_form_a['realisasi']; ?></h3>
+						<h3><?php echo $getRekap_form_a['realisasi']; ?>(<?php echo $getRekap_form_a['persenRealisasi']; ?>)</h3>
 						<p>Realisasi</p>
 					</div>
 					<div class="icon">
@@ -82,8 +80,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-12 col-xs-12">
-				<!-- small box -->
+			<!-- div class="col-lg-12 col-xs-12">
 				<div class="small-box bg-yellow">
 					<div class="inner">
 						<h3><?php echo $getRekap_form_a['persenRealisasi']; ?></h3>
@@ -93,7 +90,7 @@
 						<i class="ion ion-android-done-all"></i>
 					</div>
 				</div>
-			</div>
+			</div -->
         </div>
 		<!-- ./col -->
 	</div>
@@ -108,7 +105,7 @@
 					</div>
 				</div>
 				<!-- /.box-header -->
-				<div class="box-body" style="height: 100%; overflow-y: scroll; overflow-x: scroll;">
+				<div class="box-body" style="height: 100%; overflow-x: scroll;">
 					<table class="table table-bordered table-striped">
 						<thead>
 						<tr>
@@ -176,7 +173,7 @@
 								?>
 								<td align="right"><?php echo @$persen; ?></td>
 								<td align="right"><?php echo @$nilai; ?></td>
-								<td align="right"><?php echo number_format(@$akumulasi[$kp3] / $pembagi,4); ?></td>
+								<td align="right"><?php echo ($bulan <= (int)date('m')) ? number_format(@$akumulasi[$kp3] / $pembagi,4) : '-'; ?></td>
 								<?php } ?>
 							</tr>
 							<?php } ?>

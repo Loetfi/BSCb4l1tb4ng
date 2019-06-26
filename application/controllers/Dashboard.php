@@ -635,7 +635,7 @@ class Dashboard extends CI_Controller {
 	
 	function getDataSatker(){
 		// http://localhost:55/04.Project/ESDM/BSCb4l1tb4ng/index.php/dashboard/getDataSatker
-		$rekap = $this->detailTerkontrak('lemigas');
+		$rekap = $this->getRekap_form_c('tekmira');
 		print_r($rekap);
 		echo "\n";
 		echo "#############################################";
@@ -679,6 +679,31 @@ class Dashboard extends CI_Controller {
 			@$realisasi += $realisasiSatker;	
 		}
 		
+		if ($satKer == 'All' || $satKer == 'tekmira'){
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/table_rekap_target';
+			$method 			= 'POST';
+			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow 			= @$responRow['data'];
+			foreach($dataRow as $row){
+				@$realisasiSatker += $row['realisasi'];
+				@$kontrakSatker += $row['realisasiKontrak'];
+				// $bulan = (int)$row['bulan'];
+				// $dataSatker[$bulan] = $row;
+			}
+			$dataSatker[] = array(
+				'Unit Kerja'		=> 'BLT',
+				'Target'			=> number_format($targetSatker/$pembagi,2).$satuan,
+				'Target Bulan Ini'	=> number_format($targetBulan/$pembagi,2).$satuan,
+				'Target (%)'		=> number_format($targetBulan/$targetSatker * 100,2),
+				'Realisasi'			=> number_format($realisasiSatker/$pembagi,2).$satuan,
+				'Realisasi(%)'		=> number_format($realisasiSatker/$targetBulan * 100,2),
+				'Sisa'				=> number_format(($targetBulan - $realisasiSatker)/$pembagi,2).$satuan,
+				'Sisa(%)'			=> number_format((100 -($realisasiSatker/$targetBulan * 100)),2),
+			);
+			@$realisasi += $realisasiSatker;	
+		}
+		
 		if ($satKer == 'All' || $satKer == 'lemigas'){
 			## BLM
 			$targetSatker = 187333000000;
@@ -690,7 +715,7 @@ class Dashboard extends CI_Controller {
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
 			$dataRow 			= @$responRow['data'];
-			$kontrakSatker 		= @$dataRow['value_casted'];
+			$kontrakSatker 		+= @$dataRow['value_casted'];
 			
 			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=organization&time=yearly&source=organization';
 			$method 			= 'GET';
@@ -757,9 +782,49 @@ class Dashboard extends CI_Controller {
 				if (@$dataSatker[$i]['realiasiTahunLalu'] > 0)	{ @$data['realiasiTahunLalu'][$i-1] 	+= @$dataSatker[$i]['realiasiTahunLalu']; } else { @$data['realiasiTahunLalu'][$i-1]	+= null; }
 				
 				$AkumulasiRealiasi += @$dataSatker[$i]['realisasi'];
+				if ($i <= (int)date('m'))
 				@$data['AkumulasiRealiasi'][$i-1] 	+= $AkumulasiRealiasi;
 				
 				$AkumulasiRealiasiTahunLalu += @$dataSatker[$i]['realiasiTahunLalu'];
+				@$data['AkumulasiRealiasiTahunLalu'][$i-1] 	+= $AkumulasiRealiasiTahunLalu;
+			}
+		}
+		
+		if ($satKer == 'All' || $satKer == 'tekmira'){
+			## p3tek
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/table_rekap_target';
+			$method 			= 'POST';
+			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow 			= @$responRow['data'];
+			foreach($dataRow as $row){
+				$bulan = (int)$row['bulan'];
+				$dataSatker[$bulan] = $row;
+			}
+			
+			// tahun lalu
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/table_rekap_target';
+			$method 			= 'POST';
+			$responsedet 		= ngeCurl($url, array('tahun' => ((int)$this->thisYear) - 1), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow 			= @$responRow['data'];
+			foreach($dataRow as $row){
+				$bulan = (int)$row['bulan'];
+				$dataSatkerLalu[$bulan] = $row;
+			}
+			
+			for($i=1; $i<=12; $i++){
+				if (@$dataSatker[$i]['target'] > 0) 			{ @$data['target'][$i-1] 				+= @$dataSatker[$i]['target'];            } else { @$data['target'][$i-1]				+= null; }
+				if (@$dataSatker[$i]['potensi'] > 0)			{ @$data['potensi'][$i-1] 				+= @$dataSatker[$i]['potensi'];           } else { @$data['potensi'][$i-1]				+= null; }
+				if (@$dataSatker[$i]['realisasi'] > 0)			{ @$data['realisasi'][$i-1] 			+= @$dataSatker[$i]['realisasi'];         } else { @$data['realisasi'][$i-1]			+= null; }
+				if (@$dataSatker[$i]['realisasiKontrak'] > 0)	{ @$data['nilaiKontrak'][$i-1] 			+= @$dataSatker[$i]['realisasiKontrak'];  } else { @$data['nilaiKontrak'][$i-1]			+= null; }
+				if (@$dataSatkerLalu[$i]['realisasi'] > 0)		{ @$data['realiasiTahunLalu'][$i-1] 	+= @$dataSatkerLalu[$i]['realisasi'];     } else { @$data['realiasiTahunLalu'][$i-1]	+= null; }
+				
+				$AkumulasiRealiasi += @$dataSatker[$i]['realisasi'];
+				if ($i <= (int)date('m'))
+				@$data['AkumulasiRealiasi'][$i-1] 	+= $AkumulasiRealiasi;
+				
+				$AkumulasiRealiasiTahunLalu += @$dataSatkerLalu[$i]['realisasi'];
 				@$data['AkumulasiRealiasiTahunLalu'][$i-1] 	+= $AkumulasiRealiasiTahunLalu;
 			}
 		}
@@ -807,6 +872,7 @@ class Dashboard extends CI_Controller {
 				if (@$dataLastYear[$i]['value_casted'] > 0)		{ @$data['realiasiTahunLalu'][$i-1] 	+= @$dataLastYear[$i]['value_casted'];    } else { @$data['realiasiTahunLalu'][$i-1]	+= null; }
 				
 				$AkumulasiRealiasi += @$dataSatker[$i]['value_casted'];
+				if ($i <= (int)date('m'))
 				@$data['AkumulasiRealiasi'][$i-1] 	+= $AkumulasiRealiasi;
 				
 				$AkumulasiRealiasiTahunLalu += @$dataLastYear[$i]['value_casted'];
@@ -919,7 +985,39 @@ class Dashboard extends CI_Controller {
 		$pembagi = $this->pembagi;
 		$satuan = $this->satuan;
 		
-		if ($satker == "p3tek"){
+		if ($satker == "tekmira"){
+			$arrKp3 = array();
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_rekap';
+			$method 			= 'POST';
+			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow 			= @$responRow['data'];
+			
+			foreach($dataRow as $row){
+				$kp3 = strtoupper($row['kp3']);
+				if(!in_array($kp3, $arrKp3))
+					$arrKp3[] = $kp3;
+				
+				@$tableRekap[$kp3]['terkontrak'] 	+= $row['realisasiKontrak'];
+				@$tableRekap[$kp3]['inv'] 			+= $row['invoice'];
+				@$tableRekap[$kp3]['realisasi'] 	+= $row['realisasi'];
+			}
+			foreach($dataRow as $row){
+				$kp3 = strtoupper($row['kp3']);
+				$bulan = (int)$row['bulan'];
+				if(!in_array($kp3, $arrKp3))
+					$arrKp3[] = $kp3;
+				
+				$dataTable[$kp3][$bulan] = $row;
+			}
+			$dataReturn = array(
+				'tableRekap' => $tableRekap,
+				'dataTable' => $dataTable,
+				'arrKp3' 	=> $arrKp3,
+				'arrOrgId' 	=> @$arrOrgId,
+			);
+		}
+		else if ($satker == "p3tek"){
 			$arrKp3 = array();
 			$url 				= 'http://suvisanusi.com/bscp3tek/formc/table.php?tahun='.$this->thisYear;
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formc/table.php?tahun=2019';
