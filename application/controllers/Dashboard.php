@@ -584,6 +584,7 @@ class Dashboard extends CI_Controller {
 		$data['getGrafik_form_a'] = $this->getGrafik_form_a();
 		$data['pembagi'] = $this->pembagi;
 		$data['satuan'] = $this->satuan;
+		$data['thisYear'] = $this->thisYear;
 		
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);

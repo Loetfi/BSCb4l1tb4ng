@@ -191,7 +191,7 @@ Highcharts.chart('GrafikFormA', {
         type: 'line'
     },
     title: {
-        text: 'Report Kerja LEMIGAS Tahun 2019'
+        text: 'Report Kerja BLU Tahun <?php echo @$thisYear; ?>'
     },
     xAxis: {
 		// labels: {
