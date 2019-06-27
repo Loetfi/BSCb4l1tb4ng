@@ -233,7 +233,7 @@
 					<th>Nama Kontrak</th>
 					<th>No Kontrak</th>
 					<th>Pelanggan</th>
-					<th>Nilai Kontrak</th>
+					<th>Nilai Realisasi</th>
 				</tr>
 			</thead>
 			<tbody></tbody>

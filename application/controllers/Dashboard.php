@@ -885,7 +885,7 @@ class Dashboard extends CI_Controller {
 		## olah grafik
 		$dataSeries[] = array( 'name' => 'target', 'data' => @$data['target'] );
 		$dataSeries[] = array( 'name' => 'potensi', 'data' => @$data['potensi'] );
-		$dataSeries[] = array( 'name' => 'realisasi', 'data' => @$data['realisasi'], 'type' => 'column' );
+		$dataSeries[] = array( 'name' => 'realisasi', 'data' => @$data['realisasi'] );
 		$dataSeries[] = array( 'name' => 'Akumulasi Realiasi', 'data' => @$data['AkumulasiRealiasi'] );
 		$dataSeries[] = array( 'name' => 'realiasi TahunLalu', 'data' => @$data['realiasiTahunLalu'] );
 		$dataSeries[] = array( 'name' => 'realiasi Akumulasi Lalu', 'data' => @$data['AkumulasiRealiasiTahunLalu'] );
