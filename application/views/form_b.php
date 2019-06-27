@@ -13,7 +13,7 @@
 <!-- Main content -->
 
 <section class="content">
-	<div class="row">
+	<!-- div class="row">
 		<div class="col-lg-12 col-xs-12">
 			<select class="form-control" id="satKer">
 				<option value="p3tek" <?php echo $satKer == 'p3tek' ? 'selected' : ''; ?>>P3TEK</option>
@@ -23,7 +23,7 @@
 			</select>
 			<br>
 		</div>
-	</div>
+	</div -->
 	
 	<div class="row">
         <div class="col-lg-4 col-xs-4"> 

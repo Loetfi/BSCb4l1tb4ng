@@ -55,54 +55,69 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">NAVIGASI</li>
-           <li id="menuDashboard">
+        <li id="menuDashboard">
           <a href="<?php echo site_url('dashboard'); ?>">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span> 
+            <i class="fa fa-dashboard"></i> <span>Dashboard 1</span> 
+          </a>
+        </li> 
+		<li id="menuDashboard">
+          <a href="<?php echo site_url('dashboard/form_a'); ?>">
+            <i class="fa fa-dashboard"></i> <span>Dashboard 2</span> 
           </a>
         </li> 
         <li id="MenuUnitKerja" class="treeview">
           <a href="#">
-            <i class="fa fa-share"></i> <span>Unit Kerja</span>
+            <i class="fa fa-share"></i> <span>Satuan Kerja</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li id="MenuUnitKerjaLemigas" class="treeview">
-              <a href="#"><i class="fa fa-circle-o"></i> Lemigas
+              <a href="#"><i class="fa fa-circle-o"></i> P3TEK
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li id="unitKerjaLemigas-Lemigas"><a href="<?php echo site_url('dashboard/lemigas'); ?>"><i class="fa fa-circle-o"></i> Lemigas</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-1</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-3</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-4</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-5</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-6</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-7</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-8</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-9</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLM-10</a></li>
+                <li><a href="<?php echo site_url('dashboard/form_b/p3tek'); ?>"><i class="fa fa-circle-o"></i> Rekap</a></li>
+                <li><a href="<?php echo site_url('dashboard/form_c/p3tek'); ?>"><i class="fa fa-circle-o"></i> Detail</a></li>
               </ul>
             </li>
             <li class="treeview">
-              <a href="#"><i class="fa fa-circle-o"></i> Tekmira
+              <a href="#"><i class="fa fa-circle-o"></i> TERKMIRA
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-1</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-2</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-3</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-4</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-5</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-6</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> BLT-7</a></li>
+                <li><a href="<?php echo site_url('dashboard/form_b/tekmira'); ?>"><i class="fa fa-circle-o"></i> Rekap</a></li>
+                <li><a href="<?php echo site_url('dashboard/form_c/tekmira'); ?>"><i class="fa fa-circle-o"></i> Detail</a></li>
               </ul>
             </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-circle-o"></i> LEMIGAS
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?php echo site_url('dashboard/form_b/lemigas'); ?>"><i class="fa fa-circle-o"></i> Rekap</a></li>
+                <li><a href="<?php echo site_url('dashboard/form_c/lemigas'); ?>"><i class="fa fa-circle-o"></i> Detail</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-circle-o"></i> P3GL
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?php echo site_url('dashboard/form_b/p3gl'); ?>"><i class="fa fa-circle-o"></i> Rekap</a></li>
+                <li><a href="<?php echo site_url('dashboard/form_c/p3gl'); ?>"><i class="fa fa-circle-o"></i> Detail</a></li>
+              </ul>
+            </li>
+			
           </ul>
         </li>
         
@@ -122,7 +137,7 @@
             <i class="fa fa-briefcase"></i> <span>Master Unit Kerja</span>
           </a>
         </li>
-
+<!-- 
         <li class="header">Pengaturan</li>
            <li class="<?php echo @$this->uri->segment(1) === 'pengguna' ? 'active' : '' ; ?>">
           <a href="<?php echo site_url('pengguna'); ?>">
@@ -133,7 +148,7 @@
         <li class=""><a href="<?php echo site_url('dashboard/form_a'); ?>"><span>Form A</span></a></li>
         <li class=""><a href="<?php echo site_url('dashboard/form_b'); ?>"><span>Form B</span></a></li>
         <li class=""><a href="<?php echo site_url('dashboard/form_c'); ?>"><span>Form C</span></a></li>
-
+-->
       </ul>
     </section>
     <!-- /.sidebar -->
