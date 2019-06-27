@@ -138,7 +138,7 @@ class Struktur_model extends CI_Model {
 			LEFT JOIN ms_branch b on a.branch_id = b.branch_id
 			where parent_id = 0 
 				".$where." 
-			ORDER BY a.code ASC  ")->result_array();
+			ORDER BY b.branch_name, a.org_name ASC  ")->result_array();
 		} catch (Exception $e) {
 			$resutl = array();
 		}

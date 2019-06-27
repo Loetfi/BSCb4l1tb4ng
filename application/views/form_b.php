@@ -19,6 +19,7 @@
 				<option value="p3tek" <?php echo $satKer == 'p3tek' ? 'selected' : ''; ?>>P3TEK</option>
 				<option value="tekmira" <?php echo $satKer == 'tekmira' ? 'selected' : ''; ?>>TEKMIRA</option>
 				<option value="lemigas" <?php echo $satKer == 'lemigas' ? 'selected' : ''; ?>>LEMIGAS</option>
+				<option value="p3gl" <?php echo $satKer == 'p3gl' ? 'selected' : ''; ?>>P3GL</option>
 			</select>
 			<br>
 		</div>

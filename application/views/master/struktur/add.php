@@ -31,10 +31,10 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="branch_id" class="col-sm-2 control-label">Nama Branch</label>
+							<label for="branch_id" class="col-sm-2 control-label">Nama Satker</label>
 							<div class="col-sm-10">
 								<select class="form-control" id="branch_id" placeholder="branch_id" required>
-									<option value="">Pilih Cabang</option>
+									<option value="">Pilih Satker</option>
 									<?php foreach($branchAll as $row){ ?>
 									<option value="<?php echo $row['branch_id']; ?>"><?php echo $row['branch_name'].' '.$row['ip_address']; ?></option>
 									<?php } ?>
@@ -44,13 +44,13 @@
 						<div class="form-group">
 							<label for="code" class="col-sm-2 control-label">Kode</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="code" placeholder="code" required>
+								<input type="text" class="form-control" id="code" placeholder="code">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="type" class="col-sm-2 control-label">Tipe</label>
 							<div class="col-sm-10">
-								<select class="form-control" id="type" required>
+								<select class="form-control" id="type">
 									<option value="">Pilih Type</option>
 									<option value="Penerimaan">Penerimaan</option>
 									<option value="Pelaksanaan">Pelaksanaan</option>
@@ -59,15 +59,21 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="org_name" class="col-sm-2 control-label">Nama Organisasi</label>
+							<label for="org_name" class="col-sm-2 control-label">Nama Unit Kerja</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="org_name" placeholder="org_name" required>
+								<input type="text" class="form-control" id="org_name" placeholder="Nama Unit Kerja" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="description" class="col-sm-2 control-label">Deskripsi</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="description" placeholder="description" required>
+								<input type="text" class="form-control" id="description" placeholder="description">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="client_mapping" class="col-sm-2 control-label">client mapping</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="client_mapping" placeholder="client_mapping">
 							</div>
 						</div>
 						<div class="form-group">

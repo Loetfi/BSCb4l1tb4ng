@@ -72,6 +72,12 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label for="client_mapping" class="col-sm-2 control-label">client mapping</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="client_mapping" placeholder="client_mapping" value="<?php echo $detail['client_mapping']; ?>">
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="sts_deleted" class="col-sm-2 control-label">Status</label>
 							<div class="col-sm-10">
 								<select name="sts_deleted" class="form-control" id="sts_deleted" required>

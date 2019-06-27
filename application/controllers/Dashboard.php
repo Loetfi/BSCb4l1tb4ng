@@ -636,7 +636,7 @@ class Dashboard extends CI_Controller {
 	
 	function getDataSatker(){
 		// http://localhost:55/04.Project/ESDM/BSCb4l1tb4ng/index.php/dashboard/getDataSatker
-		$rekap = $this->getRekap_form_c('tekmira');
+		$rekap = $this->getRekap_form_a();
 		print_r($rekap);
 		echo "\n";
 		echo "#############################################";
@@ -656,12 +656,12 @@ class Dashboard extends CI_Controller {
 		$pembagi 		= $this->pembagi;
 		$satuan  		= $this->satuan;
 		
-		if ($satKer == 'All' || $satKer == 'p3tek'){
-			## p3tek
-			$targetSatker = 1980000000;
-			$targetBulan =   400000000;
+		if ($satKer == 'All' || $satKer == 'p3tek'){ $branchId = '4';
+			$getTargetSatker = $this->target->getTargetSatker($branchId, $this->thisYear, date('m'));
+			$targetSatker = @$getTargetSatker['TargetTahunIni'];
+			$targetBulan = @$getTargetSatker['TargetBulanIni'];
+			
 			$url 				= 'http://suvisanusi.com/bscp3tek/forma/rekap.php?tahun='.$this->thisYear;
-			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/forma/rekap.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -680,7 +680,11 @@ class Dashboard extends CI_Controller {
 			@$realisasi += $realisasiSatker;	
 		}
 		
-		if ($satKer == 'All' || $satKer == 'tekmira'){
+		if ($satKer == 'All' || $satKer == 'tekmira'){ $branchId = '3';
+			$getTargetSatker = $this->target->getTargetSatker($branchId, $this->thisYear, date('m'));
+			$targetSatker = @$getTargetSatker['TargetTahunIni'];
+			$targetBulan = @$getTargetSatker['TargetBulanIni'];
+			
 			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/table_rekap_target';
 			$method 			= 'POST';
 			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
@@ -689,8 +693,6 @@ class Dashboard extends CI_Controller {
 			foreach($dataRow as $row){
 				@$realisasiSatker += $row['realisasi'];
 				@$kontrakSatker += $row['realisasiKontrak'];
-				// $bulan = (int)$row['bulan'];
-				// $dataSatker[$bulan] = $row;
 			}
 			$dataSatker[] = array(
 				'Unit Kerja'		=> 'BLT',
@@ -705,10 +707,10 @@ class Dashboard extends CI_Controller {
 			@$realisasi += $realisasiSatker;	
 		}
 		
-		if ($satKer == 'All' || $satKer == 'lemigas'){
-			## BLM
-			$targetSatker = 187333000000;
-			$targetBulan =   27000000000;
+		if ($satKer == 'All' || $satKer == 'p3gl'){ $branchId = '2';
+			$getTargetSatker = $this->target->getTargetSatker($branchId, $this->thisYear, date('m'));
+			$targetSatker = @$getTargetSatker['TargetTahunIni'];
+			$targetBulan = @$getTargetSatker['TargetBulanIni'];
 			
 			// kontrak
 			$url 				= 'http://34.80.224.123/json/agreement?year='.$this->thisYear.'&group=organization&time=yearly&source=organization';
@@ -725,7 +727,7 @@ class Dashboard extends CI_Controller {
 			$dataRow 			= @$responRow['data'];
 			$realisasiSatker 	= @$dataRow['value_casted'];
 			$dataSatker[] = array(
-				'Unit Kerja'		=> 'BLM',
+				'Unit Kerja'		=> 'BLK',
 				'Target'			=> number_format($targetSatker/$pembagi,2).$satuan,
 				'Target Bulan Ini'	=> number_format($targetBulan/$pembagi,2).$satuan,
 				'Target (%)'		=> number_format($targetBulan/$targetSatker * 100,2),
@@ -737,15 +739,45 @@ class Dashboard extends CI_Controller {
 			@$realisasi += $realisasiSatker;
 		}
 		
-		if ($satKer == 'All'){
-			$targetTahunan = 30564000000;
-			$targetBulanIni = 6000000000;
-		} else {
-			$targetTahunan = @$targetSatker;
-			$targetBulanIni = @$targetBulan;
+		if ($satKer == 'All' || $satKer == 'lemigas'){ $branchId = '1';
+			$getTargetSatker = $this->target->getTargetSatker($branchId, $this->thisYear, date('m'));
+			$targetSatker = @$getTargetSatker['TargetTahunIni'];
+			$targetBulan = @$getTargetSatker['TargetBulanIni'];
+			
+			$realisasiSatker = 0;
+			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_rekap_unit_bulanan?_where=(tahun,eq,'.$this->thisYear.')';
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			foreach($responRow as $dataRow){
+				$realisasiSatker 	+= @$dataRow['debet'];
+			}
+			$dataSatker[] = array(
+				'Unit Kerja'		=> 'BLM',
+				'Target'			=> number_format($targetSatker/$pembagi,2).$satuan,
+				'Target Bulan Ini'	=> number_format($targetBulan/$pembagi,2).$satuan,
+				'Target (%)'		=> number_format($targetBulan/$targetSatker * 100,2),
+				'Realisasi'			=> number_format($realisasiSatker/$pembagi,2).$satuan,
+				'Realisasi(%)'		=> number_format($realisasiSatker/$targetBulan * 100,2),
+				'Sisa'				=> number_format(($targetBulan - $realisasiSatker)/$pembagi,2).$satuan,
+				'Sisa(%)'			=> number_format((100 -($realisasiSatker/$targetBulan * 100)),2),
+			);
+			@$realisasi += $realisasiSatker;	
 		}
+		
+		if ($satKer == 'All') { 
+			$branchId = 'All';
+			$getTargetSatker = $this->target->getTargetSatker($branchId, $this->thisYear, date('m'));
+			$targetTahunan = @$getTargetSatker['TargetTahunIni'];
+			$targetBulanIni = @$getTargetSatker['TargetBulanIni'];
+		} else {
+			$targetTahunan = $targetSatker;
+			$targetBulanIni = $targetBulan;
+		}
+		
+		
 		$persenTarget = number_format(@$targetBulanIni/$targetTahunan * 100,2);
-		$persenBulanIni = number_format(@$realisasi/$targetBulanIni * 100,2);
+		$persenBulanIni = number_format(@$realisasi/$targetTahunan * 100,2);
 		$dataReturn = array(
 			'target' 			=> number_format($targetTahunan/$pembagi,2).$satuan,
 			'targetBulanIni' 	=> number_format($targetBulanIni/$pembagi,2).$satuan,
@@ -830,7 +862,7 @@ class Dashboard extends CI_Controller {
 			}
 		}
 		
-		if ($satKer == 'All' || $satKer == 'lemigas'){
+		if ($satKer == 'All' || $satKer == 'p3gl'){
 			## kontrak
 			$url 				= 'http://34.80.224.123/json/agreement?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
 			$method 			= 'GET';
@@ -923,7 +955,7 @@ class Dashboard extends CI_Controller {
 				);
 			}
 		}
-		else if ($satker == "lemigas"){
+		else if ($satker == "p3gl"){
 			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'GET';
@@ -1051,7 +1083,7 @@ class Dashboard extends CI_Controller {
 				'arrOrgId' 	=> @$arrOrgId,
 			);
 		}
-		else if ($satker == "lemigas"){
+		else if ($satker == "p3gl"){
 			$arrKp3 = array();
 			## rekap kontrak
 			$url 				= 'http://34.80.224.123/json/agreement?year='.$this->thisYear.'&group=group&time=yearly&source=organization';

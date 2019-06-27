@@ -110,6 +110,36 @@ class Target_model extends CI_Model {
 		return $query;
 	}
 	
+	function getTargetSatker($branchId='', $tahun='',$month=''){
+		$whereTahunan = " AND t.`year`='".$tahun."' ";
+		$whereBulanan = " AND t.`year`='".$tahun."' ";
+		
+		if ($branchId != 'All'){ 
+			$whereTahunan .= " AND b.branch_id = '".$branchId."' ";
+			$whereBulanan .= " AND b.branch_id = '".$branchId."' ";
+		}
+		if ($month != ''){
+			$whereBulanan .= " AND t.`month` = '".$month."' ";
+		}
+		
+		$sql = "
+		SELECT 
+			(SELECT sum(t.amount) amount 
+				FROM target t 
+				join ms_organization o on t.org_id = o.id 
+				join ms_branch b on b.branch_id = o.branch_id
+				WHERE 1=1 ".$whereTahunan."
+			) TargetTahunIni,
+			(SELECT sum(t.amount) amount 
+				FROM target t 
+				join ms_organization o on t.org_id = o.id 
+				join ms_branch b on b.branch_id = o.branch_id
+				WHERE 1=1 ".$whereBulanan."
+			) TargetBulanIni
+		";
+		$resutl = $this->db->query($sql)->row_array();
+		return $resutl;
+	}
 	
 }
 
