@@ -44,43 +44,38 @@
 		</div>
 		
 		<div class="col-lg-4 col-xs-4">
-			<div class="col-lg-12 col-xs-12">
-				<!-- small box -->
-				<div class="small-box bg-green">
-					<div class="inner">
-						<h3><?php echo $getRekap_form_a['targetBulanIni']; ?>(<?php echo $getRekap_form_a['persenTarget']; ?>)</h3>
-						<p>Target Bulan Ini</p>
-					</div>
-					<div class="icon">
-						<i class="ion ion-android-checkmark-circle"></i>
-					</div>
+			<!-- small box -->
+			<div class="small-box bg-green">
+				<div class="inner">
+					<h3><?php echo $getRekap_form_a['targetBulanIni']; ?>(<?php echo $getRekap_form_a['persenTarget']; ?>)</h3>
+					<p>Target Bulan Ini</p>
+				</div>
+				<div class="icon">
+					<i class="ion ion-android-checkmark-circle"></i>
 				</div>
 			</div>
-			<div class="col-lg-12 col-xs-12">
-				<div class="small-box bg-aqua">
-					<div class="inner">
-						<h3><?php echo 'xxx'; ?></h3>
-						<p>Invoice</p>
-					</div>
-					<div class="icon">
-						<i class="ion ion-arrow-graph-up-right"></i>
-					</div>
+			<div class="small-box bg-aqua">
+				<div class="inner">
+					<h3><?php echo 'xxx'; ?></h3>
+					<p>Invoice</p>
+				</div>
+				<div class="icon">
+					<i class="ion ion-arrow-graph-up-right"></i>
 				</div>
 			</div>
 		</div>
 		
 		<div class="col-lg-4 col-xs-4">
-			<div class="col-lg-12 col-xs-12">
-				<div class="small-box bg-yellow">
-					<div class="inner">
-						<h3><?php echo $getRekap_form_a['realisasi']; ?>(<?php echo $getRekap_form_a['persenRealisasi']; ?>)</h3>
-						<p>Realisasi</p>
-					</div>
-					<div class="icon">
-						<i class="ion ion-android-done"></i>
-					</div>
+			<div class="small-box bg-yellow">
+				<div class="inner">
+					<h3><?php echo $getRekap_form_a['realisasi']; ?>(<?php echo $getRekap_form_a['persenRealisasi']; ?>)</h3>
+					<p>Realisasi</p>
+				</div>
+				<div class="icon">
+					<i class="ion ion-android-done"></i>
 				</div>
 			</div>
+			
 			<!-- div class="col-lg-12 col-xs-12">
 				<div class="small-box bg-yellow">
 					<div class="inner">
