@@ -141,6 +141,18 @@ class Target_model extends CI_Model {
 		return $resutl;
 	}
 	
+	function getTargetKp3Tahunan($branchId='', $tahun=''){
+		$sql = "
+		SELECT o.client_mapping, sum(t.amount) target
+		FROM target t 
+		JOIN ms_organization o ON t.org_id = o.id
+		WHERE 1=1 AND o.branch_id = '".$branchId."' and t.`year` = '".$tahun."'
+		GROUP BY o.client_mapping
+		";
+		$resutl = $this->db->query($sql)->result_array();
+		return $resutl;
+	}
+	
 }
 
 /* End of file Auth_model.php */

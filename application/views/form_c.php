@@ -107,7 +107,7 @@
 						<tr>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">No</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Unit Kerja</th>
-							<th rowspan="3" style="vertical-align: middle; text-align:center;">Target</th>
+							<th rowspan="3" style="vertical-align: middle; text-align:center;">Target [Rp.M]</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Terkontrak [Rp.M]</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Invoice [Rp.M]</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Realisasi [Rp.M]</th>
@@ -135,6 +135,7 @@
 							$dataTable = $getRekap_form_c['dataTable'];
 							$arrKp3 = $getRekap_form_c['arrKp3'];
 							$arrOrgId = $getRekap_form_c['arrOrgId'];
+							$targetAll = $getRekap_form_c['targetAll'];
 							for($i=0; $i<count($arrKp3); $i++){ 
 								$kp3 = strtoupper($arrKp3[$i]);
 								$org = @$arrOrgId[$kp3];
@@ -142,7 +143,8 @@
 							<tr>
 								<td><?php echo $i+1; ?></td>
 								<td><?php echo $kp3; ?></td>
-								<td>Target</td>
+								<td><?php echo number_format($targetAll[$kp3] / $pembagi,2); ?></td>
+								
 								<td align="right">
 									<button class="btn btn-link btnTerkontrak" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
 										<?php echo number_format(@$tableRekap[$kp3]['terkontrak'] / $pembagi ,4); ?>

@@ -638,7 +638,7 @@ class Dashboard extends CI_Controller {
 	
 	function getDataSatker(){
 		// http://localhost:55/04.Project/ESDM/BSCb4l1tb4ng/index.php/dashboard/getDataSatker
-		$rekap = $this->getRekap_form_c('All');
+		$rekap = $this->getRekap_form_c('tekmira');
 		print_r($rekap);
 		echo "\n";
 		echo "#############################################";
@@ -776,7 +776,6 @@ class Dashboard extends CI_Controller {
 			$targetTahunan = $targetSatker;
 			$targetBulanIni = $targetBulan;
 		}
-		
 		
 		$persenTarget = number_format(@$targetBulanIni/$targetTahunan * 100,2);
 		$persenBulanIni = number_format(@$realisasi/$targetTahunan * 100,2);
@@ -1098,7 +1097,7 @@ class Dashboard extends CI_Controller {
 		$totalInv = 0;
 		$totalRealisasi = 0;
 		
-		if ($satker == 'All' || $satker == "tekmira"){
+		if ($satker == 'All' || $satker == "tekmira"){ $branchId = '3';
 			$arrKp3 = array();
 			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_rekap';
 			$method 			= 'POST';
@@ -1139,7 +1138,7 @@ class Dashboard extends CI_Controller {
 				// 'dataRow' 	=> @$dataRow,
 			);
 		}
-		if ($satker == 'All' || $satker == "p3tek"){
+		if ($satker == 'All' || $satker == "p3tek"){ $branchId = '4';
 			$arrKp3 = array();
 			$url 				= 'http://suvisanusi.com/bscp3tek/formc/table.php?tahun='.$this->thisYear;
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formc/table.php?tahun=2019';
@@ -1179,7 +1178,7 @@ class Dashboard extends CI_Controller {
 				'totalRealisasi' 	=> @$totalRealisasi,
 			);
 		}
-		if ($satker == 'All' || $satker == "p3gl"){
+		if ($satker == 'All' || $satker == "p3gl"){ $branchId = '2';
 			$arrKp3 = array();
 			## rekap kontrak
 			$url 				= 'http://34.80.224.123/json/agreement?year='.$this->thisYear.'&group=group&time=yearly&source=organization';
@@ -1262,7 +1261,7 @@ class Dashboard extends CI_Controller {
 				'totalRealisasi' 	=> @$totalRealisasi,
 			);
 		}
-		if ($satker == 'All' || $satker == 'lemigas'){
+		if ($satker == 'All' || $satker == 'lemigas'){ $branchId = '1';
 			$arrKp3 = array();
 			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_rekap_unit_bulanan?_where=(tahun,eq,'.$this->thisYear.')';
 			$method 			= 'GET';
@@ -1308,10 +1307,24 @@ class Dashboard extends CI_Controller {
 				'totalRealisasi' 	=> @$totalRealisasi,
 			);
 		}
+		
+		$dataReturn['targetAll'] = array();
+		if ($satker != 'All'){
+			$targetAll = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
+			$dataReturn['targetAll'] = $targetAll;
+		}
 		return $dataReturn;
 	}
-
-
+	function getTargetKp3Tahunan($branchId='', $tahun=''){
+		$targetAll = array();
+		$dataTarget = $this->target->getTargetKp3Tahunan($branchId, $tahun);
+		foreach($dataTarget as $row){
+			$targetAll[$row['client_mapping']] = $row['target'];
+		}
+		return $targetAll;
+	}
+	
+	
 	public function detailTerkontrak(){
 		$rows = array();
 		$thisKey = @$_POST['thisKey'] ?: 0;
@@ -1356,7 +1369,6 @@ class Dashboard extends CI_Controller {
 		header('Content-Type: application/json');
 		echo json_encode($return);
 	}
-	
 	public function detailInvoice(){
 		$rows = array();
 		$thisKey = @$_POST['thisKey'] ?: 0;
@@ -1385,7 +1397,6 @@ class Dashboard extends CI_Controller {
 		header('Content-Type: application/json');
 		echo json_encode($return);
 	}
-	
 	public function detailRealisasi(){
 		$rows = array();
 		$thisKey = @$_POST['thisKey'] ?: 0;
