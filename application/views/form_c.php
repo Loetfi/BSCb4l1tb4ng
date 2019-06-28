@@ -56,7 +56,7 @@
 			</div>
 			<div class="small-box bg-aqua">
 				<div class="inner">
-					<h3><?php echo 'xxx'; ?></h3>
+					<h3><?php echo number_format($getRekap_form_c['totalInv'] / $pembagi, 2). $satuan; ?></h3>
 					<p>Invoice</p>
 				</div>
 				<div class="icon">
@@ -148,7 +148,11 @@
 										<?php echo number_format(@$tableRekap[$kp3]['terkontrak'] / $pembagi ,4); ?>
 									</button>
 								</td>
-								<td align="right"><?php echo number_format(@$tableRekap[$kp3]['inv'] / $pembagi ,4); ?></td>
+								<td align="right">
+									<button class="btn btn-link btnInvoice" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
+										<?php echo number_format(@$tableRekap[$kp3]['inv'] / $pembagi ,4); ?>
+									</button>
+								</td>
 								<td align="right">
 									<button class="btn btn-link btnRealisasi" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
 										<?php echo number_format(@$tableRekap[$kp3]['realisasi'] / $pembagi ,4); ?>
@@ -243,6 +247,37 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="modal-default-invoice">
+  <div class="modal-dialog modal-lg">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title"></h4>
+	  </div>
+	  <div class="modal-body">
+	    <table id="nTableInvoice" class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th>Nama Kontrak</th>
+					<th>No Kontrak</th>
+					<th>Pelanggan</th>
+					<th>Nilai Invoice</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+	  </div>
+	</div>
+	<!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 <script>
 $(function(){
 	// $('#MenuUnitKerja').addClass('active').addClass('menu-open');
@@ -257,6 +292,7 @@ $('#satKer').change(function(){
 
 var nTableKontrak = $('#nTableKontrak').dataTable();
 var nTableRealisasi = $('#nTableRealisasi').dataTable();
+var nTableInvoice = $('#nTableInvoice').dataTable();
 
 $('.btnTerkontrak').click(function(){
 	thisKp3 = $(this).attr('this_kp3');
@@ -333,6 +369,46 @@ $('.btnRealisasi').click(function(){
 		complete: function(){
 			$('.modal-title').text(thisKp3);
 			$('#modal-default-realisasi').modal('show');
+		}
+	});
+	
+});
+
+$('.btnInvoice').click(function(){
+	thisKp3 = $(this).attr('this_kp3');
+	thisKey = $(this).attr('this_key');
+	thisYear = $(this).attr('this_year');
+	$.ajax({
+		method: 'POST',
+		type: 'json',
+		url: '<?php echo site_url('api/dashboard/detailInvoice'); ?>', 
+		data: {
+			thisKey: thisKey, 
+			thisYear : thisYear, 
+			thisSatker : '<?php echo $satKer; ?>', 
+		},
+		beforeSend: function( ) {
+		},
+		success: function(thisData) {
+			console.log(thisData.data.length);
+			nTableInvoice.fnClearTable(); 
+			for(i = 0; i < thisData.data.length; i++){
+				row = thisData.data[i];
+				nTableInvoice.fnAddData([ 
+					(i+1),
+					row.judul,
+					row.noKontrak,
+					row.pelanggan,
+					row.nilaiInvoice
+				]);
+			} 
+		},
+		error: function() {
+			alert('Ada opsi yang belum terpilih atau refresh halaman, dan coba lagi.');
+		},
+		complete: function(){
+			$('.modal-title').text(thisKp3);
+			$('#modal-default-invoice').modal('show');
 		}
 	});
 	

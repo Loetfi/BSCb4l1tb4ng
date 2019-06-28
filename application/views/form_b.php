@@ -24,7 +24,6 @@
 			<br>
 		</div>
 	</div -->
-	
 	<div class="row">
         <div class="col-lg-4 col-xs-4"> 
 			<!-- small box -->
@@ -61,7 +60,7 @@
 			</div>
 			<div class="small-box bg-aqua">
 				<div class="inner">
-					<h3><?php echo 'xxx'; ?></h3>
+					<h3><?php echo number_format($getRekap_form_c['totalInv'] / $pembagi, 2). $satuan; ?></h3>
 					<p>Invoice</p>
 				</div>
 				<div class="icon">
