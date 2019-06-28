@@ -94,7 +94,14 @@
         </div>
 		<!-- ./col -->
 	</div>
-	
+	<?php 
+	$targetBulanan = $getGrafik_form_a['targetBulanan'];
+	$targetBulanIni = $getGrafik_form_a['targetBulanIni'];
+	// echo '<pre>';
+	// print_r($targetBulanIni);
+	// print_r($targetBulanan);
+	// echo '</pre>';
+	?>
 	<div class="row">
 		<div class="col-xs-4">
 			<div class="box box-warning">
@@ -126,8 +133,13 @@
 						<tr>
 							<th><?php echo strtoupper($row['Unit Kerja']); ?></th>
 							<td align="right"><?php echo $row['Target']; ?></td>
+							
+							<!-- td align="right"><?php echo $row['Target Bulan Ini']; ?></td>
+							<td align="right"><?php echo $row['Target (%)']; ?></td -->
+							
+							<td align="right"><?php echo number_format(@$targetBulanIni[$row['Unit Kerja']] / $pembagi,2); ?></td>
 							<td align="right"><?php echo $row['Target Bulan Ini']; ?></td>
-							<td align="right"><?php echo $row['Target (%)']; ?></td>
+							
 							<td align="right"><?php echo $row['Realisasi']; ?></td>
 							<td align="right"><?php echo $row['Realisasi(%)']; ?></td>
 							<td align="right"><?php echo $row['Sisa']; ?></td>

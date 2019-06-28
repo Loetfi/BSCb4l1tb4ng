@@ -143,7 +143,7 @@
 							<tr>
 								<td><?php echo $i+1; ?></td>
 								<td><?php echo $kp3; ?></td>
-								<td><?php echo number_format($targetAll[$kp3] / $pembagi,2); ?></td>
+								<td><?php echo number_format(@$targetAll[$kp3] / $pembagi,2); ?></td>
 								
 								<td align="right">
 									<button class="btn btn-link btnTerkontrak" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">

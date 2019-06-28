@@ -638,7 +638,7 @@ class Dashboard extends CI_Controller {
 	
 	function getDataSatker(){
 		// http://localhost:55/04.Project/ESDM/BSCb4l1tb4ng/index.php/dashboard/getDataSatker
-		$rekap = $this->getRekap_form_c('tekmira');
+		$rekap = $this->getGrafik_form_a('tekmira');
 		print_r($rekap);
 		echo "\n";
 		echo "#############################################";
@@ -794,9 +794,11 @@ class Dashboard extends CI_Controller {
 		$AkumulasiRealiasi = null;
 		$AkumulasiRealiasiTahunLalu = null;
 		
+		$targetBulanIni = array();
+		$targetBulanan = array();
 		$data = array();
 		$dataSeries = array();
-		if ($satKer == 'All' || $satKer == 'p3tek'){
+		if ($satKer == 'All' || $satKer == 'p3tek'){ $branchId = '4';
 			## p3tek
 			$url 				= 'http://suvisanusi.com/bscp3tek/forma/grafik.php?tahun='.$this->thisYear;
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/forma/grafik.php?tahun=2019';
@@ -824,7 +826,7 @@ class Dashboard extends CI_Controller {
 			}
 		}
 		
-		if ($satKer == 'All' || $satKer == 'tekmira'){
+		if ($satKer == 'All' || $satKer == 'tekmira'){ $branchId = '3';
 			## p3tek
 			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/table_rekap_target';
 			$method 			= 'POST';
@@ -863,7 +865,7 @@ class Dashboard extends CI_Controller {
 			}
 		}
 		
-		if ($satKer == 'All' || $satKer == 'p3gl'){
+		if ($satKer == 'All' || $satKer == 'p3gl'){ $branchId = '2';
 			## kontrak
 			$url 				= 'http://34.80.224.123/json/agreement?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
 			$method 			= 'GET';
@@ -914,7 +916,7 @@ class Dashboard extends CI_Controller {
 			}
 		}
 		
-		if ($satKer == 'All' || $satKer == 'lemigas'){
+		if ($satKer == 'All' || $satKer == 'lemigas'){ $branchId = '1';
 			## p3tek
 			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_rekap_unit_bulanan?_where=(tahun,eq,'.$this->thisYear.')';
 			$method 			= 'GET';
@@ -953,18 +955,40 @@ class Dashboard extends CI_Controller {
 		
 		
 		## olah grafik
-		$dataSeries[] = array( 'name' => 'target', 'data' => @$data['target'] );
 		$dataSeries[] = array( 'name' => 'potensi', 'data' => @$data['potensi'] );
 		$dataSeries[] = array( 'name' => 'realisasi', 'data' => @$data['realisasi'] );
 		$dataSeries[] = array( 'name' => 'Akumulasi Realiasi', 'data' => @$data['AkumulasiRealiasi'] );
 		$dataSeries[] = array( 'name' => 'realiasi TahunLalu', 'data' => @$data['realiasiTahunLalu'] );
 		$dataSeries[] = array( 'name' => 'realiasi Akumulasi Lalu', 'data' => @$data['AkumulasiRealiasiTahunLalu'] );
 		
+		
 		$dataReturn = array(
 			'table' => @$data,
-			'dataSeries' => @$dataSeries,
+			// 'dataSeries' => @$dataSeries,
+			'targetBulanIni' => @$targetBulanIni,
+			'targetBulanan' => @$targetBulanan,
 			// 'dataRow' => @$dataRow,
 		);
+		
+		if ($satKer != 'All'){
+			$targetBulanIni = $this->getTargetKp3Bulan($branchId, $this->thisYear, date('m'));
+			$dataReturn['targetBulanIni'] = $targetBulanIni;
+			
+			$targetBulanan = $this->getTargetKp3Bulanan($branchId, $this->thisYear);
+			$dataReturn['targetBulanan'] = $targetBulanan;
+			
+			for($i=1; $i<=12; $i++){
+				$thisTarget[] = floatval($targetBulanan[$i]);
+			}
+			$dataSeries[] = array( 'name' => 'target', 'data' => $thisTarget );
+			
+		} else {
+			$targetBulanan = $this->getTargetKp3Bulanan($satKer, $this->thisYear);
+			$dataReturn['targetBulanan'] = floatval($targetBulanan);
+		}
+		$dataReturn['dataSeries'] = @$dataSeries;
+		
+		
 		return $dataReturn;
 	}
 	function getRekap_form_b($satker){
@@ -1315,11 +1339,28 @@ class Dashboard extends CI_Controller {
 		}
 		return $dataReturn;
 	}
+
 	function getTargetKp3Tahunan($branchId='', $tahun=''){
 		$targetAll = array();
 		$dataTarget = $this->target->getTargetKp3Tahunan($branchId, $tahun);
 		foreach($dataTarget as $row){
 			$targetAll[$row['client_mapping']] = $row['target'];
+		}
+		return $targetAll;
+	}
+	function getTargetKp3Bulan($branchId='', $tahun='', $bulan=''){
+		$targetAll = array();
+		$dataTarget = $this->target->getTargetKp3Bulan($branchId, $tahun, $bulan);
+		foreach($dataTarget as $row){
+			$targetAll[$row['client_mapping']] = $row['target'];
+		}
+		return $targetAll;
+	}
+	function getTargetKp3Bulanan($branchId='', $tahun=''){
+		$targetAll = array();
+		$dataTarget = $this->target->getTargetKp3Bulanan($branchId, $tahun);
+		foreach($dataTarget as $row){
+			$targetAll[$row['month']] = $row['target'];
 		}
 		return $targetAll;
 	}

@@ -152,6 +152,37 @@ class Target_model extends CI_Model {
 		$resutl = $this->db->query($sql)->result_array();
 		return $resutl;
 	}
+	function getTargetKp3Bulan($branchId='', $tahun='', $bulan=''){
+		$sql = "
+		SELECT o.client_mapping, sum(t.amount) target
+		FROM target t 
+		JOIN ms_organization o ON t.org_id = o.id
+		WHERE 1=1 AND o.branch_id = '".$branchId."' and t.`year` = '".$tahun."' and t.`month` = '".$bulan."'
+		GROUP BY o.client_mapping
+		";
+		$resutl = $this->db->query($sql)->result_array();
+		return $resutl;
+	}
+	
+	function getTargetKp3Bulanan($branchId='', $tahun=''){
+		if ($branchId == 'All'){
+			$where = "";
+		}
+		else {
+			$where = " AND o.branch_id = '".$branchId."' ";
+		}
+		$sql = "
+		SELECT t.`month`, sum(t.amount) target
+		FROM target t 
+		JOIN ms_organization o ON t.org_id = o.id
+		WHERE 1=1 ".$where." and t.`year` = '".$tahun."'
+		GROUP BY t.`month`
+		ORDER BY t.`month` ASC
+		";
+		
+		$resutl = $this->db->query($sql)->result_array();
+		return $resutl;
+	}
 	
 }
 
