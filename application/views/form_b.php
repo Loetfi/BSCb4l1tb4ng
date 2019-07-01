@@ -97,10 +97,10 @@
 	<?php 
 	$targetBulanan = $getGrafik_form_a['targetBulanan'];
 	$targetBulanIni = $getGrafik_form_a['targetBulanIni'];
-	echo '<pre>';
+	// echo '<pre>';
 	// print_r($targetBulanIni);
-	print_r($targetBulanan);
-	echo '</pre>';
+	// print_r($targetBulanan);
+	// echo '</pre>';
 	?>
 	<div class="row">
 		<div class="col-xs-4">
