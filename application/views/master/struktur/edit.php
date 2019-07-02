@@ -45,13 +45,13 @@
 						<div class="form-group">
 							<label for="code" class="col-sm-2 control-label">Kode</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="code" placeholder="code" value="<?php echo $detail['code']; ?>" required>
+								<input type="text" class="form-control" id="code" placeholder="code" value="<?php echo $detail['code']; ?>">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="type" class="col-sm-2 control-label">Tipe</label>
 							<div class="col-sm-10">
-								<select class="form-control" id="type" required>
+								<select class="form-control" id="type">
 									<option value="">Pilih Type</option>
 									<option value="Penerimaan" <?php echo $detail['type']=='Penerimaan'?'selected':''; ?>>Penerimaan</option>
 									<option value="Pelaksanaan" <?php echo $detail['type']=='Pelaksanaan'?'selected':''; ?>>Pelaksanaan</option>
@@ -68,7 +68,7 @@
 						<div class="form-group">
 							<label for="description" class="col-sm-2 control-label">Deskripsi</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="description" placeholder="description" value="<?php echo $detail['description']; ?>" required>
+								<input type="text" class="form-control" id="description" placeholder="description" value="<?php echo $detail['description']; ?>">
 							</div>
 						</div>
 						<div class="form-group">
