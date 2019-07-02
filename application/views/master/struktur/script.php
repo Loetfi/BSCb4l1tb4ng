@@ -26,7 +26,7 @@ $(function(){
 		$.ajax({
 			dataType: "json",
 			type: "POST",
-			url: "<?php echo site_url($thisUrl.'/addProcess'); ?>",
+			url: "<?php echo site_url('api/'.$thisUrl.'/addProcess'); ?>",
 			data : {
 				parent_id: parent_id,
 				branch_id: branch_id,
@@ -64,7 +64,7 @@ $(function(){
 		$.ajax({
 			dataType: "json",
 			type: "POST",
-			url: "<?php echo site_url($thisUrl.'/editProcess'); ?>",
+			url: "<?php echo site_url('api/'.$thisUrl.'/editProcess'); ?>",
 			data : {
 				org_id: org_id,
 				parent_id: parent_id,

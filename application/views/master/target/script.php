@@ -22,7 +22,7 @@ $(function(){
 		$.ajax({
 			dataType: "json",
 			type: "POST",
-			url: "<?php echo site_url($thisUrl.'/addProcess'); ?>",
+			url: "<?php echo site_url('api/'.$thisUrl.'/addProcess'); ?>",
 			data : {
 				org_id: org_id,
 				year: year,
@@ -55,7 +55,7 @@ $(function(){
 		$.ajax({
 			dataType: "json",
 			type: "POST",
-			url: "<?php echo site_url($thisUrl.'/editProcess'); ?>",
+			url: "<?php echo site_url('api/'.$thisUrl.'/editProcess'); ?>",
 			data : {
 				target_id: target_id,
 				org_id: org_id,

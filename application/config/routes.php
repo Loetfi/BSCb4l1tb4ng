@@ -53,6 +53,13 @@ $route['default_controller'] = 'dashboard';
 $route['api/dashboard/detailTerkontrak'] = 'dashboard/detailTerkontrak';
 $route['api/dashboard/detailRealisasi'] = 'dashboard/detailRealisasi';
 $route['api/dashboard/detailInvoice'] = 'dashboard/detailInvoice';
+
+$route['api/master/target/addProcess'] = 'master/target/addProcess';
+$route['api/master/target/editProcess'] = 'master/target/editProcess';
+
+$route['api/master/struktur/addProcess'] = 'master/struktur/addProcess';
+$route['api/master/struktur/editProcess'] = 'master/struktur/editProcess';
+
 $route['login'] = 'auth/index';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
