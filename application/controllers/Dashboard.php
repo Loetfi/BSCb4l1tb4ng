@@ -715,14 +715,14 @@ class Dashboard extends CI_Controller {
 			$targetBulan = @$getTargetSatker['TargetBulanIni'];
 			
 			// kontrak
-			$url 				= 'http://34.80.224.123/json/agreement?year='.$this->thisYear.'&group=organization&time=yearly&source=organization';
+			$url 				= 'http://34.66.44.99/json/agreement?year='.$this->thisYear.'&group=organization&time=yearly&source=organization';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
 			$dataRow 			= @$responRow['data'];
 			$kontrakSatker 		+= @$dataRow['value_casted'];
 			
-			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=organization&time=yearly&source=organization';
+			$url 				= 'http://34.66.44.99/json/payment?year='.$this->thisYear.'&group=organization&time=yearly&source=organization';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -867,7 +867,7 @@ class Dashboard extends CI_Controller {
 		
 		if ($satKer == 'All' || $satKer == 'p3gl'){ $branchId = '2';
 			## kontrak
-			$url 				= 'http://34.80.224.123/json/agreement?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
+			$url 				= 'http://34.66.44.99/json/agreement?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -878,7 +878,7 @@ class Dashboard extends CI_Controller {
 			}
 			
 			## Pencapaian this year
-			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
+			$url 				= 'http://34.66.44.99/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/forma/grafik.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
@@ -889,7 +889,7 @@ class Dashboard extends CI_Controller {
 				$dataSatker[$bulan] = @$row;
 			}
 			## Pencapaian last year
-			$url 				= 'http://34.80.224.123/json/payment?year='.$this->lastYear.'&group=group&time=monthly&source=organization';
+			$url 				= 'http://34.66.44.99/json/payment?year='.$this->lastYear.'&group=group&time=monthly&source=organization';
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/forma/grafik.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
@@ -1018,7 +1018,7 @@ class Dashboard extends CI_Controller {
 			}
 		}
 		else if ($satker == "p3gl"){
-			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
+			$url 				= 'http://34.66.44.99/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
@@ -1205,7 +1205,7 @@ class Dashboard extends CI_Controller {
 		if ($satker == 'All' || $satker == "p3gl"){ $branchId = '2';
 			$arrKp3 = array();
 			## rekap kontrak
-			$url 				= 'http://34.80.224.123/json/agreement?year='.$this->thisYear.'&group=group&time=yearly&source=organization';
+			$url 				= 'http://34.66.44.99/json/agreement?year='.$this->thisYear.'&group=group&time=yearly&source=organization';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -1222,7 +1222,7 @@ class Dashboard extends CI_Controller {
 			}
 			
 			## rekap invoice
-			$url 				= 'http://34.80.224.123/json/issue?year='.$this->thisYear.'&group=group&time=yearly&source=organization';
+			$url 				= 'http://34.66.44.99/json/issue?year='.$this->thisYear.'&group=group&time=yearly&source=organization';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -1238,7 +1238,7 @@ class Dashboard extends CI_Controller {
 				$totalInv += @$row['value_casted'];
 			}
 			## rekap realisasi
-			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=group&time=yearly&source=organization';
+			$url 				= 'http://34.66.44.99/json/payment?year='.$this->thisYear.'&group=group&time=yearly&source=organization';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -1254,7 +1254,7 @@ class Dashboard extends CI_Controller {
 				$totalRealisasi += @$row['value_casted'];
 			}
 			
-			$url 				= 'http://34.80.224.123/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
+			$url 				= 'http://34.66.44.99/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -1373,7 +1373,7 @@ class Dashboard extends CI_Controller {
 		$satker = $_POST['thisSatker'] ?: 0;
 		if ($satker == "p3gl"){
 			## rekap kontrak
-			$url 				= 'http://34.80.224.123/json/organization_issue?organization_id='.$thisKey.'&year='.$this->thisYear;
+			$url 				= 'http://34.66.44.99/json/organization_issue?organization_id='.$thisKey.'&year='.$this->thisYear;
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -1417,7 +1417,7 @@ class Dashboard extends CI_Controller {
 		$satker = $_POST['thisSatker'] ?: 0;
 		if ($satker == "p3gl"){
 			## rekap kontrak
-			$url 				= 'http://34.80.224.123/json/organization_issue?organization_id='.$thisKey.'&year='.$this->thisYear;
+			$url 				= 'http://34.66.44.99/json/organization_issue?organization_id='.$thisKey.'&year='.$this->thisYear;
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -1444,7 +1444,7 @@ class Dashboard extends CI_Controller {
 		$thisYear = @$_POST['thisYear'] ?: 0;
 		$satker = $_POST['thisSatker'] ?: 0;
 		if ($satker == "p3gl"){
-			$url 				= 'http://34.80.224.123/json/organization_payment?organization_id='.$thisKey.'&year='.$this->thisYear;
+			$url 				= 'http://34.66.44.99/json/organization_payment?organization_id='.$thisKey.'&year='.$this->thisYear;
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
