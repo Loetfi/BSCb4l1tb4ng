@@ -996,7 +996,7 @@ class Dashboard extends CI_Controller {
 		$pembagi = $this->pembagi;
 		$satuan = $this->satuan;
 		
-		if ($satker == "p3tek"){
+		if ($satker == "p3tek"){ $branchId = '4';
 			$url 				= 'http://suvisanusi.com/bscp3tek/formb/table.php?tahun='.$this->thisYear;
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'GET';
@@ -1017,7 +1017,7 @@ class Dashboard extends CI_Controller {
 				);
 			}
 		}
-		else if ($satker == "p3gl"){
+		else if ($satker == "p3gl"){ $branchId = '2';
 			$url 				= 'http://34.66.44.99/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
 			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'GET';
@@ -1049,20 +1049,22 @@ class Dashboard extends CI_Controller {
 				);
 			}
 		}
-		else if ($satker == "tekmira"){
+		else if ($satker == "tekmira"){ $branchId = '3';
+			
+			$targetAll = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
+			// $dataReturn['targetAll'] = $targetAll;
+			// print_r($targetAll);
 			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_kiri';
-			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'POST';
 			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
-			// $responsedet['response'] = str_replace('{"kp3":"PEMANFAATAN ASET","target":"700000000","targetBulanIni":0,"realisasi":"261.468.000"}','',$responsedet['response']);
-			// $responsedet['response'] = str_replace('},]}','}]}',$responsedet['response']);
 			$responRow	 		= json_decode($responsedet['response'],true);
 			$dataRow 			= @$responRow['data'];
+			// print_r($dataRow); die();
 			foreach($dataRow as $row){
 				$realisasiKp3 	= str_replace('.','',@$row['realisasi']);
 				$dataReturn[] = array(
 					'Unit Kerja'		=> $row['kp3'],
-					'Target'			=> number_format($row['target']/$pembagi,2).$satuan,
+					'Target'			=> number_format($targetAll[$row['kp3']]/$pembagi,2).$satuan,
 					'Target Bulan Ini'	=> $row['targetBulanIni'],
 					'Target (%)'		=> null,
 					'Realisasi'			=> number_format($realisasiKp3/$pembagi,2).$satuan,
@@ -1072,7 +1074,7 @@ class Dashboard extends CI_Controller {
 				);
 			}
 		}
-		else if ($satker == "lemigas"){
+		else if ($satker == "lemigas"){ $branchId = '1';
 			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_rekap_unit_bulanan?_where=(tahun,eq,'.$this->thisYear.')';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
