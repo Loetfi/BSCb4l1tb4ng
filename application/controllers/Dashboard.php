@@ -638,18 +638,19 @@ class Dashboard extends CI_Controller {
 	
 	function getDataSatker(){
 		// http://localhost:55/04.Project/ESDM/BSCb4l1tb4ng/index.php/dashboard/getDataSatker
-		$rekap = $this->getRekap_form_a('tekmira');
-		print_r($rekap);
-		echo "\n # getRekap_form_a ############################################";
-		$rekap = $this->getGrafik_form_a('tekmira');
-		print_r($rekap);
-		echo "\n # getGrafik_form_a ############################################";
-		$rekap = $this->getRekap_form_b('tekmira');
+		// $rekap = $this->getRekap_form_a('tekmira');
+		// print_r($rekap);
+		// echo "\n # getRekap_form_a ############################################";
+		// $rekap = $this->getGrafik_form_a('tekmira');
+		// print_r($rekap);
+		// echo "\n # getGrafik_form_a ############################################";
+		
+		$rekap = $this->getRekap_form_b('p3tek');
 		print_r($rekap);
 		echo "\n # getRekap_form_b ############################################";
-		$rekap = $this->getRekap_form_c('tekmira');
-		print_r($rekap);
-		echo "\n # getRekap_form_c ############################################";
+		// $rekap = $this->getRekap_form_c('tekmira');
+		// print_r($rekap);
+		// echo "\n # getRekap_form_c ############################################";
 		die();
 		
 	}
@@ -1035,8 +1036,9 @@ class Dashboard extends CI_Controller {
 		$satuan = $this->satuan;
 		
 		if ($satker == "p3tek"){ $branchId = '4';
+			$targetAll = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
+			
 			$url 				= 'http://35.188.21.29/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
-			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -1056,7 +1058,7 @@ class Dashboard extends CI_Controller {
 				
 				$dataReturn[] = array(
 					'Unit Kerja'		=> @$kp3,
-					'Target'			=> @$target[$kp3],
+					'Target'			=> number_format(@$targetAll[$kp3]/$pembagi,2).$satuan,
 					'Target Bulan Ini'	=> @$targetBulanIni[$kp3],
 					'Target (%)'		=> null,
 					'Realisasi'			=> number_format($realisasiKp3/$pembagi,2).$satuan,
@@ -1067,8 +1069,9 @@ class Dashboard extends CI_Controller {
 			}
 		}
 		else if ($satker == "p3gl"){ $branchId = '2';
+			$targetAll = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
+			
 			$url 				= 'http://34.66.44.99/json/payment?year='.$this->thisYear.'&group=group&time=monthly&source=organization';
-			// $url 				= 'http://localhost:55/04.Project/ESDM/BSC_API/bscp3tek/formb/table.php?tahun=2019';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -1088,7 +1091,7 @@ class Dashboard extends CI_Controller {
 				
 				$dataReturn[] = array(
 					'Unit Kerja'		=> @$kp3,
-					'Target'			=> @$target[$kp3],
+					'Target'			=> number_format(@$targetAll[$kp3]/$pembagi,2).$satuan,
 					'Target Bulan Ini'	=> @$targetBulanIni[$kp3],
 					'Target (%)'		=> null,
 					'Realisasi'			=> number_format($realisasiKp3/$pembagi,2).$satuan,
