@@ -682,7 +682,7 @@ class Dashboard extends CI_Controller {
 			$dataRow 			= @$responRow['data'];
 			$realisasiSatker 	= @$dataRow['value_casted'];
 			$dataSatker[] = array(
-				'Unit Kerja'		=> 'BLK',
+				'Unit Kerja'		=> 'BLE',
 				'Target'			=> number_format($targetSatker/$pembagi,2).$satuan,
 				'Target Bulan Ini'	=> number_format($targetBulan/$pembagi,2).$satuan,
 				'Target (%)'		=> number_format($targetBulan/$targetSatker * 100,2),
