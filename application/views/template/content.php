@@ -57,12 +57,12 @@
         <li class="header">NAVIGASI</li>
         <li id="menuDashboard">
           <a href="<?php echo site_url('dashboard'); ?>">
-            <i class="fa fa-dashboard"></i> <span>Dashboard 1</span> 
+            <i class="fa fa-dashboard"></i> <span>Kinerja BLU</span> 
           </a>
         </li> 
 		<li id="menuDashboard">
           <a href="<?php echo site_url('dashboard/form_a'); ?>">
-            <i class="fa fa-dashboard"></i> <span>Dashboard 2</span> 
+            <i class="fa fa-dashboard"></i> <span>Realisasi Penerimaan BLU</span> 
           </a>
         </li> 
         <li id="MenuUnitKerja" class="treeview">
