@@ -964,7 +964,7 @@ class Dashboard extends CI_Controller {
 				$nilai = $row['nilai'];
 				if ($row['kontrak_currency'] == 1)
 					$nilai = @$row['nilai'] * $this->pengaliDolar;
-				@$KontrakSatker[$bulan] += @$nilai;
+				@$KontrakSatker[$bulan]['value_casted'] += @$nilai;
 			}
 			
 			## Pencapaian this year
@@ -991,7 +991,7 @@ class Dashboard extends CI_Controller {
 				if (@$dataSatker[$i]['target'] > 0) 			{ @$data['target'][$i-1] 				+= @$dataSatker[$i]['target'];            } else { @$data['target'][$i-1]				= null; }
 				if (@$dataSatker[$i]['potensi'] > 0)			{ @$data['potensi'][$i-1] 				+= @$dataSatker[$i]['potensi'];           } else { @$data['potensi'][$i-1]				= null; }
 				if (@$dataSatker[$i]['kredit'] > 0)				{ @$data['realisasi'][$i-1] 			+= @$dataSatker[$i]['kredit'];            } else { @$data['realisasi'][$i-1]			= null; }
-				if (@$KontrakSatker[$i] > 0)					{ @$data['nilaiKontrak'][$i-1] 			+= @$KontrakSatker[$i];                   } else { @$data['nilaiKontrak'][$i-1]			= null; }
+				if (@$KontrakSatker[$i]['value_casted'] > 0)	{ @$data['nilaiKontrak'][$i-1] 			+= @$KontrakSatker[$i]['value_casted'];   } else { @$data['nilaiKontrak'][$i-1]			= null; }
 				if (@$dataSatkerLalu[$i]['kredit'] > 0)			{ @$data['realiasiTahunLalu'][$i-1] 	+= @$dataSatkerLalu[$i]['kredit'];        } else { @$data['realiasiTahunLalu'][$i-1]	= null; }
 				
 				$AkumulasiRealiasi += @$dataSatker[$i]['kredit'];
