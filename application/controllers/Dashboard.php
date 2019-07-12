@@ -21,6 +21,7 @@ class Dashboard extends CI_Controller {
 		}
 		
 		$this->pembagi = 1000000000;
+		$this->pengaliDolar = 14000;
 		// $this->pembagi = 1;
 		$this->satuan = ' M';
 		$this->thisYear = date('Y');
@@ -953,7 +954,20 @@ class Dashboard extends CI_Controller {
 		}
 		
 		if ($satKer == 'All' || $satKer == 'lemigas'){ $branchId = '1';
-			## p3tek
+			## kontrak
+			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_ws_rekap_kontrak_bulan?_where=(tahun,eq,'.$this->thisYear.')&_sort=tahun,bulan';
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$dataRow	 		= json_decode($responsedet['response'],true);
+			foreach($dataRow as $row){
+				$bulan = (int)@$row['bulan'];
+				$nilai = $row['nilai'];
+				if ($row['kontrak_currency'] == 1)
+					$nilai = @$row['nilai'] * $this->pengaliDolar;
+				@$KontrakSatker[$bulan] += @$nilai;
+			}
+			
+			## Pencapaian this year
 			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_rekap_unit_bulanan?_where=(tahun,eq,'.$this->thisYear.')';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
@@ -963,7 +977,7 @@ class Dashboard extends CI_Controller {
 				@$dataSatker[$bulan]['kredit'] += $row['kredit'];
 			}
 			
-			// tahun lalu
+			## Pencapaian last year
 			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_rekap_unit_bulanan?_where=(tahun,eq,'.($this->thisYear -1).')';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
@@ -974,19 +988,22 @@ class Dashboard extends CI_Controller {
 			}
 			
 			for($i=1; $i<=12; $i++){
-				if (@$dataSatker[$i]['target'] > 0) 			{ @$data['target'][$i-1] 				+= @$dataSatker[$i]['target'];            } else { @$data['target'][$i-1]				+= null; }
-				if (@$dataSatker[$i]['potensi'] > 0)			{ @$data['potensi'][$i-1] 				+= @$dataSatker[$i]['potensi'];           } else { @$data['potensi'][$i-1]				+= null; }
-				if (@$dataSatker[$i]['kredit'] > 0)				{ @$data['realisasi'][$i-1] 			+= @$dataSatker[$i]['kredit'];            } else { @$data['realisasi'][$i-1]			+= null; }
-				if (@$dataSatker[$i]['realisasiKontrak'] > 0)	{ @$data['nilaiKontrak'][$i-1] 			+= @$dataSatker[$i]['realisasiKontrak'];  } else { @$data['nilaiKontrak'][$i-1]			+= null; }
-				if (@$dataSatkerLalu[$i]['kredit'] > 0)			{ @$data['realiasiTahunLalu'][$i-1] 	+= @$dataSatkerLalu[$i]['kredit'];        } else { @$data['realiasiTahunLalu'][$i-1]	+= null; }
+				if (@$dataSatker[$i]['target'] > 0) 			{ @$data['target'][$i-1] 				+= @$dataSatker[$i]['target'];            } else { @$data['target'][$i-1]				= null; }
+				if (@$dataSatker[$i]['potensi'] > 0)			{ @$data['potensi'][$i-1] 				+= @$dataSatker[$i]['potensi'];           } else { @$data['potensi'][$i-1]				= null; }
+				if (@$dataSatker[$i]['kredit'] > 0)				{ @$data['realisasi'][$i-1] 			+= @$dataSatker[$i]['kredit'];            } else { @$data['realisasi'][$i-1]			= null; }
+				if (@$KontrakSatker[$i] > 0)					{ @$data['nilaiKontrak'][$i-1] 			+= @$KontrakSatker[$i];                   } else { @$data['nilaiKontrak'][$i-1]			= null; }
+				if (@$dataSatkerLalu[$i]['kredit'] > 0)			{ @$data['realiasiTahunLalu'][$i-1] 	+= @$dataSatkerLalu[$i]['kredit'];        } else { @$data['realiasiTahunLalu'][$i-1]	= null; }
 				
-				$AkumulasiRealiasi += @$dataSatker[$i]['realisasi'];
+				$AkumulasiRealiasi += @$dataSatker[$i]['kredit'];
 				if ($i <= (int)date('m'))
 				@$data['AkumulasiRealiasi'][$i-1] 	+= $AkumulasiRealiasi;
 				
-				$AkumulasiRealiasiTahunLalu += @$dataSatkerLalu[$i]['realisasi'];
+				$AkumulasiRealiasiTahunLalu += @$dataSatkerLalu[$i]['kredit'];
 				@$data['AkumulasiRealiasiTahunLalu'][$i-1] 	+= $AkumulasiRealiasiTahunLalu;
 			}
+			// print_r(@$data['AkumulasiRealiasi']); 
+			// print_r(@$data['AkumulasiRealiasiTahunLalu']); 
+			// die();
 		}
 		
 		
@@ -1127,6 +1144,8 @@ class Dashboard extends CI_Controller {
 			}
 		}
 		else if ($satker == "lemigas"){ $branchId = '1';
+			$targetAll = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
+			
 			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_rekap_unit_bulanan?_where=(tahun,eq,'.$this->thisYear.')';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
@@ -1154,7 +1173,7 @@ class Dashboard extends CI_Controller {
 				
 				$dataReturn[] = array(
 					'Unit Kerja'		=> @$kp3,
-					'Target'			=> @$target[$kp3],
+					'Target'			=> number_format(@$targetAll[$kp3]/$pembagi,2).$satuan,
 					'Target Bulan Ini'	=> @$targetBulanIni[$kp3],
 					'Target (%)'		=> null,
 					'Realisasi'			=> number_format($realisasiKp3/$pembagi,2).$satuan,
@@ -1383,41 +1402,105 @@ class Dashboard extends CI_Controller {
 			);
 		}
 		if ($satker == 'All' || $satker == 'lemigas'){ $branchId = '1';
+			
 			$arrKp3 = array();
-			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_rekap_unit_bulanan?_where=(tahun,eq,'.$this->thisYear.')';
+			
+			## penerimaan
+			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_ws_invoice_penerimaan_bulan?_where=(tahun_bayar,eq,'.$this->thisYear.')&_sort=host_kode,bulan_bayar';
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$dataRow	 		= json_decode($responsedet['response'],true);
 			foreach($dataRow as $row){
-				$unit_kode = $row['unit_kode'];
+				$unit_kode = $row['host_kode'];
 				$exp = explode('.',$unit_kode);
 				if ($exp[2] == '00'){
-					$thisKp3[''.$exp[0].$exp[1].''] = $row['unit_nama'];
+					$thisKp3[''.$exp[0].$exp[1].''] = $row['unit_name'];
 				}
 				$row['unit_nama'] = @$thisKp3[''.$exp[0].$exp[1].''];
 				$row['orgId'] = ''.$exp[0].$exp[1].'';
 				$dataOlah[] = $row;
 			}
-			
 			foreach($dataOlah as $row){
 				$kp3 = strtoupper($row['unit_nama']);
-				$bulan = (int)$row['bulan'];
+				$bulan = (int)$row['bulan_bayar'];
 				if(!in_array($kp3, $arrKp3)){
 					$arrKp3[] = $kp3;
 					$arrOrgId[$kp3] = $row['orgId'];
 				}
+				
+				$nilai = $row['inv_nilai'];
+				if ($row['inv_currency'] == 1)
+					$nilai = @$row['inv_nilai'] * $this->pengaliDolar;
+				
 				$dataTable[$kp3][$bulan]['kp3'] 					= $row['unit_nama'];
-				@$dataTable[$kp3][$bulan]['realisasi'] 				+= $row['kredit'];
-				@$dataTable[$kp3][$bulan]['bulan']					= $row['bulan'];
+				@$dataTable[$kp3][$bulan]['realisasi'] 				+= $nilai;
+				@$dataTable[$kp3][$bulan]['bulan']					= $row['bulan_bayar'];
 				@$dataTable[$kp3][$bulan]['realisasiKontrak']		= null;
 				@$dataTable[$kp3][$bulan]['invoice']				= null;
 				
-				$tableRekap[$kp3]['terkontrak'] 	= 1;
-				$tableRekap[$kp3]['inv'] 			= null;
-				@$tableRekap[$kp3]['realisasi'] 		+= $row['kredit'];
+				@$tableRekap[$kp3]['realisasi'] 	+= $nilai;
 				
-				$totalRealisasi += $row['kredit'];
+				$totalRealisasi += $nilai;
 			}
+			
+			## kontrak
+			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_ws_rekap_kontrak_bulan?_where=(tahun,eq,'.$this->thisYear.')&_sort=host_kode,bulan';
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$dataRow	 		= json_decode($responsedet['response'],true);
+			// print_r(@$dataRow);
+			foreach($dataRow as $row){
+				$host_kode = $row['host_kode'];
+				$exp = explode('.',$host_kode);
+				if ($exp[2] == '00'){
+					$thisKp3[''.$exp[0].$exp[1].''] = $row['host_nama'];
+				}
+				$kp3 = strtoupper(@$thisKp3[''.$exp[0].$exp[1].'']);
+				if(!in_array($kp3, $arrKp3)){
+					$arrKp3[] = $kp3;
+				}
+				
+				$nilai = $row['nilai'];
+				if ($row['kontrak_currency'] == 1)
+					$nilai = @$row['nilai'] * $this->pengaliDolar;
+				@$KontrakSatker[$kp3] += @$nilai;
+			}
+			
+			## inv
+			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_ws_invoice_terbit_bulan?_where=(tahun,eq,'.$this->thisYear.')&_sort=host_kode,bulan';
+			$method 			= 'GET';
+			$responsedet 		= ngeCurl($url, array(), $method);
+			$dataRow	 		= json_decode($responsedet['response'],true);
+			foreach($dataRow as $row){
+				$host_kode = $row['host_kode'];
+				$exp = explode('.',$host_kode);
+				if ($exp[2] == '00'){
+					$thisKp3[''.$exp[0].$exp[1].''] = $row['unit_name'];
+				}
+				$kp3 = strtoupper(@$thisKp3[''.$exp[0].$exp[1].'']);
+				if(!in_array($kp3, $arrKp3)){
+					$arrKp3[] = $kp3;
+				}
+				
+				$nilai = $row['inv_nilai'];
+				if ($row['inv_currency'] == 1)
+					$nilai = @$row['inv_nilai'] * $this->pengaliDolar;
+				@$InvSatker[$kp3] += @$nilai;
+			}
+			// print_r(@$arrKp3);
+			// print_r(@$KontrakSatker);
+			// print_r($InvSatker);
+			// die();
+			for($i=0; $i<count($arrKp3); $i++){
+				$kp3 = strtoupper($arrKp3[$i]);
+				$tableRekap[$kp3]['terkontrak'] 	= @$KontrakSatker[$kp3] == 0 ? 1 : @$KontrakSatker[$kp3];
+				$tableRekap[$kp3]['inv'] 			= @$InvSatker[$kp3] == 0 ? 1 : @$KontrakSatker[$kp3];
+				
+				@$totalTerkontrak += @$KontrakSatker[$kp3];
+				@$totalInv += @$InvSatker[$kp3];
+			}
+			
+			
 			$dataReturn = array(
 				'tableRekap' => @$tableRekap,
 				'dataTable' => $dataTable,
@@ -1427,6 +1510,8 @@ class Dashboard extends CI_Controller {
 				'totalInv' 			=> @$totalInv,
 				'totalRealisasi' 	=> @$totalRealisasi,
 			);
+			// print_r($arrKp3); 
+			// die();
 		}
 		
 		$dataReturn['targetAll'] = array();
