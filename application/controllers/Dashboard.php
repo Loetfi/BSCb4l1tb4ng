@@ -272,7 +272,7 @@ class Dashboard extends CI_Controller {
 	}
 	function index(){
 		$data = array(
-			'title' => 'Dashboard' ,
+			'title' => 'Dashboard Kinerja BLU' ,
 			'page'	=> 'dashboard_bsc',
 		);
 		
@@ -1584,7 +1584,7 @@ class Dashboard extends CI_Controller {
 		$satker = $_POST['thisSatker'] ?: 0;
 		if ($satker == "p3gl"){
 			## rekap kontrak
-			$url 				= 'http://34.66.44.99/json/organization_issue?organization_id='.$thisKey.'&year='.$this->thisYear;
+			$url 				= 'http://34.66.44.99/json/organization_agreement?organization_id='.$thisKey.'&year='.$this->thisYear;
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
@@ -1599,7 +1599,7 @@ class Dashboard extends CI_Controller {
 		}
 		else if ($satker == "p3tek"){
 			## rekap kontrak
-			$url 				= 'http://35.188.21.29/json/organization_issue?organization_id='.$thisKey.'&year='.$this->thisYear;
+			$url 				= 'http://35.188.21.29/json/organization_agreement?organization_id='.$thisKey.'&year='.$this->thisYear;
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);

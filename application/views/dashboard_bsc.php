@@ -39,7 +39,7 @@ $getRekap_form_a = array(
 			<div class="small-box bg-green">
 				<div class="inner">
 					<h2 style="margin: 0; padding: 0; font-weight: bold;"><?php echo $row['Unit Kerja']; ?></h2>
-					<p style="">Tahun: 2018</p>
+					
 					<table width="100%">
 						<tr>
 							<th>Target</th>
@@ -143,7 +143,7 @@ $getRekap_form_a = array(
 
 <script>
 $(function(){
-	$('#menuDashboard2').addClass('active');
+	$('#menuDashboard').addClass('active');
 
 var thisTitle = 'branch-p3tek';
 Highcharts.chart('branch-p3tek', {
