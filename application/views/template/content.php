@@ -60,7 +60,7 @@
             <i class="fa fa-dashboard"></i> <span>Kinerja BLU</span> 
           </a>
         </li> 
-		<li id="menuDashboard">
+		<li id="menuDashboard2">
           <a href="<?php echo site_url('dashboard/form_a'); ?>">
             <i class="fa fa-dashboard"></i> <span>Realisasi Penerimaan BLU</span> 
           </a>

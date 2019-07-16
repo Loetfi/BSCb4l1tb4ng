@@ -32,7 +32,7 @@ class Dashboard extends CI_Controller {
 
 	
 
-	public function index(){
+	public function index_awal(){
 		$this->load->library('form_validation');
 		$this->load->model('auth_model','auth');
 		$this->load->model('Dashboard_model','dash');
@@ -265,6 +265,35 @@ class Dashboard extends CI_Controller {
 		// $getIssueGlobalTahunan = $this->dash->getIssueGlobalTahunan();
 		
 		
+		
+		$this->load->view('template/header', $data, FALSE);
+		$this->load->view('template/content', $data, FALSE);
+		$this->load->view('template/footer', $data, FALSE);
+	}
+	function index(){
+		$data = array(
+			'title' => 'Dashboard' ,
+			'page'	=> 'dashboard_bsc',
+		);
+		
+		$data['getRekap_form_a'] = $this->getRekap_form_a();
+		$data['getGrafik']['p3gl'] = $this->getGrafik_form_a('p3gl');
+		$data['getGrafik']['p3tek'] = $this->getGrafik_form_a('p3tek');
+		$data['getGrafik']['tekmira'] = $this->getGrafik_form_a('tekmira');
+		$data['getGrafik']['lemigas'] = $this->getGrafik_form_a('lemigas');
+		
+		$unit = array(); $target = array(); $realisasi = array(); $sr = array();
+		foreach($data['getRekap_form_a']['dataSatker'] as $row){
+			$unit[] = $row['Unit Kerja'];
+			$target[] = floatval(str_replace(' M','',$row['Target']));
+			$realisasi[] = floatval(str_replace(' M','',$row['Realisasi']));
+			$sr[] = floatval(number_format(floatval(str_replace(' M','',$row['Realisasi'])) / floatval(str_replace(' M','',$row['Target'])) * 100,2));
+		}
+		
+		$data['unit'] = $unit;
+		$data['target'] = $target;
+		$data['realisasi'] = $realisasi;
+		$data['sr'] = $sr;
 		
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
