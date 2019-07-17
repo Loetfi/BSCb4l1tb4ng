@@ -184,6 +184,18 @@ class Target_model extends CI_Model {
 		return $resutl;
 	}
 	
+	function getTargetBulanan($tahun=''){
+		$sql = "
+		SELECT 
+			t.`month`, 
+			sum(t.amount) target
+		FROM target t 
+		WHERE t.`year` = '".$tahun."'
+		GROUP BY t.`month`
+		";
+		$resutl = $this->db->query($sql)->result_array();
+		return $resutl;
+	}
 }
 
 /* End of file Auth_model.php */

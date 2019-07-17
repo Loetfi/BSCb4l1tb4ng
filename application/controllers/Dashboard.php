@@ -606,7 +606,12 @@ class Dashboard extends CI_Controller {
 		$data['title'] = 'Realisasi Penerimaan VS Target PNBP BLU ('.date('d F Y').')-Form A';
 		$data['page'] = 'form_a';
 		
-		for($i=1; $i<=12; $i++) 
+		$rawTarget = $this->target->getTargetBulanan($this->thisYear);
+		foreach($rawTarget as $row)
+			$thisTarget[$row['month']] = number_format($row['target']/$this->pembagi,2).$this->satuan;
+		$data['thisTarget'] = $thisTarget;
+		
+		for($i=1; $i<=12; $i++)
 			$bulanan[] = date('M', strtotime($i.'/20/2019'));
 		$data['bulanan'] = $bulanan;
 		

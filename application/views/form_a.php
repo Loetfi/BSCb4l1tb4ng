@@ -9,7 +9,7 @@
 		<?php echo @$title; ?>
 	</h1>
 </section>
-<!-- <?php print_r($this->session->all_userdata()); ?> -->
+<!-- pre><?php print_r($getGrafik_form_a); ?></pre -->
 
 <!-- Main content -->
 
@@ -101,7 +101,7 @@
 <?php for($i=1; $i<=12; $i++){ ?>
 <tr>
 	<td align="right"><?php echo date('M', strtotime($i.'/20/2019')); ?></td>
-	<td align="right"><?php echo @$getGrafik_form_a['table']['target'][$i-1] > 0 ? number_format($getGrafik_form_a['table']['target'][$i-1]/$pembagi,2).$satuan : '-'; ?></td>
+	<td align="right"><?php echo @$thisTarget[$i]; ?></td>
 	<td align="right"><?php echo @$getGrafik_form_a['table']['realisasi'][$i-1] > 0 ? number_format($getGrafik_form_a['table']['realisasi'][$i-1]/$pembagi,2).$satuan : '-'; ?></td>
 	<td align="right"><?php echo @$getGrafik_form_a['table']['nilaiKontrak'][$i-1] > 0 ? number_format($getGrafik_form_a['table']['nilaiKontrak'][$i-1]/$pembagi,2).$satuan : '-'; ?></td>
 	<td align="right"><?php echo @$getGrafik_form_a['table']['realiasiTahunLalu'][$i-1] > 0 ? number_format($getGrafik_form_a['table']['realiasiTahunLalu'][$i-1]/$pembagi,2).$satuan : '-'; ?></td>
