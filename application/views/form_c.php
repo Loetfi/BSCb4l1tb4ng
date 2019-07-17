@@ -131,12 +131,14 @@
 						<tbody>
 							<?php 
 							// $akumulasi = 0;
+							$thisUnitKerja = array();
 							$tableRekap = $getRekap_form_c['tableRekap'];
 							$dataTable = $getRekap_form_c['dataTable'];
 							$arrKp3 = $getRekap_form_c['arrKp3'];
 							$arrOrgId = $getRekap_form_c['arrOrgId'];
 							$targetAll = $getRekap_form_c['targetAll'];
-							for($i=0; $i<count($arrKp3); $i++){ 
+							for($i=0; $i<count($arrKp3); $i++){
+								$thisUnitKerja[] = $arrKp3[$i];
 								$kp3 = strtoupper($arrKp3[$i]);
 								$org = @$arrOrgId[$kp3];
 							?>
@@ -179,6 +181,28 @@
 								<?php } ?>
 							</tr>
 							<?php } ?>
+							
+							<?php foreach($thisTargetAll as $key => $val){ 
+							if (!in_array($key, $thisUnitKerja)){
+								$kp3 = $key;
+								$row['Target'] = $val
+							?>
+							<tr>
+								<td><?php echo $i = $i+1; ?></td>
+								<td><?php echo strtoupper($kp3); ?></td>
+								<td><?php echo number_format(@$targetAll[$kp3] / $pembagi,2); ?></td>
+								<td align="right" terkontrak=""></td>
+								<td align="right" Inv=""></td>
+								<td align="right" Realisasi=""></td>
+								<td align="right" sisaKontrak=""></td>
+								<td align="right" capaiRealisasi=""></td>
+								<?php for($bulan=1; $bulan<=12; $bulan++){ ?>
+								<td align="right" persen=""></td>
+								<td align="right" nilai=""></td>
+								<td align="right" sum=""></td>
+								<?php }?>
+							</tr>
+							<?php } } ?>
 						</tbody>
 					</table>
 				</div>

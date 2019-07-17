@@ -642,6 +642,13 @@ class Dashboard extends CI_Controller {
 		$data['pembagi'] = $this->pembagi;
 		$data['satuan'] = $this->satuan;
 		
+		if ($satKer == "p3tek"){ $branchId = '4'; }
+		else if ($satKer == "p3gl"){ $branchId = '2'; }
+		else if ($satKer == "tekmira"){ $branchId = '3'; }
+		else if ($satKer == "lemigas"){ $branchId = '1'; }
+		$data['targetAll'] = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
+		
+		
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
@@ -664,6 +671,12 @@ class Dashboard extends CI_Controller {
 		$data['getRekap_form_c'] = $this->getRekap_form_c($satKer);
 		$data['pembagi'] = $this->pembagi;
 		$data['satuan'] = $this->satuan;
+		
+		if ($satKer == "p3tek"){ $branchId = '4'; }
+		else if ($satKer == "p3gl"){ $branchId = '2'; }
+		else if ($satKer == "tekmira"){ $branchId = '3'; }
+		else if ($satKer == "lemigas"){ $branchId = '1'; }
+		$data['thisTargetAll'] = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
 		
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);

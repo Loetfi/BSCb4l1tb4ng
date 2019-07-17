@@ -143,22 +143,40 @@ class Target_model extends CI_Model {
 	
 	function getTargetKp3Tahunan($branchId='', $tahun=''){
 		$sql = "
-		SELECT o.client_mapping, sum(t.amount) target
+		SELECT 
+			case 
+				when o.client_mapping is null then org_name
+				else o.client_mapping
+			end client_mapping, 
+			sum(t.amount) target
 		FROM target t 
 		JOIN ms_organization o ON t.org_id = o.id
 		WHERE 1=1 AND o.branch_id = '".$branchId."' and t.`year` = '".$tahun."'
-		GROUP BY o.client_mapping
+		GROUP BY 
+			case 
+				when o.client_mapping is null then org_name
+				else o.client_mapping
+			end
 		";
 		$resutl = $this->db->query($sql)->result_array();
 		return $resutl;
 	}
 	function getTargetKp3Bulan($branchId='', $tahun='', $bulan=''){
 		$sql = "
-		SELECT o.client_mapping, sum(t.amount) target
+		SELECT 
+			case 
+				when o.client_mapping is null then org_name
+				else o.client_mapping
+			end client_mapping, 
+			sum(t.amount) target
 		FROM target t 
 		JOIN ms_organization o ON t.org_id = o.id
 		WHERE 1=1 AND o.branch_id = '".$branchId."' and t.`year` = '".$tahun."' and t.`month` = '".$bulan."'
-		GROUP BY o.client_mapping
+		GROUP BY 
+			case 
+				when o.client_mapping is null then org_name
+				else o.client_mapping
+			end
 		";
 		$resutl = $this->db->query($sql)->result_array();
 		return $resutl;

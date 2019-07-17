@@ -100,6 +100,8 @@
 	// echo '<pre>';
 	// print_r($targetBulanIni);
 	// print_r($targetBulanan);
+	// print_r($getRekap_form_b);
+	// print_r($targetAll);
 	// echo '</pre>';
 	?>
 	<div class="row">
@@ -129,9 +131,14 @@
 							<th>Rp.M</th>
 							<th>%</th>
 						</tr>
-						<?php foreach($getRekap_form_b as $row){ ?>
+						<?php 
+						$thisUnitKerja = array();
+						foreach($getRekap_form_b as $row){ ?>
 						<tr>
-							<th><?php echo strtoupper($row['Unit Kerja']); ?></th>
+							<th><?php 
+								echo strtoupper(@$row['Unit Kerja']); 
+								$thisUnitKerja[] = strtoupper(@$row['Unit Kerja']); 
+							?></th>
 							<td align="right"><?php echo $row['Target']; ?></td>
 							
 							<!-- td align="right"><?php echo $row['Target Bulan Ini']; ?></td>
@@ -145,7 +152,27 @@
 							<td align="right"><?php echo $row['Sisa']; ?></td>
 							<td align="right"><?php echo $row['Sisa(%)']; ?></td>
 						</tr>
-						<?php }?>
+						<?php } ?>
+						<?php foreach($targetAll as $key => $val){ 
+							if (!in_array($key, $thisUnitKerja)){
+								$row['Unit Kerja'] = $key;
+								$row['Target'] = $val
+						?>
+						<tr>
+							<th><?php 
+								echo strtoupper(@$row['Unit Kerja']); 
+								$thisUnitKerja[] = strtoupper(@$row['Unit Kerja']); 
+							?></th>
+							<td align="right"><?php echo number_format(@$row['Target'] / $pembagi,2).$satuan; ?></td>
+							<td align="right"><?php echo number_format(@$targetBulanIni[$row['Unit Kerja']] / $pembagi,2); ?></td>
+							<td align="right"><?php echo @$row['Target Bulan Ini']; ?></td>
+							<td align="right"></td>
+							<td align="right"></td>
+							<td align="right"></td>
+							<td align="right"></td>
+						<tr>
+						<?php } } ?>
+						
 					</table>
 				</div>
 			</div>
