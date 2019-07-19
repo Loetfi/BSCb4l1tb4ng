@@ -1,4 +1,4 @@
-<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script src="<?php echo base_url('assets/highcharts'); ?>/highcharts.src.js"></script>
 <!-- Content Header (Page header) -->
 <section class="content-header">
 	<h1>

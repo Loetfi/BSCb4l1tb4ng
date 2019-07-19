@@ -736,9 +736,9 @@ class Dashboard extends CI_Controller {
 				'Target Bulan Ini'	=> number_format($targetBulan/$pembagi,2).$satuan,
 				'Target (%)'		=> number_format($targetBulan/$targetSatker * 100,2),
 				'Realisasi'			=> number_format($realisasiSatker/$pembagi,2).$satuan,
-				'Realisasi(%)'		=> number_format($realisasiSatker/$targetBulan * 100,2),
-				'Sisa'				=> number_format(($targetBulan - $realisasiSatker)/$pembagi,2).$satuan,
-				'Sisa(%)'			=> number_format((100 -($realisasiSatker/$targetBulan * 100)),2),
+				'Realisasi(%)'		=> number_format($realisasiSatker/$targetSatker * 100,2),
+				'Sisa'				=> number_format(($targetSatker - $realisasiSatker)/$pembagi,2).$satuan,
+				'Sisa(%)'			=> number_format((100 -($realisasiSatker/$targetSatker * 100)),2),
 			);
 			@$realisasi += $realisasiSatker;	
 		}
@@ -763,9 +763,9 @@ class Dashboard extends CI_Controller {
 				'Target Bulan Ini'	=> number_format($targetBulan/$pembagi,2).$satuan,
 				'Target (%)'		=> number_format($targetBulan/$targetSatker * 100,2),
 				'Realisasi'			=> number_format($realisasiSatker/$pembagi,2).$satuan,
-				'Realisasi(%)'		=> number_format($realisasiSatker/$targetBulan * 100,2),
-				'Sisa'				=> number_format(($targetBulan - $realisasiSatker)/$pembagi,2).$satuan,
-				'Sisa(%)'			=> number_format((100 -($realisasiSatker/$targetBulan * 100)),2),
+				'Realisasi(%)'		=> number_format($realisasiSatker/$targetSatker * 100,2),
+				'Sisa'				=> number_format(($targetSatker - $realisasiSatker)/$pembagi,2).$satuan,
+				'Sisa(%)'			=> number_format((100 -($realisasiSatker/$targetSatker * 100)),2),
 			);
 			@$realisasi += $realisasiSatker;	
 		}
@@ -795,9 +795,9 @@ class Dashboard extends CI_Controller {
 				'Target Bulan Ini'	=> number_format($targetBulan/$pembagi,2).$satuan,
 				'Target (%)'		=> number_format($targetBulan/$targetSatker * 100,2),
 				'Realisasi'			=> number_format($realisasiSatker/$pembagi,2).$satuan,
-				'Realisasi(%)'		=> number_format($realisasiSatker/$targetBulan * 100,2),
-				'Sisa'				=> number_format(($targetBulan - $realisasiSatker)/$pembagi,2).$satuan,
-				'Sisa(%)'			=> number_format((100 -($realisasiSatker/$targetBulan * 100)),2),
+				'Realisasi(%)'		=> number_format($realisasiSatker/$targetSatker * 100,2),
+				'Sisa'				=> number_format(($targetSatker - $realisasiSatker)/$pembagi,2).$satuan,
+				'Sisa(%)'			=> number_format((100 -($realisasiSatker/$targetSatker * 100)),2),
 			);
 			@$realisasi += $realisasiSatker;
 		}
@@ -807,13 +807,43 @@ class Dashboard extends CI_Controller {
 			$targetSatker = @$getTargetSatker['TargetTahunIni'];
 			$targetBulan = @$getTargetSatker['TargetBulanIni'];
 			
+			## kontrak
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_rekap_kontrak_bulan/?_start=0&_count=50&_filter=tahun%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$dataRow 	= $this->getDataLemigas($url);
+			/* // print_r($responRow); die();
+			[host_kode] => 5.03.00
+            [host_nama] => Bidang Penyelenggara dan Sarana Penelitian dan Pengembangan
+            [tahun] => 2019
+            [bulan] => 1
+            [nilai] => 71400000.00
+            [kontrak_currency] => 2
+			*/
+			foreach($dataRow as $row){
+				$nilai = $row['nilai'];
+				if ($row['kontrak_currency'] == 1)
+					$nilai = @$row['nilai'] * $this->pengaliDolar;
+				@$kontrakSatker += @$nilai;
+			}
+			
 			$realisasiSatker = 0;
-			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_rekap_unit_bulanan?_where=(tahun,eq,'.$this->thisYear.')';
-			$method 			= 'GET';
-			$responsedet 		= ngeCurl($url, array(), $method);
-			$responRow	 		= json_decode($responsedet['response'],true);
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=50&_filter=tahun_bayar%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$responRow 	= $this->getDataLemigas($url);
+			/*
+			// print_r($responRow); die();
+			[host_kode] => 5.01.00
+            [unit_name] => Bagian Tata Usaha
+            [tahun_bayar] => 2019
+            [bulan_bayar] => 1
+            [inv_nilai] => 137708417.00
+            [inv_currency] => 2
+			*/
 			foreach($responRow as $dataRow){
-				$realisasiSatker 	+= @$dataRow['kredit'];
+				$debit = $dataRow['inv_nilai'];
+				if ($dataRow['inv_currency'] == 1) 
+					$debit = $debit * $this->pengaliDolar;
+				$realisasiSatker 	+= @$debit;
+				
+				// $realisasiSatker 	+= @$dataRow['kredit'];
 			}
 			$dataSatker[] = array(
 				'Unit Kerja'		=> 'BLM',
@@ -821,11 +851,11 @@ class Dashboard extends CI_Controller {
 				'Target Bulan Ini'	=> number_format($targetBulan/$pembagi,2).$satuan,
 				'Target (%)'		=> number_format($targetBulan/$targetSatker * 100,2),
 				'Realisasi'			=> number_format($realisasiSatker/$pembagi,2).$satuan,
-				'Realisasi(%)'		=> number_format($realisasiSatker/$targetBulan * 100,2),
-				'Sisa'				=> number_format(($targetBulan - $realisasiSatker)/$pembagi,2).$satuan,
-				'Sisa(%)'			=> number_format((100 -($realisasiSatker/$targetBulan * 100)),2),
+				'Realisasi(%)'		=> number_format($realisasiSatker/$targetSatker * 100,2),
+				'Sisa'				=> number_format(($targetSatker - $realisasiSatker)/$pembagi,2).$satuan,
+				'Sisa(%)'			=> number_format((100 -($realisasiSatker/$targetSatker * 100)),2),
 			);
-			@$realisasi += $realisasiSatker;	
+			@$realisasi += $realisasiSatker;
 		}
 		
 		if ($satKer == 'All') { 
@@ -1002,11 +1032,17 @@ class Dashboard extends CI_Controller {
 		
 		if ($satKer == 'All' || $satKer == 'lemigas'){ $branchId = '1';
 			## kontrak
-			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_ws_rekap_kontrak_bulan?_where=(tahun,eq,'.$this->thisYear.')&_sort=tahun,bulan';
-			$method 			= 'GET';
-			$responsedet 		= ngeCurl($url, array(), $method);
-			$dataRow	 		= json_decode($responsedet['response'],true);
-			foreach($dataRow as $row){
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_rekap_kontrak_bulan/?_start=0&_count=50&_filter=tahun%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$responRow 	= $this->getDataLemigas($url);
+			/* // print_r($responRow); die();
+			[host_kode] => 5.03.00
+            [host_nama] => Bidang Penyelenggara dan Sarana Penelitian dan Pengembangan
+            [tahun] => 2019
+            [bulan] => 1
+            [nilai] => 71400000.00
+            [kontrak_currency] => 2
+			*/
+			foreach($responRow as $row){
 				$bulan = (int)@$row['bulan'];
 				$nilai = $row['nilai'];
 				if ($row['kontrak_currency'] == 1)
@@ -1015,23 +1051,35 @@ class Dashboard extends CI_Controller {
 			}
 			
 			## Pencapaian this year
-			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_rekap_unit_bulanan?_where=(tahun,eq,'.$this->thisYear.')';
-			$method 			= 'GET';
-			$responsedet 		= ngeCurl($url, array(), $method);
-			$responRow	 		= json_decode($responsedet['response'],true);
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=50&_filter=tahun_bayar%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$responRow 	= $this->getDataLemigas($url);
+			/* // print_r($responRow); die();
+			[host_kode] => 5.01.00
+            [unit_name] => Bagian Tata Usaha
+            [tahun_bayar] => 2019
+            [bulan_bayar] => 1
+            [inv_nilai] => 137708417.00
+            [inv_currency] => 2
+			*/
 			foreach($responRow as $row){
-				$bulan = (int)$row['bulan'];
-				@$dataSatker[$bulan]['kredit'] += $row['kredit'];
+				$bulan = (int)$row['bulan_bayar'];
+				$debit = $row['inv_nilai'];
+				if ($row['inv_currency'] == 1) 
+					$debit = $debit * $this->pengaliDolar;
+				
+				@$dataSatker[$bulan]['kredit'] += $debit;
 			}
 			
 			## Pencapaian last year
-			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_rekap_unit_bulanan?_where=(tahun,eq,'.($this->thisYear -1).')';
-			$method 			= 'GET';
-			$responsedet 		= ngeCurl($url, array(), $method);
-			$responRow	 		= json_decode($responsedet['response'],true);
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=50&_filter=tahun_bayar%3D%3D'.$this->lastYear.'&_expand=yes&_view=json';
+			$responRow 	= $this->getDataLemigas($url);
 			foreach($responRow as $row){
-				$bulan = (int)$row['bulan'];
-				@$dataSatkerLalu[$bulan]['kredit'] += $row['kredit'];
+				$bulan = (int)$row['bulan_bayar'];
+				$debit = $row['inv_nilai'];
+				if ($row['inv_currency'] == 1) 
+					$debit = $debit * $this->pengaliDolar;
+				
+				@$dataSatkerLalu[$bulan]['kredit'] += $debit;
 			}
 			
 			for($i=1; $i<=12; $i++){
@@ -1193,16 +1241,14 @@ class Dashboard extends CI_Controller {
 		else if ($satker == "lemigas"){ $branchId = '1';
 			$targetAll = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
 			
-			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_rekap_unit_bulanan?_where=(tahun,eq,'.$this->thisYear.')';
-			$method 			= 'GET';
-			$responsedet 		= ngeCurl($url, array(), $method);
-			$dataRow	 		= json_decode($responsedet['response'],true);
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=50&_filter=tahun_bayar%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$dataRow 	= $this->getDataLemigas($url);
 			$arrKp3 = array();
 			foreach($dataRow as $row){
-				$unit_kode = $row['unit_kode'];
+				$unit_kode = $row['host_kode'];
 				$exp = explode('.',$unit_kode);
 				if ($exp[2] == '00'){
-					$thisKp3[''.$exp[0].$exp[1].''] = $row['unit_nama'];
+					$thisKp3[''.$exp[0].$exp[1].''] = $row['unit_name'];
 				}
 				$row['unit_nama'] = @$thisKp3[''.$exp[0].$exp[1].''];
 				$dataOlah[] = $row;
@@ -1212,7 +1258,11 @@ class Dashboard extends CI_Controller {
 				if(!in_array($kp3, $arrKp3))
 					$arrKp3[] = $kp3;
 				
-				@$realisasi[$kp3] += @$row['kredit'];
+				$debit = $row['inv_nilai'];
+				if ($row['inv_currency'] == 1) 
+					$debit = $debit * $this->pengaliDolar;
+				
+				@$realisasi[$kp3] += @$debit;
 			}
 			for($i=0; $i<count($arrKp3); $i++){
 				$kp3 = @$arrKp3[$i];
@@ -1229,6 +1279,7 @@ class Dashboard extends CI_Controller {
 					'Sisa(%)'			=> null,
 				);
 			}
+			print_r($dataReturn); die();
 		}
 		return @$dataReturn;
 	}
@@ -1453,10 +1504,17 @@ class Dashboard extends CI_Controller {
 			$arrKp3 = array();
 			
 			## penerimaan
-			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_ws_invoice_penerimaan_bulan?_where=(tahun_bayar,eq,'.$this->thisYear.')&_sort=host_kode,bulan_bayar';
-			$method 			= 'GET';
-			$responsedet 		= ngeCurl($url, array(), $method);
-			$dataRow	 		= json_decode($responsedet['response'],true);
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=50&_filter=tahun_bayar%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$dataRow 	= $this->getDataLemigas($url);
+			/* // print_r($dataRow); die();
+			[host_kode] => 5.01.00
+            [unit_name] => Bagian Tata Usaha
+            [tahun_bayar] => 2019
+            [bulan_bayar] => 1
+            [inv_nilai] => 137708417.00
+            [inv_currency] => 2
+			*/
+			$arrKp3 = array();
 			foreach($dataRow as $row){
 				$unit_kode = $row['host_kode'];
 				$exp = explode('.',$unit_kode);
@@ -1491,11 +1549,16 @@ class Dashboard extends CI_Controller {
 			}
 			
 			## kontrak
-			$url 				= 'http://bsc.lemigas.esdm.go.id:443/api/v_ws_rekap_kontrak_bulan?_where=(tahun,eq,'.$this->thisYear.')&_sort=host_kode,bulan';
-			$method 			= 'GET';
-			$responsedet 		= ngeCurl($url, array(), $method);
-			$dataRow	 		= json_decode($responsedet['response'],true);
-			// print_r(@$dataRow);
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_rekap_kontrak_bulan/?_start=0&_count=50&_filter=tahun%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$dataRow 	= $this->getDataLemigas($url);
+			/* // print_r($responRow); die();
+			[host_kode] => 5.03.00
+            [host_nama] => Bidang Penyelenggara dan Sarana Penelitian dan Pengembangan
+            [tahun] => 2019
+            [bulan] => 1
+            [nilai] => 71400000.00
+            [kontrak_currency] => 2
+			*/
 			foreach($dataRow as $row){
 				$host_kode = $row['host_kode'];
 				$exp = explode('.',$host_kode);
@@ -1518,6 +1581,18 @@ class Dashboard extends CI_Controller {
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$dataRow	 		= json_decode($responsedet['response'],true);
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_terbit_bulan/?_start=0&_count=50&_filter=tahun%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$dataRow 	= $this->getDataLemigas($url);
+			/*
+			// print_r($dataRow); die();
+			[host_kode] => 5.01.00
+            [unit_name] => Bagian Tata Usaha
+            [tahun] => 2019
+            [bulan] => 1
+            [inv_nilai] => 137708417.00
+            [inv_currency] => 2
+            [status] => 3
+			*/
 			foreach($dataRow as $row){
 				$host_kode = $row['host_kode'];
 				$exp = explode('.',$host_kode);
@@ -1755,6 +1830,37 @@ class Dashboard extends CI_Controller {
 		);
 		header('Content-Type: application/json');
 		echo json_encode($return);
+	}
+	
+	
+	public function getDataLemigas($url){
+		
+		$thisRow = $this->lemigasOnly($url);
+		@$arrHasil = $thisRow[0];
+		@$nextPage = $thisRow[1];
+		while(@$nextPage != ''){
+			$thisRow = $this->lemigasOnly($nextPage);
+			$arrHasil = array_merge($arrHasil, $thisRow[0]);
+			$nextPage = $thisRow[1];
+		}
+		return ($arrHasil);
+	}
+	public function lemigasOnly($url, $arrHasil=array()){
+		$method 			= 'GET';
+		$responsedet 		= ngeCurl($url, array(), $method);
+		$responRow	 		= json_decode($responsedet['response'],true);
+		$awal = $responRow['restify'];
+		foreach($awal['rows'] as $row){
+			$newArray = array();
+			foreach($row['values'] as $key=>$val){
+				$newArray = array_merge($newArray,array($key => $val['value']));
+			}
+			$thisRow[] = $newArray;
+		}
+		$return = array_merge($arrHasil, $thisRow);
+		$nextPage = @$awal['nextPage']['href'];
+		
+		return array($return, $nextPage);
 	}
 	
 	

@@ -1,7 +1,7 @@
-<script src="https://code.highcharts.com/highcharts.src.js"></script>
-<script src="https://code.highcharts.com/highcharts-more.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="<?php echo base_url('assets/highcharts'); ?>/highcharts.src.js"></script>
+<script src="<?php echo base_url('assets/highcharts'); ?>/highcharts-more.js"></script>
+<script src="<?php echo base_url('assets/highcharts'); ?>/modules/exporting.js"></script>
+<script src="<?php echo base_url('assets/highcharts'); ?>/modules/export-data.js"></script>
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
