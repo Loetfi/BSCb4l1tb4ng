@@ -148,19 +148,19 @@
 								<td><?php echo number_format(@$targetAll[$kp3] / $pembagi,2); ?></td>
 								
 								<td align="right">
-									<button class="btn btn-link btnTerkontrak" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
+									<a href="#" class="btn btn-link btnTerkontrak" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
 										<?php echo number_format(@$tableRekap[$kp3]['terkontrak'] / $pembagi ,4); ?>
-									</button>
+									</a>
 								</td>
 								<td align="right">
-									<button class="btn btn-link btnInvoice" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
+									<a href="#" class="btn btn-link btnInvoice" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
 										<?php echo number_format(@$tableRekap[$kp3]['inv'] / $pembagi ,4); ?>
-									</button>
+									</a>
 								</td>
 								<td align="right">
-									<button class="btn btn-link btnRealisasi" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
+									<a href="#" class="btn btn-link btnRealisasi" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
 										<?php echo number_format(@$tableRekap[$kp3]['realisasi'] / $pembagi ,4); ?>
-									</button>
+									</a>
 								</td>
 								<td align="right"><?php echo number_format(((@$tableRekap[$kp3]['terkontrak'] - @$tableRekap[$kp3]['realisasi']) / $pembagi),4); ?></td>
 								<td align="right"><?php echo number_format((@$tableRekap[$kp3]['realisasi'] / @$tableRekap[$kp3]['terkontrak'] * 100),2) ?></td>
@@ -320,7 +320,7 @@ var nTableKontrak = $('#nTableKontrak').dataTable();
 var nTableRealisasi = $('#nTableRealisasi').dataTable();
 var nTableInvoice = $('#nTableInvoice').dataTable();
 
-$('.btnTerkontrak').click(function(){
+$('.btnTerkontrak').click(function(e){
 	thisKp3 = $(this).attr('this_kp3');
 	thisKey = $(this).attr('this_key');
 	thisYear = $(this).attr('this_year');
@@ -357,10 +357,10 @@ $('.btnTerkontrak').click(function(){
 			$('#modal-default-terkontrak').modal('show');
 		}
 	});
-	
+	e.preventDefault();
 });
 
-$('.btnRealisasi').click(function(){
+$('.btnRealisasi').click(function(e){
 	thisKp3 = $(this).attr('this_kp3');
 	thisKey = $(this).attr('this_key');
 	thisYear = $(this).attr('this_year');
@@ -397,10 +397,10 @@ $('.btnRealisasi').click(function(){
 			$('#modal-default-realisasi').modal('show');
 		}
 	});
-	
+	e.preventDefault();
 });
 
-$('.btnInvoice').click(function(){
+$('.btnInvoice').click(function(e){
 	thisKp3 = $(this).attr('this_kp3');
 	thisKey = $(this).attr('this_key');
 	thisYear = $(this).attr('this_year');
@@ -437,7 +437,7 @@ $('.btnInvoice').click(function(){
 			$('#modal-default-invoice').modal('show');
 		}
 	});
-	
+	e.preventDefault();
 });
 
 });

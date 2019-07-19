@@ -21,7 +21,7 @@ class Dashboard extends CI_Controller {
 		}
 		
 		$this->pembagi = 1000000000;
-		$this->pengaliDolar = 14000;
+		$this->pengaliDolar = 14250;
 		// $this->pembagi = 1;
 		$this->satuan = ' M';
 		$this->thisYear = date('Y');
@@ -1279,7 +1279,7 @@ class Dashboard extends CI_Controller {
 					'Sisa(%)'			=> null,
 				);
 			}
-			print_r($dataReturn); die();
+			// print_r($dataReturn); die();
 		}
 		return @$dataReturn;
 	}
