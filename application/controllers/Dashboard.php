@@ -692,10 +692,11 @@ class Dashboard extends CI_Controller {
 		// $rekap = $this->getGrafik_form_a('tekmira');
 		// print_r($rekap);
 		// echo "\n # getGrafik_form_a ############################################";
-		
-		$rekap = $this->getRekap_form_b('p3tek');
-		print_r($rekap);
-		echo "\n # getRekap_form_b ############################################";
+		$thisKey = '5.03.00';
+		$thisYear = '2019';
+		$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_kontrak/?_start=0&_count=50&_filter=kontrak_host_kode%3D%3D'.$thisKey.'%26%26kontrak_tanggal%3E%3D'.$thisYear.'-01-01%26%26kontrak_tanggal%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+		$responRow 	= $this->getDataLemigas($url);
+		print_r($responRow);
 		// $rekap = $this->getRekap_form_c('tekmira');
 		// print_r($rekap);
 		// echo "\n # getRekap_form_c ############################################";
@@ -1522,7 +1523,7 @@ class Dashboard extends CI_Controller {
 					$thisKp3[''.$exp[0].$exp[1].''] = $row['unit_name'];
 				}
 				$row['unit_nama'] = @$thisKp3[''.$exp[0].$exp[1].''];
-				$row['orgId'] = ''.$exp[0].$exp[1].'';
+				$row['orgId'] = $row['host_kode'];
 				$dataOlah[] = $row;
 			}
 			foreach($dataOlah as $row){
@@ -1616,7 +1617,7 @@ class Dashboard extends CI_Controller {
 			for($i=0; $i<count($arrKp3); $i++){
 				$kp3 = strtoupper($arrKp3[$i]);
 				$tableRekap[$kp3]['terkontrak'] 	= @$KontrakSatker[$kp3] == 0 ? 1 : @$KontrakSatker[$kp3];
-				$tableRekap[$kp3]['inv'] 			= @$InvSatker[$kp3] == 0 ? 1 : @$KontrakSatker[$kp3];
+				$tableRekap[$kp3]['inv'] 			= @$InvSatker[$kp3] == 0 ? 1 : @$InvSatker[$kp3];
 				
 				@$totalTerkontrak += @$KontrakSatker[$kp3];
 				@$totalInv += @$InvSatker[$kp3];
@@ -1632,7 +1633,7 @@ class Dashboard extends CI_Controller {
 				'totalInv' 			=> @$totalInv,
 				'totalRealisasi' 	=> @$totalRealisasi,
 			);
-			// print_r($arrKp3); 
+			// print_r($arrOrgId); 
 			// die();
 		}
 		
@@ -1722,6 +1723,23 @@ class Dashboard extends CI_Controller {
 				);
 			}
 		}
+		else if ($satker == "lemigas"){
+			## rekap kontrak
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_kontrak/?_start=0&_count=50&_filter=kontrak_host_kode%3D%3D'.$thisKey.'%26%26kontrak_tanggal%3E%3D'.$thisYear.'-01-01%26%26kontrak_tanggal%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+			$responRow 	= $this->getDataLemigas($url);
+			foreach($responRow as $row){
+				$nilai = $row['kontrak_nilai'];
+				if ($row['kontrak_currency'] == 1)
+					$nilai = $nilai * $this->pengaliDolar;
+				
+				$rows[] = array(
+					'judul'			=> $row['kontrak_nama'],
+					'noKontrak'		=> $row['kontrak_no'],
+					'pelanggan'		=> $row['cust_nama'],
+					'nilaiKontrak'	=> number_format($nilai,2),
+				);
+			}
+		}
 		$return = array(
 			'data' => @$rows,
 			'responRow' => @$allData
@@ -1764,7 +1782,20 @@ class Dashboard extends CI_Controller {
 				);
 			}
 		}
-		
+		/* else if ($satker == "lemigas"){
+			## rekap kontrak
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=50&_filter=kontrak_host_kode%3D%3D'.$thisKey.'%26%26kontrak_tanggal%3E%3D'.$thisYear.'-01-01%26%26kontrak_tanggal%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=50&_filter=inv_tgl%3E%3D'.$thisYear.'-01-01%26%26inv_tgl%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+			$responRow 	= $this->getDataLemigas($url);
+			foreach($responRow as $row){
+				$rows[] = array(
+					'judul'			=> $row['kontrak_nama'],
+					'noKontrak'		=> $row['kontrak_no'],
+					'pelanggan'		=> $row['cust_nama'],
+					'nilaiKontrak'	=> number_format($row['kontrak_nilai'],2),
+				);
+			}
+		} */
 		$return = array(
 			'data' => @$rows,
 			'responRow' => @$allData
@@ -1846,6 +1877,7 @@ class Dashboard extends CI_Controller {
 		return ($arrHasil);
 	}
 	public function lemigasOnly($url, $arrHasil=array()){
+		$thisRow = array();
 		$method 			= 'GET';
 		$responsedet 		= ngeCurl($url, array(), $method);
 		$responRow	 		= json_decode($responsedet['response'],true);
