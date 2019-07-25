@@ -1716,14 +1716,15 @@ class Dashboard extends CI_Controller {
 			$responRow	 		= json_decode($responsedet['response'],true);
 			$allData 			= @$responRow['data'];
 			foreach($allData as $row){
-				if ($row['kp3'] == $thisKey && floatval($row['nilaiKontrak']) > 0)
-				$rows[] = array(
-					'judul'			=> @$row['agreement_title'],
-					'noKontrak'		=> $row['no_kontrak'],
-					'pelanggan'		=> $row['nama_pelanggan'],
-					'nilaiKontrak'	=> number_format($row['nilaiKontrak'],2),
-				);
-				@$total += $row['nilaiKontrak'];
+				if ($row['kp3'] == $thisKey && floatval($row['nilaiKontrak']) > 0){
+					$rows[] = array(
+						'judul'			=> @$row['agreement_title'],
+						'noKontrak'		=> $row['no_kontrak'],
+						'pelanggan'		=> $row['nama_pelanggan'],
+						'nilaiKontrak'	=> number_format($row['nilaiKontrak'],2),
+					);
+					@$total += $row['nilaiKontrak'];
+				}
 			}
 		}
 		else if ($satker == "lemigas"){
@@ -1877,14 +1878,15 @@ class Dashboard extends CI_Controller {
 			$responRow	 		= json_decode($responsedet['response'],true);
 			$allData 			= @$responRow['data'];
 			foreach($allData as $row){
-				if ($row['kp3'] == $thisKey && floatval($row['realisasiKontrak']) > 0)
-				$rows[] = array(
-					'judul'			=> @$row['agreement_title'],
-					'noKontrak'		=> $row['no_kontrak'],
-					'pelanggan'		=> $row['nama_pelanggan'],
-					'nilaiRealisasi'=> number_format($row['realisasiKontrak'],2),
-				);
-				@$total += $row['realisasiKontrak'];
+				if ($row['kp3'] == $thisKey && floatval($row['realisasiKontrak']) > 0){
+					$rows[] = array(
+						'judul'			=> @$row['agreement_title'],
+						'noKontrak'		=> $row['no_kontrak'],
+						'pelanggan'		=> $row['nama_pelanggan'],
+						'nilaiRealisasi'=> number_format($row['realisasiKontrak'],2),
+					);
+					@$total += $row['realisasiKontrak'];
+				}
 			}
 		}
 		else if ($satker == 'lemigas'){
