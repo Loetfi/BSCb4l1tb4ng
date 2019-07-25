@@ -1938,7 +1938,7 @@ class Dashboard extends CI_Controller {
 		$responsedet 		= ngeCurl($url, array(), $method);
 		$responRow	 		= json_decode($responsedet['response'],true);
 		$awal = $responRow['restify'];
-		if (count(@$awal['rows'])){
+		if (@$awal['rows']){
 			foreach($awal['rows'] as $row){
 				$newArray = array();
 				foreach($row['values'] as $key=>$val){
