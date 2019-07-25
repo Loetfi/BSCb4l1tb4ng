@@ -232,6 +232,15 @@
 				</tr>
 			</thead>
 			<tbody></tbody>
+			<tfoot>
+				<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th id="totalKontrak"></th>
+				</tr>
+			</tfoot>
 		</table>
 	  </div>
 	  <div class="modal-footer">
@@ -263,6 +272,15 @@
 				</tr>
 			</thead>
 			<tbody></tbody>
+			<tfoot>
+				<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th id="totalRealisasi"></th>
+				</tr>
+			</tfoot>
 		</table>
 	  </div>
 	  <div class="modal-footer">
@@ -294,6 +312,15 @@
 				</tr>
 			</thead>
 			<tbody></tbody>
+			<tfoot>
+				<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th id="totalInv"></th>
+				</tr>
+			</tfoot>
 		</table>
 	  </div>
 	  <div class="modal-footer">
@@ -347,7 +374,8 @@ $('.btnTerkontrak').click(function(e){
 					row.pelanggan,
 					row.nilaiKontrak
 				]);
-			} 
+			}
+			$('#totalKontrak').html(thisData.total);
 		},
 		error: function() {
 			alert('Ada opsi yang belum terpilih atau refresh halaman, dan coba lagi.');
@@ -388,6 +416,7 @@ $('.btnRealisasi').click(function(e){
 					row.nilaiRealisasi
 				]);
 			} 
+			$('#totalRealisasi').html(thisData.total);
 		},
 		error: function() {
 			alert('Ada opsi yang belum terpilih atau refresh halaman, dan coba lagi.');
@@ -428,6 +457,7 @@ $('.btnInvoice').click(function(e){
 					row.nilaiInvoice
 				]);
 			} 
+			$('#totalInv').html(thisData.total);
 		},
 		error: function() {
 			alert('Ada opsi yang belum terpilih atau refresh halaman, dan coba lagi.');

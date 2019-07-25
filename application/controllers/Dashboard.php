@@ -1689,6 +1689,7 @@ class Dashboard extends CI_Controller {
 					'pelanggan'		=> $row['client_name'],
 					'nilaiKontrak'	=> number_format($row['agreement_value_casted'],2),
 				);
+				@$total += $row['agreement_value_casted'];
 			}
 		}
 		else if ($satker == "p3tek"){
@@ -1704,6 +1705,7 @@ class Dashboard extends CI_Controller {
 					'pelanggan'		=> $row['client_name'],
 					'nilaiKontrak'	=> number_format($row['agreement_value_casted'],2),
 				);
+				@$total += $row['agreement_value_casted'];
 			}
 		}
 		else if ($satker == "tekmira"){
@@ -1721,6 +1723,7 @@ class Dashboard extends CI_Controller {
 					'pelanggan'		=> $row['nama_pelanggan'],
 					'nilaiKontrak'	=> number_format($row['nilaiKontrak'],2),
 				);
+				@$total += $row['nilaiKontrak'];
 			}
 		}
 		else if ($satker == "lemigas"){
@@ -1738,11 +1741,13 @@ class Dashboard extends CI_Controller {
 					'pelanggan'		=> $row['cust_nama'],
 					'nilaiKontrak'	=> number_format($nilai,2),
 				);
+				@$total += $nilai;
 			}
 		}
 		$return = array(
 			'data' => @$rows,
-			'responRow' => @$allData
+			'responRow' => @$allData,
+			'total' => number_format(@$total,2),
 		);
 		header('Content-Type: application/json');
 		echo json_encode($return);
@@ -1765,6 +1770,7 @@ class Dashboard extends CI_Controller {
 					'pelanggan'		=> $row['client_name'],
 					'nilaiInvoice'	=> number_format($row['issue_value_casted'],2),
 				);
+				@$total += $row['issue_value_casted'];
 			}
 		}
 		else if ($satker == "p3tek"){
@@ -1780,12 +1786,14 @@ class Dashboard extends CI_Controller {
 					'pelanggan'		=> $row['client_name'],
 					'nilaiInvoice'	=> number_format($row['issue_value_casted'],2),
 				);
+				@$total += $row['issue_value_casted'];
 			}
 		}
 		else if ($satker == "lemigas"){
+			$statusInv = 2;
 			## rekap invoice
 			// $url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=50&_filter=kontrak_host_kode%3D%3D'.$thisKey.'%26%26kontrak_tanggal%3E%3D'.$thisYear.'-01-01%26%26kontrak_tanggal%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=50&_filter=host_kode%3D%3D'.$thisKey.'%26%26inv_tgl%3E%3D'.$thisYear.'-01-01%26%26inv_tgl%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=50&_filter=status%3D%3D'.$statusInv.'%26%26host_kode%3D%3D'.$thisKey.'%26%26inv_tgl%3E%3D'.$thisYear.'-01-01%26%26inv_tgl%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
 			$allData 	= $this->getDataLemigas($url);
 			foreach($allData as $row){
 				$nilai = $row['inv_nilai'];
@@ -1797,11 +1805,13 @@ class Dashboard extends CI_Controller {
 					'pelanggan'		=> $row['cust_nama'],
 					'nilaiInvoice'	=> number_format($nilai,2),
 				);
+				@$total += $nilai;
 			}
 		}
 		$return = array(
 			'data' => @$rows,
 			'responRow' => @$allData,
+			'total' => number_format(@$total,2),
 			'url'  => $url
 		);
 		header('Content-Type: application/json');
@@ -1825,6 +1835,7 @@ class Dashboard extends CI_Controller {
 					'pelanggan'		=> $row['client_name'],
 					'nilaiRealisasi'=> number_format($row['payment_value_casted'],2),
 				);
+				@$total += $row['payment_value_casted'];
 			}
 		}
 		else if ($satker == "p3tek"){
@@ -1840,6 +1851,7 @@ class Dashboard extends CI_Controller {
 					'pelanggan'		=> $row['client_name'],
 					'nilaiRealisasi'=> number_format($row['payment_value_casted'],2),
 				);
+				@$total += $row['payment_value_casted'];
 			}
 		}
 		else if ($satker == 'tekmira'){
@@ -1857,11 +1869,13 @@ class Dashboard extends CI_Controller {
 					'pelanggan'		=> $row['nama_pelanggan'],
 					'nilaiRealisasi'=> number_format($row['realisasiKontrak'],2),
 				);
+				@$total += $row['realisasiKontrak'];
 			}
 		}
 		else if ($satker == 'lemigas'){
 			// $thisKey
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=50&_filter=host_kode%3D%3D'.$thisKey.'%26%26inv_tgl_bayar%3E%3D'.$thisYear.'-01-01%26%26inv_tgl_bayar%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+			$statusInv = 3;
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=50&_filter=status%3D%3D'.$statusInv.'%26%26host_kode%3D%3D'.$thisKey.'%26%26inv_tgl%3E%3D'.$thisYear.'-01-01%26%26inv_tgl%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
 			$allData 	= $this->getDataLemigas($url);
 			foreach($allData as $row){
 				$nilai = $row['inv_nilai'];
@@ -1873,11 +1887,13 @@ class Dashboard extends CI_Controller {
 					'pelanggan'		=> $row['cust_nama'],
 					'nilaiRealisasi'=> number_format($nilai,2),
 				);
+				@$total += $nilai;
 			}
 		}
 		$return = array(
 			'data' => @$rows,
 			'responRow' => @$allData,
+			'total' => number_format(@$total,2),
 			'url'  => $url
 		);
 		header('Content-Type: application/json');
