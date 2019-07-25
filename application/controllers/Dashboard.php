@@ -1932,21 +1932,25 @@ class Dashboard extends CI_Controller {
 	}
 	public function lemigasOnly($url, $arrHasil=array()){
 		$thisRow = array();
+		$return = array();
+		$awal = array();
 		$method 			= 'GET';
 		$responsedet 		= ngeCurl($url, array(), $method);
 		$responRow	 		= json_decode($responsedet['response'],true);
 		$awal = $responRow['restify'];
-		foreach($awal['rows'] as $row){
-			$newArray = array();
-			foreach($row['values'] as $key=>$val){
-				$newArray = array_merge($newArray,array($key => $val['value']));
+		if (count(@$awal['rows'])){
+			foreach($awal['rows'] as $row){
+				$newArray = array();
+				foreach($row['values'] as $key=>$val){
+					$newArray = array_merge($newArray,array($key => $val['value']));
+				}
+				$thisRow[] = $newArray;
 			}
-			$thisRow[] = $newArray;
+			$return = array_merge($arrHasil, $thisRow);
+			$nextPage = @$awal['nextPage']['href'];
 		}
-		$return = array_merge($arrHasil, $thisRow);
-		$nextPage = @$awal['nextPage']['href'];
 		
-		return array($return, $nextPage);
+		return array($return, @$nextPage);
 	}
 	
 	
