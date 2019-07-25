@@ -1807,6 +1807,21 @@ class Dashboard extends CI_Controller {
 				);
 				@$total += $nilai;
 			}
+			$statusInv = 3;
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=50&_filter=status%3D%3D'.$statusInv.'%26%26host_kode%3D%3D'.$thisKey.'%26%26inv_tgl%3E%3D'.$thisYear.'-01-01%26%26inv_tgl%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+			$allData 	= $this->getDataLemigas($url);
+			foreach($allData as $row){
+				$nilai = $row['inv_nilai'];
+				if ($row['inv_currency'] == 1)
+					$nilai = $nilai * $this->pengaliDolar;
+				$rows[] = array(
+					'judul'			=> $row['kontrak_nama'],
+					'noKontrak'		=> $row['kontrak_no'],
+					'pelanggan'		=> $row['cust_nama'],
+					'nilaiInvoice'	=> number_format($nilai,2),
+				);
+				@$total += $nilai;
+			}
 		}
 		$return = array(
 			'data' => @$rows,
