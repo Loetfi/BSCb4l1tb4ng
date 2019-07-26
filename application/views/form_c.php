@@ -1,4 +1,9 @@
 <!-- Content Header (Page header) -->
+<style>
+/* /html/body/div/div[1]/section[2]/div[2]/div/div/div[2]/table/tbody/tr[1]/td[9] */
+#ssTable .td-border-left{ border-left: 1px dashed #000 !important; }
+#ssTable .td-border-right{ border-right: 1px dashed #000 !important; }
+</style>
 <section class="content-header">
 	<h1>
 		<?php echo @$title; ?>
@@ -8,9 +13,7 @@
 <!-- Main content -->
 
 <section class="content">
-<pre>
-<?php print_r($getRekap_form_c['targetAllBulanan']); ?>
-</pre>
+<!-- pre><?php print_r($getRekap_form_c['dataTable']); ?></pre -->
 	<!-- div class="row">
 		<div class="col-lg-12 col-xs-12">
 			<select class="form-control" id="satKer">
@@ -105,7 +108,7 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body" style="height: 100%; overflow-x: scroll;">
-					<table class="table table-bordered table-striped">
+					<table id="ssTable" class="table table-bordered table-striped">
 						<thead>
 						<tr>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">No</th>
@@ -115,19 +118,20 @@
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Invoice [Rp.M]</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Realisasi [Rp.M]</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Sisa Kontrak [Rp.M]</th>
-							<th rowspan="3" style="vertical-align: middle; text-align:center;">Capaian Realisasi <br>%</th>
-							<th colspan="36"style="vertical-align: middle; text-align:center; width: 2400px;">Realisasi Bulanan</th>
+							<th rowspan="3" style="vertical-align: middle; text-align:center;" class="td-border-right">Capaian Realisasi <br>%</th>
+							<th colspan="48"style="vertical-align: middle; text-align:center; width: 2400px;" class="td-border-left" >Realisasi Bulanan</th>
 						</tr>
 						<tr>
 							<?php for($i=1; $i<=12; $i++){ ?>
-							<th colspan="3" style="text-align:center;"><?php echo date('M', strtotime($i.'/20/2019')); ?></th>
+							<th colspan="4" style="text-align:center;" class="td-border-left td-border-right"><?php echo date('M', strtotime($i.'/20/2019')); ?></th>
 							<?php } ?>
 						</tr>
 						<tr>
 							<?php for($bulan=1; $bulan<=12; $bulan++){ ?>
+							<th style="width: 100px;" class="td-border-left">T [Rp.M]</th>
+							<th style="width: 100px;">R [Rp.M]</th>
 							<th>%</th>
-							<th style="width: 100px;">[Rp.M]</th>
-							<th style="width: 100px;">Sum</th>
+							<th style="width: 100px;" class="td-border-right">Sum</th>
 							<?php } ?>
 						</tr>
 						</thead>
@@ -166,8 +170,22 @@
 										<?php echo number_format(@$tableRekap[$kp3]['realisasi'] / $pembagi ,4); ?>
 									</a>
 								</td>
-								<td align="right"><?php echo number_format(((@$tableRekap[$kp3]['terkontrak'] - @$tableRekap[$kp3]['realisasi']) / $pembagi),4); ?></td>
-								<td align="right"><?php echo number_format((@$tableRekap[$kp3]['realisasi'] / @$tableRekap[$kp3]['terkontrak'] * 100),2) ?></td>
+								<td align="right">
+									<?php 
+									if (@$tableRekap[$kp3]['terkontrak'] > 1)
+										echo number_format(((@$tableRekap[$kp3]['terkontrak'] - @$tableRekap[$kp3]['realisasi']) / $pembagi),4); 
+									else 
+										echo number_format(0,4);
+									?>
+								</td>
+								<td align="right" class="td-border-right">
+									<?php 
+									if (@$tableRekap[$kp3]['terkontrak'] > 1)
+										echo number_format((@$tableRekap[$kp3]['realisasi'] / @$tableRekap[$kp3]['terkontrak'] * 100),2);
+									else 
+										echo '-';
+									?>
+								</td>
 								<?php 
 								for($bulan=1; $bulan<=12; $bulan++){ 
 									$nilai = '-';
@@ -175,15 +193,19 @@
 									if (@$dataTable[$kp3][$bulan]['realisasi'] > 0){
 										$nilai = number_format(@$dataTable[$kp3][$bulan]['realisasi'] / $pembagi ,4);
 										$thisMonthTarget = $targetAllBulanan[$kp3][$bulan] > 0 ? $targetAllBulanan[$kp3][$bulan] : 1 ;
-										$persen = number_format(((@$dataTable[$kp3][$bulan]['realisasi']/ $pembagi) / ($thisMonthTarget/$pembagi) * 100),2);
+										if ($thisMonthTarget > 1)
+											$persen = number_format(((@$dataTable[$kp3][$bulan]['realisasi']/ $pembagi) / ($thisMonthTarget/$pembagi) * 100),2);
+										else 
+											$persen = number_format(100,2);
 										// $persen = number_format(rand(1,80),2);
 										@$akumulasi[$kp3] += @$dataTable[$kp3][$bulan]['realisasi'];
 									}
 								
 								?>
-								<td align="right"><?php echo @$persen; ?><br><?php echo number_format(@$thisMonthTarget,2); ?></td>
+								<td align="right" class="td-border-left"><?php echo number_format(@$thisMonthTarget/$pembagi,4); ?></td>
 								<td align="right"><?php echo @$nilai; ?></td>
-								<td align="right"><?php echo ($bulan <= (int)date('m')) ? number_format(@$akumulasi[$kp3] / $pembagi,4) : '-'; ?></td>
+								<td align="right"><?php echo @$persen; ?></td>
+								<td align="right" class="td-border-right"><?php echo ($bulan <= (int)date('m')) ? number_format(@$akumulasi[$kp3] / $pembagi,4) : '-'; ?></td>
 								<?php } ?>
 							</tr>
 							<?php } ?>
@@ -201,11 +223,12 @@
 								<td align="right" Inv=""></td>
 								<td align="right" Realisasi=""></td>
 								<td align="right" sisaKontrak=""></td>
-								<td align="right" capaiRealisasi=""></td>
+								<td align="right" capaiRealisasi="" class="td-border-right"></td>
 								<?php for($bulan=1; $bulan<=12; $bulan++){ ?>
+								<td align="right" target="" class="td-border-left"></td>
 								<td align="right" persen=""></td>
 								<td align="right" nilai=""></td>
-								<td align="right" sum=""></td>
+								<td align="right" sum="" class="td-border-right"></td>
 								<?php }?>
 							</tr>
 							<?php } } ?>
