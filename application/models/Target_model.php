@@ -182,6 +182,25 @@ class Target_model extends CI_Model {
 		return $resutl;
 	}
 	
+	function getTargetAllKp3Bulanan($branchId='', $tahun=''){
+		if ($branchId == 'All'){
+			$where = "";
+		}
+		else {
+			$where = " AND o.branch_id = '".$branchId."' ";
+		}
+		$sql = "
+		SELECT t.`month`, o.client_mapping, sum(t.amount) target
+		FROM target t 
+		JOIN ms_organization o ON t.org_id = o.id
+		WHERE 1=1 ".$where." and t.`year` = '".$tahun."'
+		GROUP BY t.`month`, o.client_mapping
+		ORDER BY t.`month` ASC
+		";
+		
+		$resutl = $this->db->query($sql)->result_array();
+		return $resutl;
+	}
 	function getTargetKp3Bulanan($branchId='', $tahun=''){
 		if ($branchId == 'All'){
 			$where = "";

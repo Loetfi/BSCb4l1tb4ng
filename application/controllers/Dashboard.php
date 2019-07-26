@@ -1641,6 +1641,12 @@ class Dashboard extends CI_Controller {
 		if ($satker != 'All'){
 			$targetAll = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
 			$dataReturn['targetAll'] = $targetAll;
+			
+			$targetAllBulanan = $this->target->getTargetAllKp3Bulanan($branchId, $this->thisYear);
+			foreach($targetAllBulanan as $row){
+				$thisRows[$row['client_mapping']][$row['month']] = $row['target'];
+			}
+			$dataReturn['targetAllBulanan'] = $thisRows;
 		}
 		return $dataReturn;
 	}

@@ -8,6 +8,9 @@
 <!-- Main content -->
 
 <section class="content">
+<pre>
+<?php print_r($getRekap_form_c['targetAllBulanan']); ?>
+</pre>
 	<!-- div class="row">
 		<div class="col-lg-12 col-xs-12">
 			<select class="form-control" id="satKer">
@@ -137,6 +140,7 @@
 							$arrKp3 = $getRekap_form_c['arrKp3'];
 							$arrOrgId = $getRekap_form_c['arrOrgId'];
 							$targetAll = $getRekap_form_c['targetAll'];
+							$targetAllBulanan = $getRekap_form_c['targetAllBulanan'];
 							for($i=0; $i<count($arrKp3); $i++){
 								$thisUnitKerja[] = $arrKp3[$i];
 								$kp3 = strtoupper($arrKp3[$i]);
@@ -170,12 +174,14 @@
 									$persen = '-';
 									if (@$dataTable[$kp3][$bulan]['realisasi'] > 0){
 										$nilai = number_format(@$dataTable[$kp3][$bulan]['realisasi'] / $pembagi ,4);
-										$persen = number_format(rand(1,80),2);
+										$thisMonthTarget = $targetAllBulanan[$kp3][$bulan] > 0 ? $targetAllBulanan[$kp3][$bulan] : 1 ;
+										$persen = number_format(((@$dataTable[$kp3][$bulan]['realisasi']/ $pembagi) / ($thisMonthTarget/$pembagi) * 100),2);
+										// $persen = number_format(rand(1,80),2);
 										@$akumulasi[$kp3] += @$dataTable[$kp3][$bulan]['realisasi'];
 									}
 								
 								?>
-								<td align="right"><?php echo @$persen; ?></td>
+								<td align="right"><?php echo @$persen; ?><br><?php echo number_format(@$thisMonthTarget,2); ?></td>
 								<td align="right"><?php echo @$nilai; ?></td>
 								<td align="right"><?php echo ($bulan <= (int)date('m')) ? number_format(@$akumulasi[$kp3] / $pembagi,4) : '-'; ?></td>
 								<?php } ?>
