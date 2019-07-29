@@ -1,3 +1,4 @@
+<?php $thisSession = $this->session->all_userdata(); ?>
 <div class="wrapper">
 
   <header class="main-header">
@@ -55,6 +56,8 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">NAVIGASI</li>
+		
+		<?php if ($thisSession['branch_name'] == 'Administrator'){ ?>
         <li id="menuDashboard">
           <a href="<?php echo site_url('dashboard'); ?>">
             <i class="fa fa-dashboard"></i> <span>Kinerja BLU</span> 
@@ -65,7 +68,10 @@
             <i class="fa fa-dashboard"></i> <span>Realisasi Penerimaan BLU</span> 
           </a>
         </li> 
-        <li id="MenuUnitKerja" class="treeview">
+        <?php } ?>
+		
+		
+		<li id="MenuUnitKerja" class="treeview">
           <a href="#">
             <i class="fa fa-share"></i> <span>Satuan Kerja</span>
             <span class="pull-right-container">
@@ -73,7 +79,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="MenuUnitKerjaLemigas" class="treeview">
+			<?php if ($thisSession['branch_name'] == 'Administrator' || $thisSession['branch_name'] == 'P3TEK'){ ?>
+            <li id="MenuUnitKerja-P3TEK" class="treeview">
               <a href="#"><i class="fa fa-circle-o"></i> P3TEK
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
@@ -84,7 +91,11 @@
                 <li><a href="<?php echo site_url('dashboard/form_c/p3tek'); ?>"><i class="fa fa-circle-o"></i> Detail</a></li>
               </ul>
             </li>
-            <li class="treeview">
+			<?php } ?>
+			
+			
+			<?php if ($thisSession['branch_name'] == 'Administrator' || $thisSession['branch_name'] == 'TERKMIRA'){ ?>
+            <li id="MenuUnitKerja-TERKMIRA" class="treeview">
               <a href="#"><i class="fa fa-circle-o"></i> TERKMIRA
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
@@ -95,7 +106,11 @@
                 <li><a href="<?php echo site_url('dashboard/form_c/tekmira'); ?>"><i class="fa fa-circle-o"></i> Detail</a></li>
               </ul>
             </li>
-            <li class="treeview">
+			<?php } ?>
+			
+			
+			<?php if ($thisSession['branch_name'] == 'Administrator' || $thisSession['branch_name'] == 'LEMIGAS'){ ?>
+            <li id="MenuUnitKerja-LEMIGAS" class="treeview">
               <a href="#"><i class="fa fa-circle-o"></i> LEMIGAS
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
@@ -106,7 +121,11 @@
                 <li><a href="<?php echo site_url('dashboard/form_c/lemigas'); ?>"><i class="fa fa-circle-o"></i> Detail</a></li>
               </ul>
             </li>
-            <li class="treeview">
+			<?php } ?>
+			
+			
+			<?php if ($thisSession['branch_name'] == 'Administrator' || $thisSession['branch_name'] == 'P3GL'){ ?>
+            <li id="MenuUnitKerja-P3GL" class="treeview">
               <a href="#"><i class="fa fa-circle-o"></i> P3GL
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
@@ -117,38 +136,37 @@
                 <li><a href="<?php echo site_url('dashboard/form_c/p3gl'); ?>"><i class="fa fa-circle-o"></i> Detail</a></li>
               </ul>
             </li>
+			<?php } ?>
 			
           </ul>
         </li>
         
+		<?php if ($thisSession['branch_name'] == 'Administrator'){ ?>
         <li class="header">Data Master</li>
+        <!-- <li id="menuBranch">
+          <a href="<?php echo site_url('master/branch'); ?>">
+            <i class="fa fa-briefcase"></i> <span>Master Unit Kerja</span>
+          </a>
+        </li> -->
+        <li id="menuStruktur">
+          <a href="<?php echo site_url('master/struktur'); ?>">
+            <i class="fa fa-sitemap"></i> <span>Master Satuan Kerja(KP3)</span>
+          </a>
+        </li>  
         <li id="menuTarget">
           <a href="<?php echo site_url('master/target'); ?>">
             <i class="fa fa-rocket"></i> <span>Master Target</span>
           </a>
         </li>
-        <li id="menuStruktur">
-          <a href="<?php echo site_url('master/struktur'); ?>">
-            <i class="fa fa-sitemap"></i> <span>Master Organisasi</span>
-          </a>
-        </li>  
-        <li id="menuBranch">
-          <a href="<?php echo site_url('master/branch'); ?>">
-            <i class="fa fa-briefcase"></i> <span>Master Unit Kerja</span>
-          </a>
-        </li>
-<!-- 
-        <li class="header">Pengaturan</li>
+
+        <li class="header">Pengguna</li>
            <li class="<?php echo @$this->uri->segment(1) === 'pengguna' ? 'active' : '' ; ?>">
           <a href="<?php echo site_url('pengguna'); ?>">
             <i class="fa fa-users"></i> <span>Pengguna</span> 
           </a>
         </li>
-		<li class="header">Form Laporan</li>
-        <li class=""><a href="<?php echo site_url('dashboard/form_a'); ?>"><span>Form A</span></a></li>
-        <li class=""><a href="<?php echo site_url('dashboard/form_b'); ?>"><span>Form B</span></a></li>
-        <li class=""><a href="<?php echo site_url('dashboard/form_c'); ?>"><span>Form C</span></a></li>
--->
+		<?php } ?>
+		
       </ul>
     </section>
     <!-- /.sidebar -->

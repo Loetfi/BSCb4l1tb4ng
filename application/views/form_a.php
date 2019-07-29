@@ -15,6 +15,16 @@
 
 <section class="content">
 	<div class="row">
+		<div class="col-lg-12 col-xs-12">
+			<select class="form-control" id="tahun">
+				<?php for($i=date('Y'); $i>2017; $i--){ ?>
+				<option value="<?php echo $i; ?>" <?php echo $i == @$selectedYear ? 'selected' : ''; ?>><?php echo $i; ?></option>
+				<?php } ?>
+			</select>
+			<br>
+		</div>
+	</div>
+	<div class="row">
         <div class="col-lg-4 col-xs-4"> 
 			<!-- small box -->
 			<div class="small-box bg-red">
@@ -180,6 +190,11 @@ $(function(){
 	// $('#MenuUnitKerja').addClass('active').addClass('menu-open');
 	// $('#MenuUnitKerjaLemigas').addClass('active').addClass('menu-open');
 	// $('#unitKerjaLemigas-Lemigas').addClass('active');
+	
+$('#tahun').change(function(){
+	val = $(this).val();
+	window.location.href="<?php echo site_url('dashboard/form_a'); ?>/"+val;
+});
 
 Highcharts.chart('GrafikFormA', {
 	credits: { enabled: false },

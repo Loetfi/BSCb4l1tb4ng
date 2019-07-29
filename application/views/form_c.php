@@ -14,17 +14,16 @@
 
 <section class="content">
 <!-- pre><?php print_r($getRekap_form_c['dataTable']); ?></pre -->
-	<!-- div class="row">
+	<div class="row">
 		<div class="col-lg-12 col-xs-12">
-			<select class="form-control" id="satKer">
-				<option value="p3tek" <?php echo $satKer == 'p3tek' ? 'selected' : ''; ?>>P3TEK</option>
-				<option value="tekmira" <?php echo $satKer == 'tekmira' ? 'selected' : ''; ?>>TERKMIRA</option>
-				<option value="lemigas" <?php echo $satKer == 'lemigas' ? 'selected' : ''; ?>>LEMIGAS</option>
-				<option value="p3gl" <?php echo $satKer == 'p3gl' ? 'selected' : ''; ?>>P3GL</option>
+			<select class="form-control" id="tahun">
+				<?php for($i=date('Y'); $i>2017; $i--){ ?>
+				<option value="<?php echo $i; ?>" <?php echo $i == @$selectedYear ? 'selected' : ''; ?>><?php echo $i; ?></option>
+				<?php } ?>
 			</select>
 			<br>
 		</div>
-	</div -->
+	</div>
 	
 	<div class="row">
         <div class="col-lg-4 col-xs-4"> 
@@ -362,14 +361,13 @@
 </div>
 <script>
 $(function(){
-	// $('#MenuUnitKerja').addClass('active').addClass('menu-open');
-	// $('#MenuUnitKerjaLemigas').addClass('active').addClass('menu-open');
-	// $('#unitKerjaLemigas-Lemigas').addClass('active');
+	$('#MenuUnitKerja').addClass('active').addClass('menu-open');
+	$('#MenuUnitKerja-<?php echo strtoupper($satKer); ?>').addClass('active').addClass('menu-open');
 
-$('#satKer').change(function(){
+$('#tahun').change(function(){
 	val = $(this).val();
 	// alert(val);
-	window.location.href="<?php echo site_url('dashboard/form_c'); ?>/"+val;
+	window.location.href="<?php echo site_url('dashboard/form_c/'.$satKer); ?>/"+val;
 });
 
 var nTableKontrak = $('#nTableKontrak').dataTable();

@@ -1,3 +1,4 @@
+<?php $thisSession = $this->session->all_userdata(); ?>
 <script src="<?php echo base_url('assets/highcharts'); ?>/highcharts.src.js"></script>
 <script src="<?php echo base_url('assets/highcharts'); ?>/highcharts-more.js"></script>
 <script src="<?php echo base_url('assets/highcharts'); ?>/modules/exporting.js"></script>
@@ -13,17 +14,16 @@
 <!-- Main content -->
 
 <section class="content">
-	<!-- div class="row">
+	<div class="row">
 		<div class="col-lg-12 col-xs-12">
-			<select class="form-control" id="satKer">
-				<option value="p3tek" <?php echo $satKer == 'p3tek' ? 'selected' : ''; ?>>P3TEK</option>
-				<option value="tekmira" <?php echo $satKer == 'tekmira' ? 'selected' : ''; ?>>TEKMIRA</option>
-				<option value="lemigas" <?php echo $satKer == 'lemigas' ? 'selected' : ''; ?>>LEMIGAS</option>
-				<option value="p3gl" <?php echo $satKer == 'p3gl' ? 'selected' : ''; ?>>P3GL</option>
+			<select class="form-control" id="tahun">
+				<?php for($i=date('Y'); $i>2017; $i--){ ?>
+				<option value="<?php echo $i; ?>" <?php echo $i == @$selectedYear ? 'selected' : ''; ?>><?php echo $i; ?></option>
+				<?php } ?>
 			</select>
 			<br>
 		</div>
-	</div -->
+	</div>
 	<div class="row">
         <div class="col-lg-4 col-xs-4"> 
 			<!-- small box -->
@@ -170,7 +170,7 @@
 							<td align="right"></td>
 							<td align="right"></td>
 							<td align="right"></td>
-						<tr>
+						</tr>
 						<?php } } ?>
 						
 					</table>
@@ -242,8 +242,8 @@
 
 <script>
 $(function(){
-	// $('#MenuUnitKerja').addClass('active').addClass('menu-open');
-	// $('#MenuUnitKerjaLemigas').addClass('active').addClass('menu-open');
+	$('#MenuUnitKerja').addClass('active').addClass('menu-open');
+	$('#MenuUnitKerja-<?php echo strtoupper($satKer); ?>').addClass('active').addClass('menu-open');
 	// $('#unitKerjaLemigas-Lemigas').addClass('active');
 Highcharts.chart('GrafikFormB', {
 	credits: { enabled: false },
@@ -274,10 +274,11 @@ Highcharts.chart('GrafikFormB', {
 	series: <?php echo json_encode($getGrafik_form_a['dataSeries']); ?>
 });
 
-$('#satKer').change(function(){
+$('#tahun').change(function(){
 	val = $(this).val();
 	// alert(val);
-	window.location.href="<?php echo site_url('dashboard/form_b'); ?>/"+val;
+	window.location.href="<?php echo site_url('dashboard/form_b/'.$satKer); ?>/"+val;
 });
+
 });
 </script>

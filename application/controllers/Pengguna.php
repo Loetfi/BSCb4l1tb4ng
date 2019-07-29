@@ -14,6 +14,12 @@ class Pengguna extends CI_Controller {
     $this->load->model('pengguna_model');
     $this->load->model('branch_model');
     check_login('dashboard');
+	$this->thisSession = $this->session->all_userdata();
+	if ($this->thisSession['branch_name'] == 'Administrator'){}
+	else {
+		$satKer = strtolower($this->thisSession['branch_name']);
+		redirect('dashboard/form_b/'.$satKer);
+	}
   }
 
 

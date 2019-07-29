@@ -26,6 +26,7 @@ class Dashboard extends CI_Controller {
 		$this->satuan = ' M';
 		$this->thisYear = date('Y');
 		$this->lastYear = date('Y')-1;
+		$this->thisSession = $this->session->all_userdata();
 	}
 
 
@@ -270,34 +271,52 @@ class Dashboard extends CI_Controller {
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
 	}
-	function index(){
-		$data = array(
-			'title' => 'Dashboard Kinerja BLU' ,
-			'page'	=> 'dashboard_bsc',
-		);
-		
-		$data['getRekap_form_a'] = $this->getRekap_form_a();
-		$data['getGrafik']['p3gl'] = $this->getGrafik_form_a('p3gl');
-		$data['getGrafik']['p3tek'] = $this->getGrafik_form_a('p3tek');
-		$data['getGrafik']['tekmira'] = $this->getGrafik_form_a('tekmira');
-		$data['getGrafik']['lemigas'] = $this->getGrafik_form_a('lemigas');
-		
-		$unit = array(); $target = array(); $realisasi = array(); $sr = array();
-		foreach($data['getRekap_form_a']['dataSatker'] as $row){
-			$unit[] = $row['Unit Kerja'];
-			$target[] = floatval(str_replace(' M','',$row['Target']));
-			$realisasi[] = floatval(str_replace(' M','',$row['Realisasi']));
-			$sr[] = floatval(number_format(floatval(str_replace(' M','',$row['Realisasi'])) / floatval(str_replace(' M','',$row['Target'])) * 100,2));
+	function index($selectedYear = ""){
+		if ($this->thisSession['branch_name'] == 'Administrator'){
+			if ($selectedYear == "" || $selectedYear == date('Y')){
+				$selectedYear = date('Y');
+				$this->thisYear = date('Y');
+				$this->lastYear = date('Y') - 1;
+				$titleDate = date('d F Y');
+			} else {
+				$this->thisYear = $selectedYear;
+				$this->lastYear = $selectedYear - 1;
+				$titleDate = $selectedYear;
+			}
+			$data['selectedYear'] = $selectedYear;
+			
+			$data = array(
+				'title' => 'Dashboard Kinerja BLU' ,
+				'page'	=> 'dashboard_bsc',
+			);
+			
+			$data['getRekap_form_a'] = $this->getRekap_form_a('All', $selectedYear);
+			$data['getGrafik']['p3gl'] = $this->getGrafik_form_a('p3gl', $selectedYear);
+			$data['getGrafik']['p3tek'] = $this->getGrafik_form_a('p3tek', $selectedYear);
+			$data['getGrafik']['tekmira'] = $this->getGrafik_form_a('tekmira', $selectedYear);
+			$data['getGrafik']['lemigas'] = $this->getGrafik_form_a('lemigas', $selectedYear);
+			
+			$unit = array(); $target = array(); $realisasi = array(); $sr = array();
+			foreach($data['getRekap_form_a']['dataSatker'] as $row){
+				$unit[] = $row['Unit Kerja'];
+				$target[] = floatval(str_replace(' M','',$row['Target']));
+				$realisasi[] = floatval(str_replace(' M','',$row['Realisasi']));
+				$sr[] = floatval(number_format(floatval(str_replace(' M','',$row['Realisasi'])) / floatval(str_replace(' M','',$row['Target'])) * 100,2));
+			}
+			
+			$data['unit'] = $unit;
+			$data['target'] = $target;
+			$data['realisasi'] = $realisasi;
+			$data['sr'] = $sr;
+			
+			$this->load->view('template/header', $data, FALSE);
+			$this->load->view('template/content', $data, FALSE);
+			$this->load->view('template/footer', $data, FALSE);
 		}
-		
-		$data['unit'] = $unit;
-		$data['target'] = $target;
-		$data['realisasi'] = $realisasi;
-		$data['sr'] = $sr;
-		
-		$this->load->view('template/header', $data, FALSE);
-		$this->load->view('template/content', $data, FALSE);
-		$this->load->view('template/footer', $data, FALSE);
+		else {
+			$satKer = strtolower($this->thisSession['branch_name']);
+			redirect('dashboard/form_b/'.$satKer.'/'.$selectedYear);
+		}
 	}
 	
 	public function lemigas(){
@@ -602,7 +621,26 @@ class Dashboard extends CI_Controller {
 		$this->load->view('template/footer', $data, FALSE);
 	}
 	
-	public function form_a(){
+	public function form_a($selectedYear = ""){
+		$satKer = 'All';
+		if ($selectedYear == "" || $selectedYear == date('Y')){
+			$selectedYear = date('Y');
+			$this->thisYear = date('Y');
+			$this->lastYear = date('Y') - 1;
+			$titleDate = date('d F Y');
+		} else {
+			$this->thisYear = $selectedYear;
+			$this->lastYear = $selectedYear - 1;
+			$titleDate = $selectedYear;
+		}
+		$data['selectedYear'] = $selectedYear;
+		
+		if ($this->thisSession['branch_name'] == "Administrator"){}
+		else {
+			$satKer = strtolower($this->thisSession['branch_name']);
+			redirect('dashboard/form_b/'.$satKer.'/'.$selectedYear);
+		}
+		
 		$data['title'] = 'Realisasi Penerimaan VS Target PNBP BLU ('.date('d F Y').')-Form A';
 		$data['page'] = 'form_a';
 		
@@ -615,9 +653,9 @@ class Dashboard extends CI_Controller {
 			$bulanan[] = date('M', strtotime($i.'/20/2019'));
 		$data['bulanan'] = $bulanan;
 		
-		$data['getRekap_form_a'] = $this->getRekap_form_a();
-		$data['getGrafik_form_a'] = $this->getGrafik_form_a();
-		$data['getRekap_form_c'] = $this->getRekap_form_c();
+		$data['getRekap_form_a'] = $this->getRekap_form_a($satKer, $selectedYear);
+		$data['getGrafik_form_a'] = $this->getGrafik_form_a($satKer, $selectedYear);
+		$data['getRekap_form_c'] = $this->getRekap_form_c($satKer, $selectedYear);
 		$data['pembagi'] = $this->pembagi;
 		$data['satuan'] = $this->satuan;
 		$data['thisYear'] = $this->thisYear;
@@ -626,8 +664,28 @@ class Dashboard extends CI_Controller {
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
 	}
-	public function form_b($satKer = 'p3tek'){
-		$data['title'] = 'Kurva S '.strtoupper($satKer).' ('.date('d F Y').')-Form B';
+	public function form_b($satKer = 'p3tek', $selectedYear=""){
+		$satKer = strtolower($satKer);
+		if ($selectedYear == "" || $selectedYear == date('Y')){
+			$selectedYear = date('Y');
+			$this->thisYear = date('Y');
+			$this->lastYear = date('Y') - 1;
+			$titleDate = date('d F Y');
+		} else {
+			$this->thisYear = $selectedYear;
+			$this->lastYear = $selectedYear - 1;
+			$titleDate = $selectedYear;
+		}
+		$data['selectedYear'] = $selectedYear;
+		
+		if ($this->thisSession['branch_name'] == "Administrator"){}
+		else if ($satKer != strtolower($this->thisSession['branch_name'])){
+			$satKer = strtolower($this->thisSession['branch_name']);
+			redirect('dashboard/form_b/'.$satKer.'/'.$selectedYear);
+		}
+		
+		
+		$data['title'] = 'Kurva S '.strtoupper($satKer).' ('.$titleDate.')-Form B';
 		$data['page'] = 'form_b';
 		$data['satKer'] = $satKer;
 		
@@ -635,10 +693,10 @@ class Dashboard extends CI_Controller {
 			$bulanan[] = date('M', strtotime($i.'/20/2019'));
 		$data['bulanan'] = $bulanan;
 		
-		$data['getRekap_form_a'] = $this->getRekap_form_a($satKer);
-		$data['getGrafik_form_a'] = $this->getGrafik_form_a($satKer);
-		$data['getRekap_form_b'] = $this->getRekap_form_b($satKer);
-		$data['getRekap_form_c'] = $this->getRekap_form_c($satKer);
+		$data['getRekap_form_a'] = $this->getRekap_form_a($satKer, $selectedYear);
+		$data['getGrafik_form_a'] = $this->getGrafik_form_a($satKer, $selectedYear);
+		$data['getRekap_form_b'] = $this->getRekap_form_b($satKer, $selectedYear);
+		$data['getRekap_form_c'] = $this->getRekap_form_c($satKer, $selectedYear);
 		$data['pembagi'] = $this->pembagi;
 		$data['satuan'] = $this->satuan;
 		
@@ -654,10 +712,30 @@ class Dashboard extends CI_Controller {
 		$this->load->view('template/footer', $data, FALSE);
 
 	}
-	public function form_c($satKer = 'p3tek'){
-		$data['title'] = 'Table Detail '.strtoupper($satKer).' ('.date('d F Y').')-Form C';
+	public function form_c($satKer = 'p3tek', $selectedYear=""){
+		$satKer = strtolower($satKer);
+		if ($selectedYear == ""){
+			$selectedYear = date('Y');
+			$this->thisYear = date('Y');
+			$this->lastYear = date('Y') - 1;
+			$titleDate = date('d F Y');
+		} else {
+			$this->thisYear = $selectedYear;
+			$this->lastYear = $selectedYear - 1;
+			$titleDate = $selectedYear;
+		}
+		$data['selectedYear'] = $selectedYear;
+		
+		if ($this->thisSession['branch_name'] == "Administrator"){}
+		else if ($satKer != strtolower($this->thisSession['branch_name'])){
+			$satKer = strtolower($this->thisSession['branch_name']);
+			redirect('dashboard/form_c/'.$satKer.'/'.$selectedYear);
+		}
+		
+		$data['title'] = 'Table Detail '.strtoupper($satKer).' ('.$titleDate.')-Form C';
 		$data['page'] = 'form_c';
 		$data['satKer'] = $satKer;
+		
 		
 		$data['pembagi'] = $this->pembagi;
 		$data['satuan'] = $this->satuan;
@@ -666,9 +744,9 @@ class Dashboard extends CI_Controller {
 			$bulanan[] = date('M', strtotime($i.'/20/2019'));
 		$data['bulanan'] = $bulanan;
 		
-		$data['getRekap_form_a'] = $this->getRekap_form_a($satKer);
-		$data['getGrafik_form_a'] = $this->getGrafik_form_a($satKer);
-		$data['getRekap_form_c'] = $this->getRekap_form_c($satKer);
+		$data['getRekap_form_a'] = $this->getRekap_form_a($satKer, $selectedYear);
+		$data['getGrafik_form_a'] = $this->getGrafik_form_a($satKer, $selectedYear);
+		$data['getRekap_form_c'] = $this->getRekap_form_c($satKer, $selectedYear);
 		$data['pembagi'] = $this->pembagi;
 		$data['satuan'] = $this->satuan;
 		
@@ -676,7 +754,7 @@ class Dashboard extends CI_Controller {
 		else if ($satKer == "p3gl"){ $branchId = '2'; }
 		else if ($satKer == "tekmira"){ $branchId = '3'; }
 		else if ($satKer == "lemigas"){ $branchId = '1'; }
-		$data['thisTargetAll'] = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
+		$data['thisTargetAll'] = $this->getTargetKp3Tahunan($branchId, $selectedYear);
 		
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
@@ -704,7 +782,14 @@ class Dashboard extends CI_Controller {
 		
 	}
 	
-	function getRekap_form_a($satKer = 'All'){
+	function getRekap_form_a($satKer = 'All', $selectedYear=""){
+		if ($selectedYear == ""){
+			$this->thisYear = date('Y');
+			$this->lastYear = date('Y') - 1;
+		} else {
+			$this->thisYear = $selectedYear;
+			$this->lastYear = $selectedYear - 1;
+		}
 		$realisasi 		= 0;
 		$kontrakSatker 	= 0;
 		$targetSatker 	= 1;
@@ -882,7 +967,14 @@ class Dashboard extends CI_Controller {
 		);
 		return @$dataReturn;
 	}
-	function getGrafik_form_a($satKer = 'All'){
+	function getGrafik_form_a($satKer = 'All', $selectedYear=""){
+		if ($selectedYear == ""){
+			$this->thisYear = date('Y');
+			$this->lastYear = date('Y') - 1;
+		} else {
+			$this->thisYear = $selectedYear;
+			$this->lastYear = $selectedYear - 1;
+		}
 		$AkumulasiRealiasi = null;
 		$AkumulasiRealiasiTahunLalu = null;
 		
@@ -1143,7 +1235,14 @@ class Dashboard extends CI_Controller {
 		
 		return $dataReturn;
 	}
-	function getRekap_form_b($satker){
+	function getRekap_form_b($satker, $selectedYear=""){
+		if ($selectedYear == ""){
+			$this->thisYear = date('Y');
+			$this->lastYear = date('Y') - 1;
+		} else {
+			$this->thisYear = $selectedYear;
+			$this->lastYear = $selectedYear - 1;
+		}
 		$dataReturn = array();
 		$pembagi = $this->pembagi;
 		$satuan = $this->satuan;
@@ -1284,7 +1383,14 @@ class Dashboard extends CI_Controller {
 		}
 		return @$dataReturn;
 	}
-	function getRekap_form_c($satker = 'All'){
+	function getRekap_form_c($satker = 'All', $selectedYear=""){
+		if ($selectedYear == ""){
+			$this->thisYear = date('Y');
+			$this->lastYear = date('Y') - 1;
+		} else {
+			$this->thisYear = $selectedYear;
+			$this->lastYear = $selectedYear - 1;
+		}
 		$arrOrgId = array();
 		$dataReturn = array();
 		$pembagi = $this->pembagi;
