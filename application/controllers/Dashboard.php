@@ -1048,7 +1048,7 @@ class Dashboard extends CI_Controller {
 				$nilai = $row['realisasiKontrak'];
 				@$KontrakSatker[$bulan]['value_casted'] += @$nilai;
 			}
-			print_r(@$KontrakSatker); die();
+			// print_r(@$KontrakSatker);
 			
 			
 			## Pencapaian this year
