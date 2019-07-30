@@ -842,8 +842,18 @@ class Dashboard extends CI_Controller {
 			$dataRow 			= @$responRow['data'];
 			foreach($dataRow as $row){
 				@$realisasiSatker += floatval(str_replace('.','',$row['realisasi']));
-				@$kontrakSatker += floatval(str_replace('.','',$row['realisasi']));
 			}
+			
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/terkontrak_kp3_tahunan';
+			$method 			= 'POST';
+			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow 			= @$responRow['data'];
+			// print_r($dataRow); die();
+			foreach($dataRow as $row){
+				@$kontrakSatker += floatval(str_replace('.','',$row['terkontrak']));
+			}
+			
 			
 			$dataSatker[] = array(
 				'Unit Kerja'		=> 'BLT',
@@ -1470,7 +1480,6 @@ class Dashboard extends CI_Controller {
 				$nilai = $row['realisasiKontrak'];
 				@$KontrakSatker[$kp3] += @$nilai;
 			}
-			
 			// print_r($KontrakSatker); die();
 			
 			## invoice
