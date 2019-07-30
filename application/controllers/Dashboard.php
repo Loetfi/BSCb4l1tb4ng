@@ -842,6 +842,7 @@ class Dashboard extends CI_Controller {
 			$dataRow 			= @$responRow['data'];
 			foreach($dataRow as $row){
 				@$realisasiSatker += floatval(str_replace('.','',$row['realisasi']));
+				@$kontrakSatker += floatval(str_replace('.','',$row['realisasi']));
 			}
 			
 			$dataSatker[] = array(
@@ -1427,26 +1428,79 @@ class Dashboard extends CI_Controller {
 		if ($satker == 'All' || $satker == "tekmira"){ $branchId = '3';
 			$arrKp3 = array();
 			## penerimaan
-			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_detail_realisasi';
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/realisasi_kp3_bulanan';
 			$method 			= 'POST';
 			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
-			// print_r($responRow);
+			$dataRow 			= @$responRow['data'];
+			foreach($dataRow as $row){
+				$kp3 = strtoupper($row['kp3']);
+				$bulan = (int)$row['bulan'];
+				if(!in_array($kp3, $arrKp3)){
+					$arrKp3[] = $kp3;
+					$arrOrgId[$kp3] = $row['kp3'];
+				}
+				
+				$nilai = $row['realisasi'];
+				
+				$dataTable[$kp3][$bulan]['kp3'] 					= $row['kp3'];
+				@$dataTable[$kp3][$bulan]['realisasi'] 				+= $nilai;
+				@$dataTable[$kp3][$bulan]['bulan']					= $row['bulan'];
+				@$dataTable[$kp3][$bulan]['realisasiKontrak']		= null;
+				@$dataTable[$kp3][$bulan]['invoice']				= null;
+				
+				@$tableRekap[$kp3]['realisasi'] 	+= $nilai;
+				
+				$totalRealisasi += $nilai;
+			}
+			// print_r($dataTable); print_r($tableRekap); die();
 			
 			## kontrak
-			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_detail_kontrak';
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/terkontrak_kp3_bulanan';
 			$method 			= 'POST';
 			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
-			// print_r($responRow);
+			$dataRow 			= @$responRow['data'];
+			foreach($dataRow as $row){
+				$kp3 = strtoupper($row['kp3']);
+				if(!in_array($kp3, $arrKp3)){
+					$arrKp3[] = $kp3;
+				}
+				
+				$nilai = $row['realisasiKontrak'];
+				@$KontrakSatker[$kp3] += @$nilai;
+			}
+			
+			// print_r($KontrakSatker); die();
 			
 			## invoice
-			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_detail_realisasi';
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/realisasi_kp3_bulanan';
 			$method 			= 'POST';
 			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
-			// print_r($responRow);
+			$dataRow 			= @$responRow['data'];
+			foreach($dataRow as $row){
+				$kp3 = strtoupper($row['kp3']);
+				if(!in_array($kp3, $arrKp3)){
+					$arrKp3[] = $kp3;
+				}
+				
+				$nilai = $row['realisasi'];
+				@$InvSatker[$kp3] += @$nilai;
+			}
 			
+			
+			for($i=0; $i<count($arrKp3); $i++){
+				$kp3 = strtoupper($arrKp3[$i]);
+				$tableRekap[$kp3]['terkontrak'] 	= @$KontrakSatker[$kp3] == 0 ? 1 : @$KontrakSatker[$kp3];
+				$tableRekap[$kp3]['inv'] 			= @$InvSatker[$kp3] == 0 ? 1 : @$InvSatker[$kp3];
+				
+				@$totalTerkontrak += @$KontrakSatker[$kp3];
+				@$totalInv += @$InvSatker[$kp3];
+			}
+			
+			// print_r($responRow);
+			/* 
 			## https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_rekap_target
 			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_kiri';
 			$method 			= 'POST';
@@ -1482,7 +1536,7 @@ class Dashboard extends CI_Controller {
 					$arrKp3[] = $kp3;
 				
 				$dataTable[$kp3][$bulan] = $row;
-			}
+			} */
 			$dataReturn = array(
 				'tableRekap' 		=> $tableRekap,
 				'dataTable' 		=> $dataTable,

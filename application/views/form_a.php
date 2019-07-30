@@ -107,7 +107,7 @@
 				<!-- /.box-header -->
 				<div class="box-body">
 <table class="table table-bordered table-striped">
-<tr><th>Bulan	</th><th>Target 2019	</th><th>Realisasi	</td><th>Realisasi Kontrak</th><th>Realisasi Tahun Lalu</th></tr>
+<tr><th>Bulan	</th><th>Target <?php echo @$selectedYear; ?>	</th><th>Realisasi	</td><th>Realisasi Kontrak</th><th>Realisasi Tahun Lalu</th></tr>
 <?php for($i=1; $i<=12; $i++){ ?>
 <tr>
 	<td align="right"><?php echo date('M', strtotime($i.'/20/2019')); ?></td>
