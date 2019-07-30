@@ -834,15 +834,16 @@ class Dashboard extends CI_Controller {
 			$targetSatker = @$getTargetSatker['TargetTahunIni'];
 			$targetBulan = @$getTargetSatker['TargetBulanIni'];
 			
-			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/table_rekap_target';
+			// realisasi
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/realisasi_kp3_tahunan';
 			$method 			= 'POST';
 			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
 			$dataRow 			= @$responRow['data'];
 			foreach($dataRow as $row){
-				@$realisasiSatker += $row['realisasi'];
-				@$kontrakSatker += $row['realisasiKontrak'];
+				@$realisasiSatker += floatval(str_replace('.','',$row['realisasi']));
 			}
+			
 			$dataSatker[] = array(
 				'Unit Kerja'		=> 'BLT',
 				'Target'			=> number_format($targetSatker/$pembagi,2).$satuan,
@@ -1035,26 +1036,47 @@ class Dashboard extends CI_Controller {
 		
 		if ($satKer == 'All' || $satKer == 'tekmira'){ $branchId = '3';
 			## p3tek
-			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/table_rekap_target';
+			
+			## kontrak
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/terkontrak_kp3_bulanan';
+			$method 			= 'POST';
+			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			$dataRow 			= @$responRow['data'];
+			foreach($dataRow as $row){
+				$bulan = (int)@$row['bulan'];
+				$nilai = $row['realisasiKontrak'];
+				@$KontrakSatker[$bulan]['value_casted'] += @$nilai;
+			}
+			print_r(@$KontrakSatker); die();
+			
+			
+			## Pencapaian this year
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/realisasi_kp3_bulanan';
 			$method 			= 'POST';
 			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
 			$dataRow 			= @$responRow['data'];
 			foreach($dataRow as $row){
 				$bulan = (int)$row['bulan'];
-				$dataSatker[$bulan] = $row;
+				$debit = $row['realisasi'];
+				@$dataSatker[$bulan]['realisasi'] += $debit;
 			}
+			// print_r(@$dataSatker);
 			
-			// tahun lalu
-			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/table_rekap_target';
+			## Pencapaian last year
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/realisasi_kp3_bulanan';
 			$method 			= 'POST';
-			$responsedet 		= ngeCurl($url, array('tahun' => ((int)$this->thisYear) - 1), $method);
+			$responsedet 		= ngeCurl($url, array('tahun' => $this->lastYear), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
 			$dataRow 			= @$responRow['data'];
 			foreach($dataRow as $row){
 				$bulan = (int)$row['bulan'];
-				$dataSatkerLalu[$bulan] = $row;
+				$debit = $row['realisasi'];
+				@$dataSatkerLalu[$bulan]['realisasi'] += $debit;
 			}
+			
+			// print_r(@$dataSatkerLalu); die();
 			
 			for($i=1; $i<=12; $i++){
 				if (@$dataSatker[$i]['target'] > 0) 			{ @$data['target'][$i-1] 				+= @$dataSatker[$i]['target'];            } else { @$data['target'][$i-1]				+= null; }
@@ -1318,18 +1340,18 @@ class Dashboard extends CI_Controller {
 			$targetAll = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
 			// $dataReturn['targetAll'] = $targetAll;
 			// print_r($targetAll);
-			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_kiri';
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/realisasi_kp3_tahunan';
 			$method 			= 'POST';
 			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
 			$dataRow 			= @$responRow['data'];
 			// print_r($dataRow); die();
 			foreach($dataRow as $row){
-				$realisasiKp3 	= str_replace('.','',@$row['realisasi']);
+				$realisasiKp3 	= floatval(str_replace('.','',@$row['realisasi']));
 				$dataReturn[] = array(
 					'Unit Kerja'		=> $row['kp3'],
 					'Target'			=> number_format($targetAll[$row['kp3']]/$pembagi,2).$satuan,
-					'Target Bulan Ini'	=> $row['targetBulanIni'],
+					'Target Bulan Ini'	=> @$row['targetBulanIni'],
 					'Target (%)'		=> null,
 					'Realisasi'			=> number_format($realisasiKp3/$pembagi,2).$satuan,
 					'Realisasi(%)'		=> null,
@@ -1337,6 +1359,9 @@ class Dashboard extends CI_Controller {
 					'Sisa(%)'			=> null,
 				);
 			}
+			// print_r($targetAll); 
+			// print_r($dataReturn); 
+			// die();
 		}
 		else if ($satker == "lemigas"){ $branchId = '1';
 			$targetAll = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
@@ -1401,6 +1426,35 @@ class Dashboard extends CI_Controller {
 		
 		if ($satker == 'All' || $satker == "tekmira"){ $branchId = '3';
 			$arrKp3 = array();
+			## penerimaan
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_detail_realisasi';
+			$method 			= 'POST';
+			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			// print_r($responRow);
+			
+			## kontrak
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_detail_kontrak';
+			$method 			= 'POST';
+			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			// print_r($responRow);
+			
+			## invoice
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_detail_realisasi';
+			$method 			= 'POST';
+			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			// print_r($responRow);
+			
+			## https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_rekap_target
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_kiri';
+			$method 			= 'POST';
+			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
+			$responRow	 		= json_decode($responsedet['response'],true);
+			// print_r($responRow);
+			// die();
+			
 			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/tabel_rekap';
 			$method 			= 'POST';
 			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
