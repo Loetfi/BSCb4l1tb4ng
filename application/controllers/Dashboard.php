@@ -817,7 +817,7 @@ class Dashboard extends CI_Controller {
 			$dataRow 			= @$responRow['data'];
 			$realisasiSatker 	= @$dataRow['value_casted'];
 			$dataSatker[] = array(
-				'Unit Kerja'		=> 'BLE',
+				'Unit Kerja'		=> 'P3TEK',
 				'Target'			=> number_format($targetSatker/$pembagi,2).$satuan,
 				'Target Bulan Ini'	=> number_format($targetBulan/$pembagi,2).$satuan,
 				'Target (%)'		=> number_format($targetBulan/$targetSatker * 100,2),
@@ -856,7 +856,7 @@ class Dashboard extends CI_Controller {
 			
 			
 			$dataSatker[] = array(
-				'Unit Kerja'		=> 'BLT',
+				'Unit Kerja'		=> 'Tekmira',
 				'Target'			=> number_format($targetSatker/$pembagi,2).$satuan,
 				'Target Bulan Ini'	=> number_format($targetBulan/$pembagi,2).$satuan,
 				'Target (%)'		=> number_format($targetBulan/$targetSatker * 100,2),
@@ -888,7 +888,7 @@ class Dashboard extends CI_Controller {
 			$dataRow 			= @$responRow['data'];
 			$realisasiSatker 	= @$dataRow['value_casted'];
 			$dataSatker[] = array(
-				'Unit Kerja'		=> 'BLK',
+				'Unit Kerja'		=> 'P3GL',
 				'Target'			=> number_format($targetSatker/$pembagi,2).$satuan,
 				'Target Bulan Ini'	=> number_format($targetBulan/$pembagi,2).$satuan,
 				'Target (%)'		=> number_format($targetBulan/$targetSatker * 100,2),
@@ -944,7 +944,7 @@ class Dashboard extends CI_Controller {
 				// $realisasiSatker 	+= @$dataRow['kredit'];
 			}
 			$dataSatker[] = array(
-				'Unit Kerja'		=> 'BLM',
+				'Unit Kerja'		=> 'Lemigas',
 				'Target'			=> number_format($targetSatker/$pembagi,2).$satuan,
 				'Target Bulan Ini'	=> number_format($targetBulan/$pembagi,2).$satuan,
 				'Target (%)'		=> number_format($targetBulan/$targetSatker * 100,2),
@@ -1349,29 +1349,51 @@ class Dashboard extends CI_Controller {
 			}
 		}
 		else if ($satker == "tekmira"){ $branchId = '3';
-			
+			$arrKp3 = array();
 			$targetAll = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
 			// $dataReturn['targetAll'] = $targetAll;
 			// print_r($targetAll);
-			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/realisasi_kp3_tahunan';
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/realisasi_kp3_bulanan';
 			$method 			= 'POST';
 			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
 			$dataRow 			= @$responRow['data'];
-			// print_r($dataRow); die();
-			foreach($dataRow as $row){
-				$realisasiKp3 	= floatval(str_replace('.','',@$row['realisasi']));
-				$dataReturn[] = array(
-					'Unit Kerja'		=> $row['kp3'],
-					'Target'			=> number_format($targetAll[$row['kp3']]/$pembagi,2).$satuan,
+            foreach($dataRow as $row){
+                $kp3 = strtoupper($row['kp3']);
+				if(!in_array($kp3, $arrKp3)){
+					$arrKp3[] = $kp3;
+				}
+                @$realisasiKp3[$kp3] 	+= floatval(str_replace('.','',@$row['realisasi']));
+            }
+            for($i=0; $i<count($arrKp3); $i++){
+                $kp3 = $arrKp3[$i];
+                $dataReturn[] = array(
+					'Unit Kerja'		=> $kp3,
+					'Target'			=> number_format(@$targetAll[$kp3]/$pembagi,2).$satuan,
 					'Target Bulan Ini'	=> @$row['targetBulanIni'],
 					'Target (%)'		=> null,
-					'Realisasi'			=> number_format($realisasiKp3/$pembagi,2).$satuan,
+					'Realisasi'			=> number_format($realisasiKp3[$kp3]/$pembagi,2).$satuan,
 					'Realisasi(%)'		=> null,
 					'Sisa'				=> null,
 					'Sisa(%)'			=> null,
 				);
-			}
+                
+            }
+			// print_r($realisasiKp3);  print_r($dataRow);  die();
+            
+			// foreach($dataRow as $row){
+				// $realisasiKp3 	= floatval(str_replace('.','',@$row['realisasi']));
+				// $dataReturn[] = array(
+					// 'Unit Kerja'		=> $row['kp3'],
+					// 'Target'			=> number_format(@$targetAll[$row['kp3']]/$pembagi,2).$satuan,
+					// 'Target Bulan Ini'	=> @$row['targetBulanIni'],
+					// 'Target (%)'		=> null,
+					// 'Realisasi'			=> number_format($realisasiKp3/$pembagi,2).$satuan,
+					// 'Realisasi(%)'		=> null,
+					// 'Sisa'				=> null,
+					// 'Sisa(%)'			=> null,
+				// );
+			// }
 			// print_r($targetAll); 
 			// print_r($dataReturn); 
 			// die();

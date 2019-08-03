@@ -191,7 +191,7 @@
 									$persen = '-';
 									if (@$dataTable[$kp3][$bulan]['realisasi'] > 0){
 										$nilai = number_format(@$dataTable[$kp3][$bulan]['realisasi'] / $pembagi ,4);
-										$thisMonthTarget = $targetAllBulanan[$kp3][$bulan] > 0 ? $targetAllBulanan[$kp3][$bulan] : 1 ;
+										$thisMonthTarget = @$targetAllBulanan[$kp3][$bulan] > 0 ? @$targetAllBulanan[$kp3][$bulan] : 1 ;
 										if ($thisMonthTarget > 1)
 											$persen = number_format(((@$dataTable[$kp3][$bulan]['realisasi']/ $pembagi) / ($thisMonthTarget/$pembagi) * 100),2);
 										else 
