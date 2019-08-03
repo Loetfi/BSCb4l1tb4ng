@@ -835,7 +835,7 @@ class Dashboard extends CI_Controller {
 			$targetBulan = @$getTargetSatker['TargetBulanIni'];
 			
 			// realisasi
-			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/realisasi_kp3_tahunan';
+			$url 				= 'https://layanan.tekmira.esdm.go.id/emonev/restapi/realisasi_kp3_bulanan';
 			$method 			= 'POST';
 			$responsedet 		= ngeCurl($url, array('tahun' => $this->thisYear), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
