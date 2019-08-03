@@ -2206,7 +2206,118 @@ class Dashboard extends CI_Controller {
 		return array($return, @$nextPage);
 	}
 	
-	
+	public function raw_rekap(){
+        $satker = 'tekmira';
+        $tekmira = $this->getRekap_form_c($satker);
+        foreach($tekmira['tableRekap'] as $kp3 => $val){
+            $dataInsert[] = array(
+                'tgl' => date('Y-m-d'),
+                'satker' => $satker,
+                'kp3' => $kp3,
+                'terkontrak' => @$val['terkontrak'] == '1' ? '0' : @$val['terkontrak'],
+                'inv' => @$val['inv'] == '1' ? '0' : @$val['inv'],
+                'realisasi' => @$val['realisasi'] == '1' ? '0' : @$val['realisasi'],
+            );
+        }
+        
+        $satker = 'p3tek';
+        $p3tek = $this->getRekap_form_c($satker);
+        foreach($p3tek['tableRekap'] as $kp3 => $val){
+            $dataInsert[] = array(
+                'tgl' => date('Y-m-d'),
+                'satker' => $satker,
+                'kp3' => $kp3,
+                'terkontrak' => @$val['terkontrak'] == '1' ? '0' : @$val['terkontrak'],
+                'inv' => @$val['inv'] == '1' ? '0' : @$val['inv'],
+                'realisasi' => @$val['realisasi'] == '1' ? '0' : @$val['realisasi'],
+            );
+        }
+        
+        $satker = 'p3gl';
+        $p3gl = $this->getRekap_form_c($satker);
+        foreach($p3gl['tableRekap'] as $kp3 => $val){
+            $dataInsert[] = array(
+                'tgl' => date('Y-m-d'),
+                'satker' => $satker,
+                'kp3' => $kp3,
+                'terkontrak' => @$val['terkontrak'] == '1' ? '0' : @$val['terkontrak'],
+                'inv' => @$val['inv'] == '1' ? '0' : @$val['inv'],
+                'realisasi' => @$val['realisasi'] == '1' ? '0' : @$val['realisasi'],
+            );
+        }
+        
+        $satker = 'lemigas';
+        $lemigas = $this->getRekap_form_c($satker);
+        foreach($lemigas['tableRekap'] as $kp3 => $val){
+            $dataInsert[] = array(
+                'tgl' => date('Y-m-d'),
+                'satker' => $satker,
+                'kp3' => $kp3,
+                'terkontrak' => @$val['terkontrak'] == '1' ? '0' : @$val['terkontrak'],
+                'inv' => @$val['inv'] == '1' ? '0' : @$val['inv'],
+                'realisasi' => @$val['realisasi'] == '1' ? '0' : @$val['realisasi'],
+            );
+        }
+        
+        $raw_rekap = $this->dash->raw_rekap($dataInsert);
+        print_r($raw_rekap); 
+    }
+    
+    function getNotif($tgl=''){
+        $this->load->library('email');
+        
+        $tgl = ($tgl == "" ? date('Y-m-d') : $tgl);
+        $getNotif = $this->dash->getNotif($tgl);
+        if (count($getNotif) > 0){
+            $tgl = date('d F Y', strtotime($tgl));
+            
+            $table = '<table width="100%">
+                <tr>
+                    <th>No</th>
+                    <th>Satker</th>
+                    <th>KP3</th>
+                    <th>Penambah Terkontrak</th>
+                    <th>Penambah Invoice</th>
+                    <th>Penambah Realiasi</th>
+                </tr>
+            <tbody>'; 
+            $no = 0;
+            foreach($getNotif as $row){
+                $no++;
+                $table = '<tr>
+                    <td>'.$no.'</td>
+                    <td>'.$row['satker'].'</td>
+                    <td>'.$row['kp3'].'</td>
+                    <td align="right">'.number_format($row['selisih_terkontrak'],2).'</td>
+                    <td align="right">'.number_format($row['selisih_inv'],2).'</td>
+                    <td align="right">'.number_format($row['selisih_realisasi'],2).'</td>
+                </tr>';
+            }
+            $table .= '</tbody></table>';
+            $message = '<html><body>';
+            $message .= '<h1 style="color:#f40;">Hi Jane!</h1>';
+            $message .= '<p>Berikut Update Progress</p>';
+            $message .= $table;
+            $message .= '</body></html>';
+            
+            $this->email->from('admin@suvisanusi.com', 'Suvi Sanusi');
+            $this->email->to('suvi.7888@gmail.com');
+            // $this->email->cc('another@another-example.com');
+            // $this->email->bcc('them@their-example.com');
+
+            $this->email->subject('Update Progres BSC BALITBANG ESDM, Tanggal '.$tgl);
+            $this->email->message($message);
+            $this->email->set_mailtype("html");
+
+            $cek = $this->email->send();
+            if($cek){
+                echo 'Your mail has been sent successfully.';
+            } else{
+                echo 'Unable to send email. Please try again.';
+            }
+        }
+        print_r($getNotif);
+    }
 }
 
 /* End of file Kegiatan.php */

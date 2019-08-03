@@ -70,6 +70,37 @@ class Dashboard_model extends CI_Model {
 		return $query->result_array();
     }
 	
+    function raw_rekap($dataInsert){
+        $this->db->insert_batch('raw_rekap', $dataInsert);
+    }
+    
+    function getNotif($tgl = ""){
+        $tgl = ($tgl == "" ? date('Y-m-d') : $tgl);
+        $sql = "SELECT *
+        FROM selisih_harian
+        WHERE tgl = '".$tgl."'
+        AND (
+            selisih_terkontrak > 0
+            OR selisih_inv > 0
+            OR selisih_realisasi > 0
+        )";
+        $query = $this->db->query($sql);
+		return $query->result_array();
+    }
+    /*
+CREATE VIEW selisih_harian AS 
+SELECT 
+	A.*,
+	(IFNULL(A.terkontrak, 0) - IFNULL(B.terkontrak, 0)) selisih_terkontrak,
+	(IFNULL(A.inv, 0) - IFNULL(B.inv, 0)) selisih_inv,
+	(IFNULL(A.realisasi, 0) - IFNULL(B.realisasi, 0)) selisih_realisasi
+FROM raw_rekap A
+LEFT JOIN raw_rekap B
+	ON (A.tgl + 0) = (B.tgl +1)
+	AND A.satker = B.satker 
+	AND A.kp3 = B.kp3
+ORDER BY tgl DESC, satker ASC, kp3 ASC
+    */
 }
 
 /* End of file Auth_model.php */
