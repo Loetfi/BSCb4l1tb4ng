@@ -2264,10 +2264,13 @@ class Dashboard extends CI_Controller {
     }
     
     function getNotif($tgl=''){
-        $this->load->library('email');
+		$this->load->library('email');
+		$this->load->helper('sending');
         
         $tgl = ($tgl == "" ? date('Y-m-d') : $tgl);
-        $getNotif = $this->dash->getNotif($tgl);
+		$getNotif = $this->dash->getNotif($tgl);
+		
+		// print_r($getNotif); die;
         if (count($getNotif) > 0){
             $tgl = date('d F Y', strtotime($tgl));
             
@@ -2299,24 +2302,19 @@ class Dashboard extends CI_Controller {
             $message .= '<p>Berikut Update Progress</p>';
             $message .= $table;
             $message .= '</body></html>';
-            
-            $this->email->from('admin@suvisanusi.com', 'Suvi Sanusi');
-            $this->email->to('suvi.7888@gmail.com');
-            // $this->email->cc('another@another-example.com');
-            // $this->email->bcc('them@their-example.com');
 
-            $this->email->subject('Update Progres BSC BALITBANG ESDM, Tanggal '.$tgl);
-            $this->email->message($message);
-            $this->email->set_mailtype("html");
+			$res = Notification::sending('Update Progres BSC BALITBANG ESDM, Tanggal '.$tgl ,$message,'suvi.7888@gmail.com');
 
-            $cek = $this->email->send();
-            if($cek){
+			// print_r($res); die;
+
+            // $cek = $this->email->send();
+            if($res){
                 echo 'Your mail has been sent successfully.';
             } else{
                 echo 'Unable to send email. Please try again.';
             }
         }
-        print_r($getNotif);
+        // print_r($getNotif);
     }
 }
 
