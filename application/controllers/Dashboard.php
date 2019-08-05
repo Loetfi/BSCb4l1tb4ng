@@ -16,9 +16,9 @@ class Dashboard extends CI_Controller {
 
 		$this->load->model('dashboard/kontrak_model','kontrak');
 
-		if (!$_POST) {
-			check_login('dashboard');	
-		}
+		// if (!$_POST) {
+			// check_login('dashboard');	
+		// }
 		
 		$this->pembagi = 1000000000;
 		$this->pengaliDolar = 14250;
@@ -271,7 +271,7 @@ class Dashboard extends CI_Controller {
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
 	}
-	function index($selectedYear = ""){
+	function index($selectedYear = ""){ if (!$_POST) { check_login('dashboard'); }
 		if ($this->thisSession['branch_name'] == 'Administrator'){
 			if ($selectedYear == "" || $selectedYear == date('Y')){
 				$selectedYear = date('Y');
@@ -621,7 +621,7 @@ class Dashboard extends CI_Controller {
 		$this->load->view('template/footer', $data, FALSE);
 	}
 	
-	public function form_a($selectedYear = ""){
+	public function form_a($selectedYear = ""){ if (!$_POST) { check_login('dashboard'); }
 		$satKer = 'All';
 		if ($selectedYear == "" || $selectedYear == date('Y')){
 			$selectedYear = date('Y');
@@ -664,7 +664,7 @@ class Dashboard extends CI_Controller {
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
 	}
-	public function form_b($satKer = 'p3tek', $selectedYear=""){
+	public function form_b($satKer = 'p3tek', $selectedYear=""){ if (!$_POST) { check_login('dashboard'); }
 		$satKer = strtolower($satKer);
 		if ($selectedYear == "" || $selectedYear == date('Y')){
 			$selectedYear = date('Y');
@@ -712,7 +712,7 @@ class Dashboard extends CI_Controller {
 		$this->load->view('template/footer', $data, FALSE);
 
 	}
-	public function form_c($satKer = 'p3tek', $selectedYear=""){
+	public function form_c($satKer = 'p3tek', $selectedYear=""){ if (!$_POST) { check_login('dashboard'); }
 		$satKer = strtolower($satKer);
 		if ($selectedYear == ""){
 			$selectedYear = date('Y');
@@ -2274,7 +2274,7 @@ class Dashboard extends CI_Controller {
         if (count($getNotif) > 0){
             $tgl = date('d F Y', strtotime($tgl));
             
-            $table = '<table width="100%">
+            $table = '<table width="100%" border="1">
                 <tr>
                     <th>No</th>
                     <th>Satker</th>
@@ -2287,7 +2287,7 @@ class Dashboard extends CI_Controller {
             $no = 0;
             foreach($getNotif as $row){
                 $no++;
-                $table = '<tr>
+                $table .= '<tr>
                     <td>'.$no.'</td>
                     <td>'.$row['satker'].'</td>
                     <td>'.$row['kp3'].'</td>
@@ -2298,7 +2298,6 @@ class Dashboard extends CI_Controller {
             }
             $table .= '</tbody></table>';
             $message = '<html><body>';
-            $message .= '<h1 style="color:#f40;">Hi Jane!</h1>';
             $message .= '<p>Berikut Update Progress</p>';
             $message .= $table;
             $message .= '</body></html>';
