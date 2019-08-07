@@ -30,8 +30,7 @@
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Tgl Awal</th>
-								<th>Tgl Pembanding</th>
+								<th>Tgl</th>
 								<th>Satker</th>
 								<th>KP3</th>
 								<th>Penambah Terkontrak</th>
@@ -45,8 +44,7 @@
 							foreach($getNotif as $row){ ?>
 							<tr>
 								<td><?php echo ++$no; ?></td>
-								<td><?php echo date('d M Y', strtotime($tgl.' -2 days')); ?></td>
-								<td><?php echo date('d M Y', strtotime($tgl.' -1 days')); ?></td>
+								<td><?php echo $tanggal; ?></td>
 								<td><?php echo strtoupper(@$row['satker']); ?></td>
 								<td><?php echo strtoupper(@$row['kp3']); ?></td>
 								<td align="right"><?php echo $row['selisih_terkontrak'] > 0 ? number_format($row['selisih_terkontrak'],2) : '-'; ?></td>
