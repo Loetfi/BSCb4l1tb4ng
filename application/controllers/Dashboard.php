@@ -1095,7 +1095,7 @@ class Dashboard extends CI_Controller {
 				if (@$dataSatker[$i]['target'] > 0) 			{ @$data['target'][$i-1] 				+= @$dataSatker[$i]['target'];            } else { @$data['target'][$i-1]				+= null; }
 				if (@$dataSatker[$i]['potensi'] > 0)			{ @$data['potensi'][$i-1] 				+= @$dataSatker[$i]['potensi'];           } else { @$data['potensi'][$i-1]				+= null; }
 				if (@$dataSatker[$i]['realisasi'] > 0)			{ @$data['realisasi'][$i-1] 			+= @$dataSatker[$i]['realisasi'];         } else { @$data['realisasi'][$i-1]			+= null; }
-				if (@$dataSatker[$i]['realisasiKontrak'] > 0)	{ @$data['nilaiKontrak'][$i-1] 			+= @$dataSatker[$i]['realisasiKontrak'];  } else { @$data['nilaiKontrak'][$i-1]			+= null; }
+				if (@$KontrakSatker[$i]['value_casted'] > 0)	{ @$data['nilaiKontrak'][$i-1] 			+= @$KontrakSatker[$i]['value_casted'];   } else { @$data['nilaiKontrak'][$i-1]			= null; }
 				if (@$dataSatkerLalu[$i]['realisasi'] > 0)		{ @$data['realiasiTahunLalu'][$i-1] 	+= @$dataSatkerLalu[$i]['realisasi'];     } else { @$data['realiasiTahunLalu'][$i-1]	+= null; }
 				
 				$AkumulasiRealiasi += @$dataSatker[$i]['realisasi'];
