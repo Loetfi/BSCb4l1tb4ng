@@ -143,8 +143,12 @@
         
 		<?php if ($thisSession['branch_name'] == 'Administrator'){ ?>
 		<li id="menuNotif">
-          <a href="<?php echo site_url('diff'); ?>">
+          <a href="<?php echo site_url('diff'); ?>" class="label-success">
             <i class="fa fa-bell"></i> <span>Difference Log</span> 
+            <span class="pull-right-container">
+              <small class="label pull-right bg-yellow">new</small>
+            </span>
+			
           </a>
         </li> 
 		<li class="header">Data Master</li>
