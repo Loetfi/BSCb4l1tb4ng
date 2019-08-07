@@ -142,7 +142,7 @@
         </li>
         
 		<?php if ($thisSession['branch_name'] == 'Administrator'){ ?>
-        <li class="header">Data Master</li>
+		<li class="header">Data Master</li>
         <!-- <li id="menuBranch">
           <a href="<?php echo site_url('master/branch'); ?>">
             <i class="fa fa-briefcase"></i> <span>Master Unit Kerja</span>
@@ -165,6 +165,11 @@
             <i class="fa fa-users"></i> <span>Pengguna</span> 
           </a>
         </li>
+		<li id="menuNotif">
+          <a href="<?php echo site_url('diff'); ?>">
+            <i class="fa fa-bell"></i> <span>Difference Log</span> 
+          </a>
+        </li> 
 		<?php } ?>
 		
       </ul>

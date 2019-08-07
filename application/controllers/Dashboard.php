@@ -2092,7 +2092,7 @@ class Dashboard extends CI_Controller {
 		$thisYear = @$_POST['thisYear'] ?: 0;
 		$satker = $_POST['thisSatker'] ?: 0;
 		if ($satker == "p3gl"){
-			$url 				= 'http://34.66.44.99/json/organization_payment?organization_id='.$thisKey.'&year='.$this->thisYear;
+			$url 				= 'http://34.66.44.99/json/deviation?organization_id='.$thisKey.'&year='.$this->thisYear;
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$responRow	 		= json_decode($responsedet['response'],true);
