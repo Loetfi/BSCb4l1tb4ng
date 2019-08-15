@@ -289,6 +289,7 @@ class Dashboard extends CI_Controller {
 				'title' => 'Dashboard Kinerja BLU' ,
 				'page'	=> 'dashboard_bsc',
 			);
+			$data['script_file'] = 'script_dash';
 			
 			$data['getRekap_form_a'] = $this->getRekap_form_a('All', $selectedYear);
 			$data['getGrafik']['p3gl'] = $this->getGrafik_form_a('p3gl', $selectedYear);
@@ -643,6 +644,7 @@ class Dashboard extends CI_Controller {
 		
 		$data['title'] = 'Realisasi Penerimaan VS Target PNBP BLU ('.date('d F Y').')-Form A';
 		$data['page'] = 'form_a';
+		$data['script_file'] = 'script_a';
 		
 		$rawTarget = $this->target->getTargetBulanan($this->thisYear);
 		foreach($rawTarget as $row)
@@ -687,6 +689,7 @@ class Dashboard extends CI_Controller {
 		
 		$data['title'] = 'Kurva S '.strtoupper($satKer).' ('.$titleDate.')-Form B';
 		$data['page'] = 'form_b';
+		$data['script_file'] = 'script_b';
 		$data['satKer'] = $satKer;
 		
 		for($i=1; $i<=12; $i++) 
@@ -734,6 +737,7 @@ class Dashboard extends CI_Controller {
 		
 		$data['title'] = 'Table Detail '.strtoupper($satKer).' ('.$titleDate.')-Form C';
 		$data['page'] = 'form_c';
+		$data['script_file'] = 'script_c';
 		$data['satKer'] = $satKer;
 		
 		

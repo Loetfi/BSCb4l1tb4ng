@@ -21,6 +21,7 @@ class Diff extends CI_Controller {
 			'title' => 'Difference Value Date' ,
 			'page'	=> 'difference'
 		);
+		$data['script_file'] = 'script_diff';
 		
 		$tgl = @$_GET['tgl'];
 		$tgl = ($tgl == "" ? date('Y-m-d') : $tgl);
