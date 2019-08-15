@@ -267,7 +267,7 @@ class Dashboard extends CI_Controller {
 		
 		
 		
-		$this->load->view('template/header', $data, FALSE);
+		$this->load->view('template/header-content', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
 	}
@@ -310,7 +310,7 @@ class Dashboard extends CI_Controller {
 			$data['realisasi'] = $realisasi;
 			$data['sr'] = $sr;
 			
-			$this->load->view('template/header', $data, FALSE);
+			$this->load->view('template/header-content', $data, FALSE);
 			$this->load->view('template/content', $data, FALSE);
 			$this->load->view('template/footer', $data, FALSE);
 		}
@@ -617,7 +617,7 @@ class Dashboard extends CI_Controller {
         // print_r($dataSeries);
         // die();
 
-		$this->load->view('template/header', $data, FALSE);
+		$this->load->view('template/header-content', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
 	}
@@ -662,7 +662,7 @@ class Dashboard extends CI_Controller {
 		$data['satuan'] = $this->satuan;
 		$data['thisYear'] = $this->thisYear;
 		
-		$this->load->view('template/header', $data, FALSE);
+		$this->load->view('template/header-content', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
 	}
@@ -710,7 +710,7 @@ class Dashboard extends CI_Controller {
 		$data['targetAll'] = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
 		
 		
-		$this->load->view('template/header', $data, FALSE);
+		$this->load->view('template/header-content', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
 
@@ -760,7 +760,7 @@ class Dashboard extends CI_Controller {
 		else if ($satKer == "lemigas"){ $branchId = '1'; }
 		$data['thisTargetAll'] = $this->getTargetKp3Tahunan($branchId, $selectedYear);
 		
-		$this->load->view('template/header', $data, FALSE);
+		$this->load->view('template/header-content', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
 

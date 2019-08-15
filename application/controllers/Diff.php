@@ -58,7 +58,7 @@ class Diff extends CI_Controller {
 		$table .= '</tbody></table>';
 		*/
 		
-		$this->load->view('template/header', $data, FALSE);
+		$this->load->view('template/header-content', $data, FALSE);
 		$this->load->view('template/content', $data, FALSE);
 		$this->load->view('template/footer', $data, FALSE);
 	}
