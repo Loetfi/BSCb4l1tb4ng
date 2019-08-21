@@ -683,6 +683,7 @@ class Dashboard extends CI_Controller {
 		if ($this->thisSession['branch_name'] == "Administrator"){}
 		else if ($satKer != strtolower($this->thisSession['branch_name'])){
 			$satKer = strtolower($this->thisSession['branch_name']);
+			if ($satKer == 'p3tkebtke') $satKer = 'p3tek';
 			redirect('dashboard/form_b/'.$satKer.'/'.$selectedYear);
 		}
 		
@@ -732,6 +733,7 @@ class Dashboard extends CI_Controller {
 		if ($this->thisSession['branch_name'] == "Administrator"){}
 		else if ($satKer != strtolower($this->thisSession['branch_name'])){
 			$satKer = strtolower($this->thisSession['branch_name']);
+			if ($satKer == 'p3tkebtke') $satKer = 'p3tek';
 			redirect('dashboard/form_c/'.$satKer.'/'.$selectedYear);
 		}
 		
