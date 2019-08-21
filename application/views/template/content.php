@@ -94,7 +94,7 @@
 			<?php } ?>
 			
 			
-			<?php if ($thisSession['branch_name'] == 'Administrator' || $thisSession['branch_name'] == 'TERKMIRA'){ ?>
+			<?php if ($thisSession['branch_name'] == 'Administrator' || $thisSession['branch_name'] == 'TEKMIRA'){ ?>
             <li id="MenuUnitKerja-TERKMIRA" class="treeview">
               <a href="#"><i class="fa fa-circle-o"></i> TEKMIRA
                 <span class="pull-right-container">
