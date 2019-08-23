@@ -119,7 +119,7 @@ class Target_model extends CI_Model {
 			$whereBulanan .= " AND b.branch_id = '".$branchId."' ";
 		}
 		if ($month != ''){
-			$whereBulanan .= " AND t.`month` = '".$month."' ";
+			$whereBulanan .= " AND t.`month` <= '".$month."' ";
 		}
 		
 		$sql = "
