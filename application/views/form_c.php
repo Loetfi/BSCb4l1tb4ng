@@ -53,7 +53,7 @@
 			<div class="small-box bg-green">
 				<div class="inner">
 					<h3><?php echo $getRekap_form_a['targetBulanIni']; ?>(<?php echo $getRekap_form_a['persenTarget']; ?>)</h3>
-					<p>Target Bulan Ini</p>
+					<p>Target Sampai Bulan Berjalan</p>
 				</div>
 				<div class="icon">
 					<i class="ion ion-android-checkmark-circle"></i>
@@ -156,17 +156,17 @@
 								
 								<td align="right">
 									<a href="#" class="btnTerkontrak" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
-										<?php echo number_format(@$tableRekap[$kp3]['terkontrak'] / $pembagi ,4); ?>
+										<?php echo number_format(@$tableRekap[$kp3]['terkontrak'], 0, ',', '.'); ?>
 									</a>
 								</td>
 								<td align="right">
 									<a href="#" class="btnInvoice" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
-										<?php echo number_format(@$tableRekap[$kp3]['inv'] / $pembagi ,4); ?>
+										<?php echo number_format(@$tableRekap[$kp3]['inv'], 0, ',', '.' ); ?>
 									</a>
 								</td>
 								<td align="right">
 									<a href="#" class="btnRealisasi" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
-										<?php echo number_format(@$tableRekap[$kp3]['realisasi'] / $pembagi ,4); ?>
+										<?php echo number_format(@$tableRekap[$kp3]['realisasi'], 0, ',', '.' ); ?>
 									</a>
 								</td>
 								<td align="right">
