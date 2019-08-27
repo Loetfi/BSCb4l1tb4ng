@@ -139,7 +139,7 @@
 							<!-- td align="right"><?php echo $row['Target Bulan Ini']; ?></td>
 							<td align="right"><?php echo $row['Target (%)']; ?></td -->
 							
-							<td align="right"><?php echo number_format(@$targetBulanIni[$row['Unit Kerja']] / $pembagi,2); ?></td>
+							<td align="right"><?php echo number_format(@$targetBulanIni[$row['Unit Kerja']], 0, ',', '.' ); ?></td>
 							<td align="right"><?php echo $row['Target Bulan Ini']; ?></td>
 							
 							<td align="right"><?php echo $row['Realisasi']; ?></td>
@@ -158,8 +158,8 @@
 								echo strtoupper(@$row['Unit Kerja']); 
 								$thisUnitKerja[] = strtoupper(@$row['Unit Kerja']); 
 							?></th>
-							<td align="right"><?php echo number_format(@$row['Target'] / $pembagi,2).$satuan; ?></td>
-							<td align="right"><?php echo number_format(@$targetBulanIni[$row['Unit Kerja']] / $pembagi,2); ?></td>
+							<td align="right"><?php echo number_format(@$row['Target'], 0, ',', '.' ); ?></td>
+							<td align="right"><?php echo number_format(@$targetBulanIni[$row['Unit Kerja']], 0, ',', '.' ); ?></td>
 							<td align="right"><?php echo @$row['Target Bulan Ini']; ?></td>
 							<td align="right"></td>
 							<td align="right"></td>
@@ -205,25 +205,25 @@
 						<tr>
 							<th>Target</th>
 							<?php for($i=1; $i<=12; $i++){ ?>
-							<td align="right"><?php echo @$targetBulanan[$i] > 0 ? number_format($targetBulanan[$i]/$pembagi,2).$satuan : '-'; ?></td>
+							<td align="right"><?php echo @$targetBulanan[$i] > 0 ? number_format($targetBulanan[$i], 0, ',', '.' ) : '-'; ?></td>
 							<?php } ?>
 						</tr>
 						<tr>
 							<th>Realisasi Penerimaan</th>
 							<?php for($i=1; $i<=12; $i++){ ?>
-							<td align="right"><?php echo @$getGrafik_form_a['table']['realisasi'][$i-1] > 0 ? number_format($getGrafik_form_a['table']['realisasi'][$i-1]/$pembagi,2).$satuan : '-'; ?></td>
+							<td align="right"><?php echo @$getGrafik_form_a['table']['realisasi'][$i-1] > 0 ? number_format($getGrafik_form_a['table']['realisasi'][$i-1], 0, ',', '.' ) : '-'; ?></td>
 							<?php } ?>
 						</tr>
 						<tr>
 							<th>Realisasi Kontrak</th>
 							<?php for($i=1; $i<=12; $i++){ ?>
-							<td align="right"><?php echo @$getGrafik_form_a['table']['nilaiKontrak'][$i-1] > 0 ? number_format($getGrafik_form_a['table']['nilaiKontrak'][$i-1]/$pembagi,2).$satuan : '-'; ?></td>
+							<td align="right"><?php echo @$getGrafik_form_a['table']['nilaiKontrak'][$i-1] > 0 ? number_format($getGrafik_form_a['table']['nilaiKontrak'][$i-1], 0, ',', '.' ) : '-'; ?></td>
 							<?php } ?>
 						</tr>
 						<tr>
 							<th>Realisasi Tahun Lalu</th>
 							<?php for($i=1; $i<=12; $i++){ ?>
-							<td align="right"><?php echo @$getGrafik_form_a['table']['realiasiTahunLalu'][$i-1] > 0 ? number_format($getGrafik_form_a['table']['realiasiTahunLalu'][$i-1]/$pembagi,2).$satuan : '-'; ?></td>
+							<td align="right"><?php echo @$getGrafik_form_a['table']['realiasiTahunLalu'][$i-1] > 0 ? number_format($getGrafik_form_a['table']['realiasiTahunLalu'][$i-1], 0, ',', '.' ) : '-'; ?></td>
 							<?php } ?>
 						</tr>
 						</table>

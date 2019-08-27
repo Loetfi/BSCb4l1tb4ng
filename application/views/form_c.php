@@ -172,15 +172,15 @@
 								<td align="right">
 									<?php 
 									if (@$tableRekap[$kp3]['terkontrak'] > 1)
-										echo number_format(((@$tableRekap[$kp3]['terkontrak'] - @$tableRekap[$kp3]['realisasi']) / $pembagi),4); 
+										echo number_format(((@$tableRekap[$kp3]['terkontrak'] - @$tableRekap[$kp3]['realisasi']) / $pembagi), 0, ',', '.' );
 									else 
-										echo number_format(0,4);
+										echo number_format(0, 0, ',', '.' );
 									?>
 								</td>
 								<td align="right" class="td-border-right">
 									<?php 
 									if (@$tableRekap[$kp3]['terkontrak'] > 1)
-										echo number_format((@$tableRekap[$kp3]['realisasi'] / @$tableRekap[$kp3]['terkontrak'] * 100),2);
+										echo number_format((@$tableRekap[$kp3]['realisasi'] / @$tableRekap[$kp3]['terkontrak'] * 100), 0, ',', '.' );
 									else 
 										echo '-';
 									?>
@@ -190,21 +190,21 @@
 									$nilai = '-';
 									$persen = '-';
 									if (@$dataTable[$kp3][$bulan]['realisasi'] > 0){
-										$nilai = number_format(@$dataTable[$kp3][$bulan]['realisasi'] / $pembagi ,4);
+										$nilai = number_format(@$dataTable[$kp3][$bulan]['realisasi'] / $pembagi , 0, ',', '.' );
 										$thisMonthTarget = @$targetAllBulanan[$kp3][$bulan] > 0 ? @$targetAllBulanan[$kp3][$bulan] : 1 ;
 										if ($thisMonthTarget > 1)
-											$persen = number_format(((@$dataTable[$kp3][$bulan]['realisasi']/ $pembagi) / ($thisMonthTarget/$pembagi) * 100),2);
+											$persen = number_format(((@$dataTable[$kp3][$bulan]['realisasi']/ $pembagi) / ($thisMonthTarget/$pembagi) * 100), 2, ',', '.' );
 										else 
-											$persen = number_format(100,2);
+											$persen = number_format(100, 2, ',', '.' );
 										// $persen = number_format(rand(1,80),2);
 										@$akumulasi[$kp3] += @$dataTable[$kp3][$bulan]['realisasi'];
 									}
 								
 								?>
-								<td align="right" class="td-border-left"><?php echo number_format(@$thisMonthTarget/$pembagi,4); ?></td>
+								<td align="right" class="td-border-left"><?php echo number_format(@$thisMonthTarget, 0, ',', '.' ); ?></td>
 								<td align="right"><?php echo @$nilai; ?></td>
 								<td align="right"><?php echo @$persen; ?></td>
-								<td align="right" class="td-border-right"><?php echo ($bulan <= (int)date('m')) ? number_format(@$akumulasi[$kp3] / $pembagi,4) : '-'; ?></td>
+								<td align="right" class="td-border-right"><?php echo ($bulan <= (int)date('m')) ? number_format(@$akumulasi[$kp3], 0, ',', '.' ) : '-'; ?></td>
 								<?php } ?>
 							</tr>
 							<?php } ?>
