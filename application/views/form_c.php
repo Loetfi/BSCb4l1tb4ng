@@ -152,7 +152,7 @@
 							<tr>
 								<td><?php echo $i+1; ?></td>
 								<td><?php echo $kp3; ?></td>
-								<td><?php echo number_format(@$targetAll[$kp3] / $pembagi,2); ?></td>
+								<td><?php echo number_format(@$targetAll[$kp3], 0, ',', '.'); ?></td>
 								
 								<td align="right">
 									<a href="#" class="btnTerkontrak" this_key="<?php echo $org == null ? $kp3 : $org; ?>" this_year="<?php echo date('Y'); ?>" this_kp3="<?php echo $kp3; ?>">
@@ -172,7 +172,7 @@
 								<td align="right">
 									<?php 
 									if (@$tableRekap[$kp3]['terkontrak'] > 1)
-										echo number_format(((@$tableRekap[$kp3]['terkontrak'] - @$tableRekap[$kp3]['realisasi']) / $pembagi), 0, ',', '.' );
+										echo number_format((@$tableRekap[$kp3]['terkontrak'] - @$tableRekap[$kp3]['realisasi']), 0, ',', '.' );
 									else 
 										echo number_format(0, 0, ',', '.' );
 									?>
@@ -217,7 +217,7 @@
 							<tr>
 								<td><?php echo $i = $i+1; ?></td>
 								<td><?php echo strtoupper($kp3); ?></td>
-								<td><?php echo number_format(@$targetAll[$kp3] / $pembagi,2); ?></td>
+								<td><?php echo number_format(@$targetAll[$kp3], 0, ',', '.');; ?></td>
 								<td align="right" terkontrak=""></td>
 								<td align="right" Inv=""></td>
 								<td align="right" Realisasi=""></td>
