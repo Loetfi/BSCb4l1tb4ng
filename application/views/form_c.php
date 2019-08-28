@@ -112,11 +112,11 @@
 						<tr>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">No</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;">Unit Kerja</th>
-							<th rowspan="3" style="vertical-align: middle; text-align:center;">Target [Rp.M]</th>
-							<th rowspan="3" style="vertical-align: middle; text-align:center;">Terkontrak [Rp.M]</th>
-							<th rowspan="3" style="vertical-align: middle; text-align:center;">Invoice [Rp.M]</th>
-							<th rowspan="3" style="vertical-align: middle; text-align:center;">Realisasi [Rp.M]</th>
-							<th rowspan="3" style="vertical-align: middle; text-align:center;">Sisa Kontrak [Rp.M]</th>
+							<th rowspan="3" style="vertical-align: middle; text-align:center;">Target [Rp.]</th>
+							<th rowspan="3" style="vertical-align: middle; text-align:center;">Terkontrak [Rp.]</th>
+							<th rowspan="3" style="vertical-align: middle; text-align:center;">Invoice [Rp.]</th>
+							<th rowspan="3" style="vertical-align: middle; text-align:center;">Realisasi [Rp.]</th>
+							<th rowspan="3" style="vertical-align: middle; text-align:center;">Sisa Kontrak [Rp.]</th>
 							<th rowspan="3" style="vertical-align: middle; text-align:center;" class="td-border-right">Capaian Realisasi <br>%</th>
 							<th colspan="48"style="vertical-align: middle; text-align:center; width: 2400px;" class="td-border-left" >Realisasi Bulanan</th>
 						</tr>
@@ -127,8 +127,8 @@
 						</tr>
 						<tr>
 							<?php for($bulan=1; $bulan<=12; $bulan++){ ?>
-							<th style="width: 100px;" class="td-border-left">T [Rp.M]</th>
-							<th style="width: 100px;">R [Rp.M]</th>
+							<th style="width: 100px;" class="td-border-left">T [Rp.]</th>
+							<th style="width: 100px;">R [Rp.]</th>
 							<th>%</th>
 							<th style="width: 100px;" class="td-border-right">Sum</th>
 							<?php } ?>

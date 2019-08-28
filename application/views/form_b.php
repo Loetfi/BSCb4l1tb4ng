@@ -119,11 +119,11 @@
 							<th colspan="2">Sisa</th>
 						</tr>
 						<tr>
-							<th>Rp.M</th>
+							<th>Rp.</th>
 							<th>%</th>
-							<th>Rp.M</th>
+							<th>Rp.</th>
 							<th>%</th>
-							<th>Rp.M</th>
+							<th>Rp.</th>
 							<th>%</th>
 						</tr>
 						<?php 
