@@ -291,11 +291,17 @@ class Dashboard extends CI_Controller {
 			);
 			$data['script_file'] = 'script_dash';
 			
-			$data['getRekap_form_a'] = $this->getRekap_form_a('All', $selectedYear);
-			$data['getGrafik']['p3gl'] = $this->getGrafik_form_a('p3gl', $selectedYear);
-			$data['getGrafik']['p3tek'] = $this->getGrafik_form_a('p3tek', $selectedYear);
-			$data['getGrafik']['tekmira'] = $this->getGrafik_form_a('tekmira', $selectedYear);
-			$data['getGrafik']['lemigas'] = $this->getGrafik_form_a('lemigas', $selectedYear);
+			$strJsonFileContents = file_get_contents('assets/json/All_'.$selectedYear.'.json'); $fileJson_All = json_decode($strJsonFileContents, true);
+			$strJsonFileContents = file_get_contents('assets/json/p3gl_'.$selectedYear.'.json'); $fileJson_p3gl = json_decode($strJsonFileContents, true);
+			$strJsonFileContents = file_get_contents('assets/json/p3tek_'.$selectedYear.'.json'); $fileJson_p3tek = json_decode($strJsonFileContents, true);
+			$strJsonFileContents = file_get_contents('assets/json/tekmira_'.$selectedYear.'.json'); $fileJson_tekmira = json_decode($strJsonFileContents, true);
+			$strJsonFileContents = file_get_contents('assets/json/lemigas_'.$selectedYear.'.json'); $fileJson_lemigas = json_decode($strJsonFileContents, true);
+			
+			$data['getRekap_form_a'] = $fileJson_All['getRekap_form_a'][$selectedYear]; 				// $this->getRekap_form_a('All', $selectedYear);
+			$data['getGrafik']['p3gl'] = $fileJson_p3gl['getGrafik_form_a'][$selectedYear];				// $this->getGrafik_form_a('p3gl', $selectedYear);
+			$data['getGrafik']['p3tek'] = $fileJson_p3tek['getGrafik_form_a'][$selectedYear];			// $this->getGrafik_form_a('p3tek', $selectedYear);
+			$data['getGrafik']['tekmira'] = $fileJson_tekmira['getGrafik_form_a'][$selectedYear]; 		// $this->getGrafik_form_a('tekmira', $selectedYear);
+			$data['getGrafik']['lemigas'] = $fileJson_lemigas['getGrafik_form_a'][$selectedYear];		// $this->getGrafik_form_a('lemigas', $selectedYear);
 			
 			$unit = array(); $target = array(); $realisasi = array(); $sr = array();
 			foreach($data['getRekap_form_a']['dataSatker'] as $row){
@@ -655,9 +661,16 @@ class Dashboard extends CI_Controller {
 			$bulanan[] = date('M', strtotime($i.'/20/2019'));
 		$data['bulanan'] = $bulanan;
 		
-		$data['getRekap_form_a'] = $this->getRekap_form_a($satKer, $selectedYear);
-		$data['getGrafik_form_a'] = $this->getGrafik_form_a($satKer, $selectedYear);
-		$data['getRekap_form_c'] = $this->getRekap_form_c($satKer, $selectedYear);
+		$strJsonFileContents = file_get_contents('assets/json/'.$satKer.'_'.$selectedYear.'.json');
+		$fileJson = json_decode($strJsonFileContents, true);
+		$data['getRekap_form_a'] = $fileJson['getRekap_form_a'][$selectedYear];
+		$data['getGrafik_form_a'] = $fileJson['getGrafik_form_a'][$selectedYear];
+		$data['getRekap_form_b'] = $fileJson['getRekap_form_b'][$selectedYear];
+		$data['getRekap_form_c'] = $fileJson['getRekap_form_c'][$selectedYear];
+		
+		// $data['getRekap_form_a'] = $this->getRekap_form_a($satKer, $selectedYear);
+		// $data['getGrafik_form_a'] = $this->getGrafik_form_a($satKer, $selectedYear);
+		// $data['getRekap_form_c'] = $this->getRekap_form_c($satKer, $selectedYear);
 		$data['pembagi'] = $this->pembagi;
 		$data['satuan'] = $this->satuan;
 		$data['thisYear'] = $this->thisYear;
@@ -697,10 +710,17 @@ class Dashboard extends CI_Controller {
 			$bulanan[] = date('M', strtotime($i.'/20/2019'));
 		$data['bulanan'] = $bulanan;
 		
-		$data['getRekap_form_a'] = $this->getRekap_form_a($satKer, $selectedYear);
-		$data['getGrafik_form_a'] = $this->getGrafik_form_a($satKer, $selectedYear);
-		$data['getRekap_form_b'] = $this->getRekap_form_b($satKer, $selectedYear);
-		$data['getRekap_form_c'] = $this->getRekap_form_c($satKer, $selectedYear);
+		$strJsonFileContents = file_get_contents('assets/json/'.$satKer.'_'.$selectedYear.'.json');
+		$fileJson = json_decode($strJsonFileContents, true);
+		$data['getRekap_form_a'] = $fileJson['getRekap_form_a'][$selectedYear];
+		$data['getGrafik_form_a'] = $fileJson['getGrafik_form_a'][$selectedYear];
+		$data['getRekap_form_b'] = $fileJson['getRekap_form_b'][$selectedYear];
+		$data['getRekap_form_c'] = $fileJson['getRekap_form_c'][$selectedYear];
+
+		// $data['getRekap_form_a'] = $this->getRekap_form_a($satKer, $selectedYear);
+		// $data['getGrafik_form_a'] = $this->getGrafik_form_a($satKer, $selectedYear);
+		// $data['getRekap_form_b'] = $this->getRekap_form_b($satKer, $selectedYear);
+		// $data['getRekap_form_c'] = $this->getRekap_form_c($satKer, $selectedYear);
 		$data['pembagi'] = $this->pembagi;
 		$data['satuan'] = $this->satuan;
 		
@@ -750,9 +770,16 @@ class Dashboard extends CI_Controller {
 			$bulanan[] = date('M', strtotime($i.'/20/2019'));
 		$data['bulanan'] = $bulanan;
 		
-		$data['getRekap_form_a'] = $this->getRekap_form_a($satKer, $selectedYear);
-		$data['getGrafik_form_a'] = $this->getGrafik_form_a($satKer, $selectedYear);
-		$data['getRekap_form_c'] = $this->getRekap_form_c($satKer, $selectedYear);
+		$strJsonFileContents = file_get_contents('assets/json/'.$satKer.'_'.$selectedYear.'.json');
+		$fileJson = json_decode($strJsonFileContents, true);
+		$data['getRekap_form_a'] = $fileJson['getRekap_form_a'][$selectedYear];
+		$data['getGrafik_form_a'] = $fileJson['getGrafik_form_a'][$selectedYear];
+		$data['getRekap_form_b'] = $fileJson['getRekap_form_b'][$selectedYear];
+		$data['getRekap_form_c'] = $fileJson['getRekap_form_c'][$selectedYear];
+		
+		// $data['getRekap_form_a'] = $this->getRekap_form_a($satKer, $selectedYear);
+		// $data['getGrafik_form_a'] = $this->getGrafik_form_a($satKer, $selectedYear);
+		// $data['getRekap_form_c'] = $this->getRekap_form_c($satKer, $selectedYear);
 		$data['pembagi'] = $this->pembagi;
 		$data['satuan'] = $this->satuan;
 		
@@ -2268,6 +2295,8 @@ class Dashboard extends CI_Controller {
         
         $raw_rekap = $this->dash->raw_rekap($dataInsert);
         print_r($raw_rekap); 
+		
+		$this->backupDaily();
     }
     
     function getNotif($tgl=''){
@@ -2322,6 +2351,38 @@ class Dashboard extends CI_Controller {
         }
         // print_r($getNotif);
     }
+	
+	function backupDaily($selectedYear = ""){
+		if ($selectedYear == "" || $selectedYear == date('Y')){
+			$selectedYear = date('Y');
+		}
+		$satKer = 'tekmira';
+		$this->backupToJson($satKer, $selectedYear);
+		$satKer = 'p3tek';
+		$this->backupToJson($satKer, $selectedYear);
+		$satKer = 'p3gl';
+		$this->backupToJson($satKer, $selectedYear);
+		$satKer = 'lemigas';
+		$this->backupToJson($satKer, $selectedYear);
+		$satKer = 'All';
+		$this->backupToJson($satKer, $selectedYear);
+		
+	}
+	function backupToJson($satKer, $selectedYear){
+		$thisSatker = array();
+		$thisSatker['getRekap_form_a'][$selectedYear] = $this->getRekap_form_a($satKer, $selectedYear);
+		$thisSatker['getGrafik_form_a'][$selectedYear] = $this->getGrafik_form_a($satKer, $selectedYear);
+		$thisSatker['getRekap_form_b'][$selectedYear] = $this->getRekap_form_b($satKer, $selectedYear);
+		$thisSatker['getRekap_form_c'][$selectedYear] = $this->getRekap_form_c($satKer, $selectedYear);
+		$fp = fopen('assets/json/'.$satKer.'_'.$selectedYear.'.json', 'w');
+		fwrite($fp, json_encode($thisSatker));
+		fclose($fp);
+		
+		$fp = fopen('assets/json/'.$selectedYear.'/'.$satKer.'_'.date('Ymd').'.json', 'w');
+		fwrite($fp, json_encode($thisSatker));
+		fclose($fp);
+	}
+	
 }
 
 /* End of file Kegiatan.php */
