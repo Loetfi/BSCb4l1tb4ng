@@ -1339,10 +1339,10 @@ class Dashboard extends CI_Controller {
 				
 				$dataReturn[] = array(
 					'Unit Kerja'		=> @$kp3,
-					'Target'			=> number_format(@$targetAll[$kp3]/$pembagi,2).$satuan,
+					'Target'			=> number_format(@$targetAll[$kp3],2),
 					'Target Bulan Ini'	=> @$targetBulanIni[$kp3],
 					'Target (%)'		=> null,
-					'Realisasi'			=> number_format($realisasiKp3/$pembagi,2).$satuan,
+					'Realisasi'			=> number_format($realisasiKp3,2),
 					'Realisasi(%)'		=> null,
 					'Sisa'				=> null,
 					'Sisa(%)'			=> null,
@@ -1372,10 +1372,10 @@ class Dashboard extends CI_Controller {
 				
 				$dataReturn[] = array(
 					'Unit Kerja'		=> @$kp3,
-					'Target'			=> number_format(@$targetAll[$kp3]/$pembagi,2).$satuan,
+					'Target'			=> number_format(@$targetAll[$kp3],2),
 					'Target Bulan Ini'	=> @$targetBulanIni[$kp3],
 					'Target (%)'		=> null,
-					'Realisasi'			=> number_format($realisasiKp3/$pembagi,2).$satuan,
+					'Realisasi'			=> number_format($realisasiKp3,2),
 					'Realisasi(%)'		=> null,
 					'Sisa'				=> null,
 					'Sisa(%)'			=> null,
@@ -1403,10 +1403,10 @@ class Dashboard extends CI_Controller {
                 $kp3 = $arrKp3[$i];
                 $dataReturn[] = array(
 					'Unit Kerja'		=> $kp3,
-					'Target'			=> number_format(@$targetAll[$kp3]/$pembagi,2).$satuan,
+					'Target'			=> number_format(@$targetAll[$kp3],2),
 					'Target Bulan Ini'	=> @$row['targetBulanIni'],
 					'Target (%)'		=> null,
-					'Realisasi'			=> number_format($realisasiKp3[$kp3]/$pembagi,2).$satuan,
+					'Realisasi'			=> number_format($realisasiKp3[$kp3],2),
 					'Realisasi(%)'		=> null,
 					'Sisa'				=> null,
 					'Sisa(%)'			=> null,
@@ -1464,10 +1464,10 @@ class Dashboard extends CI_Controller {
 				
 				$dataReturn[] = array(
 					'Unit Kerja'		=> @$kp3,
-					'Target'			=> number_format(@$targetAll[$kp3]/$pembagi,2).$satuan,
+					'Target'			=> number_format(@$targetAll[$kp3],2),
 					'Target Bulan Ini'	=> @$targetBulanIni[$kp3],
 					'Target (%)'		=> null,
-					'Realisasi'			=> number_format($realisasiKp3/$pembagi,2).$satuan,
+					'Realisasi'			=> number_format($realisasiKp3,2),
 					'Realisasi(%)'		=> null,
 					'Sisa'				=> null,
 					'Sisa(%)'			=> null,
@@ -2036,6 +2036,7 @@ class Dashboard extends CI_Controller {
 			'data' => @$rows,
 			'responRow' => @$allData,
 			'total' => number_format(@$total,2),
+			'url' => @$url
 		);
 		header('Content-Type: application/json');
 		echo json_encode($return);
