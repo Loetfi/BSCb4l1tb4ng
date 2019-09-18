@@ -805,7 +805,7 @@ class Dashboard extends CI_Controller {
 		// echo "\n # getGrafik_form_a ############################################";
 		$thisKey = '5.03.00';
 		$thisYear = '2019';
-		$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_kontrak/?_start=0&_count=20&_filter=kontrak_host_kode%3D%3D'.$thisKey.'%26%26kontrak_tanggal%3E%3D'.$thisYear.'-01-01%26%26kontrak_tanggal%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+		$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_kontrak/?_start=0&_count=50&_filter=kontrak_host_kode%3D%3D'.$thisKey.'%26%26kontrak_tanggal%3E%3D'.$thisYear.'-01-01%26%26kontrak_tanggal%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
 		$responRow 	= $this->getDataLemigas($url);
 		print_r($responRow);
 		// $rekap = $this->getRekap_form_c('tekmira');
@@ -940,7 +940,7 @@ class Dashboard extends CI_Controller {
 			$targetBulan = @$getTargetSatker['TargetBulanIni'];
 			
 			## kontrak
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_rekap_kontrak_bulan/?_start=0&_count=20&_filter=tahun%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_rekap_kontrak_bulan/?_start=0&_count=50&_filter=tahun%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
 			$dataRow 	= $this->getDataLemigas($url);
 			/* // print_r($responRow); die();
 			[host_kode] => 5.03.00
@@ -958,7 +958,7 @@ class Dashboard extends CI_Controller {
 			}
 			
 			$realisasiSatker = 0;
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=20&_filter=tahun_bayar%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=50&_filter=tahun_bayar%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
 			$responRow 	= $this->getDataLemigas($url);
 			/*
 			// print_r($responRow); die();
@@ -1194,7 +1194,7 @@ class Dashboard extends CI_Controller {
 		
 		if ($satKer == 'All' || $satKer == 'lemigas'){ $branchId = '1';
 			## kontrak
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_rekap_kontrak_bulan/?_start=0&_count=20&_filter=tahun%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_rekap_kontrak_bulan/?_start=0&_count=50&_filter=tahun%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
 			$responRow 	= $this->getDataLemigas($url);
 			/* // print_r($responRow); die();
 			[host_kode] => 5.03.00
@@ -1213,7 +1213,7 @@ class Dashboard extends CI_Controller {
 			}
 			
 			## Pencapaian this year
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=20&_filter=tahun_bayar%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=50&_filter=tahun_bayar%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
 			$responRow 	= $this->getDataLemigas($url);
 			/* // print_r($responRow); die();
 			[host_kode] => 5.01.00
@@ -1233,7 +1233,7 @@ class Dashboard extends CI_Controller {
 			}
 			
 			## Pencapaian last year
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=20&_filter=tahun_bayar%3D%3D'.$this->lastYear.'&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=50&_filter=tahun_bayar%3D%3D'.$this->lastYear.'&_expand=yes&_view=json';
 			$responRow 	= $this->getDataLemigas($url);
 			foreach($responRow as $row){
 				$bulan = (int)$row['bulan_bayar'];
@@ -1435,7 +1435,7 @@ class Dashboard extends CI_Controller {
 		else if ($satker == "lemigas"){ $branchId = '1';
 			$targetAll = $this->getTargetKp3Tahunan($branchId, $this->thisYear);
 			
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=20&_filter=tahun_bayar%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=50&_filter=tahun_bayar%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
 			$dataRow 	= $this->getDataLemigas($url);
 			$arrKp3 = array();
 			foreach($dataRow as $row){
@@ -1786,7 +1786,7 @@ class Dashboard extends CI_Controller {
 			$arrKp3 = array();
 			
 			## penerimaan
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=20&_filter=tahun_bayar%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_penerimaan_bulan/?_start=0&_count=50&_filter=tahun_bayar%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
 			$dataRow 	= $this->getDataLemigas($url);
 			/* // print_r($dataRow); die();
 			[host_kode] => 5.01.00
@@ -1831,7 +1831,7 @@ class Dashboard extends CI_Controller {
 			}
 			
 			## kontrak
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_rekap_kontrak_bulan/?_start=0&_count=20&_filter=tahun%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_rekap_kontrak_bulan/?_start=0&_count=50&_filter=tahun%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
 			$dataRow 	= $this->getDataLemigas($url);
 			/* // print_r($responRow); die();
 			[host_kode] => 5.03.00
@@ -1863,7 +1863,7 @@ class Dashboard extends CI_Controller {
 			$method 			= 'GET';
 			$responsedet 		= ngeCurl($url, array(), $method);
 			$dataRow	 		= json_decode($responsedet['response'],true);
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_terbit_bulan/?_start=0&_count=20&_filter=tahun%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_invoice_terbit_bulan/?_start=0&_count=50&_filter=tahun%3D%3D'.$this->thisYear.'&_expand=yes&_view=json';
 			$dataRow 	= $this->getDataLemigas($url);
 			/*
 			// print_r($dataRow); die();
@@ -2016,7 +2016,7 @@ class Dashboard extends CI_Controller {
 		}
 		else if ($satker == "lemigas"){
 			## rekap kontrak
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_kontrak/?_start=0&_count=20&_filter=kontrak_host_kode%3D%3D'.$thisKey.'%26%26kontrak_tanggal%3E%3D'.$thisYear.'-01-01%26%26kontrak_tanggal%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_kontrak/?_start=0&_count=50&_filter=kontrak_host_kode%3D%3D'.$thisKey.'%26%26kontrak_tanggal%3E%3D'.$thisYear.'-01-01%26%26kontrak_tanggal%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
 			$responRow 	= $this->getDataLemigas($url);
 			foreach($responRow as $row){
 				$nilai = $row['kontrak_nilai'];
@@ -2081,8 +2081,8 @@ class Dashboard extends CI_Controller {
 		else if ($satker == "lemigas"){
 			$statusInv = 2;
 			## rekap invoice
-			// $url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=20&_filter=kontrak_host_kode%3D%3D'.$thisKey.'%26%26kontrak_tanggal%3E%3D'.$thisYear.'-01-01%26%26kontrak_tanggal%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=20&_filter=status%3D%3D'.$statusInv.'%26%26host_kode%3D%3D'.$thisKey.'%26%26inv_tgl%3E%3D'.$thisYear.'-01-01%26%26inv_tgl%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+			// $url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=50&_filter=kontrak_host_kode%3D%3D'.$thisKey.'%26%26kontrak_tanggal%3E%3D'.$thisYear.'-01-01%26%26kontrak_tanggal%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=50&_filter=status%3D%3D'.$statusInv.'%26%26host_kode%3D%3D'.$thisKey.'%26%26inv_tgl%3E%3D'.$thisYear.'-01-01%26%26inv_tgl%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
 			$allData 	= $this->getDataLemigas($url);
 			foreach($allData as $row){
 				$nilai = $row['inv_nilai'];
@@ -2097,7 +2097,7 @@ class Dashboard extends CI_Controller {
 				@$total += $nilai;
 			}
 			$statusInv = 3;
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=20&_filter=status%3D%3D'.$statusInv.'%26%26host_kode%3D%3D'.$thisKey.'%26%26inv_tgl%3E%3D'.$thisYear.'-01-01%26%26inv_tgl%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=50&_filter=status%3D%3D'.$statusInv.'%26%26host_kode%3D%3D'.$thisKey.'%26%26inv_tgl%3E%3D'.$thisYear.'-01-01%26%26inv_tgl%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
 			$allData 	= $this->getDataLemigas($url);
 			foreach($allData as $row){
 				$nilai = $row['inv_nilai'];
@@ -2180,7 +2180,7 @@ class Dashboard extends CI_Controller {
 		else if ($satker == 'lemigas'){
 			// $thisKey
 			$statusInv = 3;
-			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=20&_filter=status%3D%3D'.$statusInv.'%26%26host_kode%3D%3D'.$thisKey.'%26%26inv_tgl_bayar%3E%3D'.$thisYear.'-01-01%26%26inv_tgl_bayar%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
+			$url 		= 'http://bsc.lemigas.esdm.go.id/api/webservice_bsc/v_ws_detail_invoice/?_start=0&_count=50&_filter=status%3D%3D'.$statusInv.'%26%26host_kode%3D%3D'.$thisKey.'%26%26inv_tgl_bayar%3E%3D'.$thisYear.'-01-01%26%26inv_tgl_bayar%3C'.($thisYear + 1).'-01-01&_expand=yes&_view=json';
 			$allData 	= $this->getDataLemigas($url);
 			foreach($allData as $row){
 				$nilai = $row['inv_nilai'];
