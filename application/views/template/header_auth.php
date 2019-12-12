@@ -26,4 +26,34 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  
+  <!-- link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/bgslideshow/css/style1.css');?>" / -->
+  <style>
+  ol,ul {
+    list-style:none;
+  }
+  .global-header {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    text-align: center;
+  }
+  .global-header{
+    -webkit-animation: fade 4s infinite;
+    -moz-animation: fade 4s infinite;
+    -o-animation: fade 4s infinite;
+    animation: fade 4s infinite;
+  }
+
+  .global-header {
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    transition: all .2s ease;
+    -webkit-animation: fade 4s infinite;
+    -moz-animation: fade 4s infinite;
+    -o-animation: fade 4s infinite;
+    animation: fade 4s infinite;
+  }
+  </style>
 </head>
