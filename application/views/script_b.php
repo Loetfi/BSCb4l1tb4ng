@@ -15,7 +15,7 @@ Highcharts.chart('GrafikFormB', {
         type: 'line'
     },
     title: {
-        text: 'Report Kerja Tahun 2019'
+        text: 'Report Kerja Tahun <?php echo $selectedYear; ?>'
     },
     xAxis: {
 		// labels: {

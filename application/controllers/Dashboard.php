@@ -655,7 +655,7 @@ class Dashboard extends CI_Controller {
 		$rawTarget = $this->target->getTargetBulanan($this->thisYear);
 		foreach($rawTarget as $row)
 			$thisTarget[$row['month']] = number_format($row['target']/$this->pembagi,2).$this->satuan;
-		$data['thisTarget'] = $thisTarget;
+		$data['thisTarget'] = @$thisTarget;
 		
 		for($i=1; $i<=12; $i++)
 			$bulanan[] = date('M', strtotime($i.'/20/2019'));
@@ -1797,6 +1797,7 @@ class Dashboard extends CI_Controller {
             [inv_currency] => 2
 			*/
 			$arrKp3 = array();
+            $dataOlah = [];
 			foreach($dataRow as $row){
 				$unit_kode = $row['host_kode'];
 				$exp = explode('.',$unit_kode);
@@ -1907,8 +1908,8 @@ class Dashboard extends CI_Controller {
 			
 			$dataReturn = array(
 				'tableRekap' => @$tableRekap,
-				'dataTable' => $dataTable,
-				'arrKp3' 	=> $arrKp3,
+				'dataTable' => @$dataTable,
+				'arrKp3' 	=> @$arrKp3,
 				'arrOrgId' 	=> @$arrOrgId,
 				'totalTerkontrak' 	=> @$totalTerkontrak,
 				'totalInv' 			=> @$totalInv,
@@ -1929,7 +1930,7 @@ class Dashboard extends CI_Controller {
 			}
 			$dataReturn['targetAllBulanan'] = $thisRows;
 		}
-		return $dataReturn;
+		return @$dataReturn;
 	}
 
 	function getTargetKp3Tahunan($branchId='', $tahun=''){
