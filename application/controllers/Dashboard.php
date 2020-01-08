@@ -308,7 +308,10 @@ class Dashboard extends CI_Controller {
 				$unit[] = $row['Unit Kerja'];
 				$target[] = floatval(str_replace(' M','',$row['Target']));
 				$realisasi[] = floatval(str_replace(' M','',$row['Realisasi']));
-				$sr[] = floatval(number_format(floatval(str_replace(' M','',$row['Realisasi'])) / floatval(str_replace(' M','',$row['Target'])) * 100,2));
+                if (floatval(str_replace(' M','',$row['Target'])) > 0)
+                    $sr[] = floatval(number_format(floatval(str_replace(' M','',$row['Realisasi'])) / floatval(str_replace(' M','',$row['Target'])) * 100,2));
+                else 
+                    $sr[] = 0;
 			}
 			
 			$data['unit'] = $unit;

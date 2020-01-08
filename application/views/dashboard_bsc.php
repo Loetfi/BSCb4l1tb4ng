@@ -32,7 +32,7 @@ $getRekap_form_a = array(
 <!-- pre><?php print_r($getRekap_form_a); ?></pre -->
 <section class="content">
 	<div class="row">
-		<?php foreach($getRekap_form_a['dataSatker'] as $row){ ?>
+		<?php foreach(@$getRekap_form_a['dataSatker'] as $row){ ?>
 		<div class="col-lg-3 col-xs-6"> 
 			<!-- small box -->
 			<div class="small-box bg-green">
@@ -53,7 +53,10 @@ $getRekap_form_a = array(
 							<td align="right"><?php 
 								$thisTarget = floatval(str_replace(' M','',$row['Target']));
 								$thisRealisasi = floatval(str_replace(' M','',$row['Realisasi']));
-								echo $thisSr = floatval(number_format(floatval(str_replace(' M','',$row['Realisasi'])) / floatval(str_replace(' M','',$row['Target'])) * 100,2));
+                                if (floatval(str_replace(' M','',$row['Target'])) > 0)
+                                    echo $thisSr = floatval(number_format(floatval(str_replace(' M','',$row['Realisasi'])) / floatval(str_replace(' M','',$row['Target'])) * 100,2));
+                                else 
+                                    echo 0;
 							?> %</td>
 						</tr>
 					</table>
