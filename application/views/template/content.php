@@ -167,6 +167,15 @@
             <i class="fa fa-rocket"></i> <span>Master Target</span>
           </a>
         </li>
+        <li>
+          <a href="javaScript:void(0);" id="btnUpdateData" isupdate="false">
+            <i class="fa fa-refresh" id="faBtnUpdateDate" style="width: auto;"></i> <span style="margin-left: 10px;">Update Data</span> 
+            <span class="pull-right-container">
+              <small class="label pull-right bg-blue">new</small>
+            </span>
+			
+          </a>
+        </li>
 
         <li class="header">Pengguna</li>
            <li class="<?php echo @$this->uri->segment(1) === 'pengguna' ? 'active' : '' ; ?>">

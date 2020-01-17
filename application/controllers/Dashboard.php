@@ -297,11 +297,11 @@ class Dashboard extends CI_Controller {
 			$strJsonFileContents = file_get_contents('assets/json/tekmira_'.$selectedYear.'.json'); $fileJson_tekmira = json_decode($strJsonFileContents, true);
 			$strJsonFileContents = file_get_contents('assets/json/lemigas_'.$selectedYear.'.json'); $fileJson_lemigas = json_decode($strJsonFileContents, true);
 			
-			$data['getRekap_form_a'] = $fileJson_All['getRekap_form_a'][$selectedYear]; 				// $this->getRekap_form_a('All', $selectedYear);
-			$data['getGrafik']['p3gl'] = $fileJson_p3gl['getGrafik_form_a'][$selectedYear];				// $this->getGrafik_form_a('p3gl', $selectedYear);
-			$data['getGrafik']['p3tek'] = $fileJson_p3tek['getGrafik_form_a'][$selectedYear];			// $this->getGrafik_form_a('p3tek', $selectedYear);
-			$data['getGrafik']['tekmira'] = $fileJson_tekmira['getGrafik_form_a'][$selectedYear]; 		// $this->getGrafik_form_a('tekmira', $selectedYear);
-			$data['getGrafik']['lemigas'] = $fileJson_lemigas['getGrafik_form_a'][$selectedYear];		// $this->getGrafik_form_a('lemigas', $selectedYear);
+			$data['getRekap_form_a'] = @$fileJson_All['getRekap_form_a'][$selectedYear]; 				// $this->getRekap_form_a('All', $selectedYear);
+			$data['getGrafik']['p3gl'] = @$fileJson_p3gl['getGrafik_form_a'][$selectedYear];				// $this->getGrafik_form_a('p3gl', $selectedYear);
+			$data['getGrafik']['p3tek'] = @$fileJson_p3tek['getGrafik_form_a'][$selectedYear];			// $this->getGrafik_form_a('p3tek', $selectedYear);
+			$data['getGrafik']['tekmira'] = @$fileJson_tekmira['getGrafik_form_a'][$selectedYear]; 		// $this->getGrafik_form_a('tekmira', $selectedYear);
+			$data['getGrafik']['lemigas'] = @$fileJson_lemigas['getGrafik_form_a'][$selectedYear];		// $this->getGrafik_form_a('lemigas', $selectedYear);
 			
 			$unit = array(); $target = array(); $realisasi = array(); $sr = array();
 			foreach($data['getRekap_form_a']['dataSatker'] as $row){

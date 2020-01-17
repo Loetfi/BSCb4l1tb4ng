@@ -234,7 +234,32 @@
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
-    })
+    });
+    $('#btnUpdateData').click(function(){
+      isUpdate = $(this).attr('isupdate');
+      if (isUpdate == 'false'){
+        $('#faBtnUpdateDate').addClass('fa-spin');
+        $(this).attr('isUpdate','true');
+        
+        $.ajax({
+          method: 'GET',
+          url: '<?php echo site_url('dashboard/backupDaily'); ?>', 
+          beforeSend: function( ) {
+            
+          },
+          success: function() {},
+          error: function() {
+            alert('Ada opsi yang belum terpilih atau refresh halaman, dan coba lagi.');
+          },
+          complete: function(){
+            $('#faBtnUpdateDate').removeClass('fa-spin');
+            $('#btnUpdateData').attr('isUpdate','false');
+          }
+        });
+      } else {
+        alert('Update Data masih berlangsung');
+      }
+    });
   })
 </script>
 <?php if (@$script_file) { $this->load->view($script_file); } ?>
