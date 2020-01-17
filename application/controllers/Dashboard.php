@@ -2379,6 +2379,9 @@ class Dashboard extends CI_Controller {
 		$thisSatker['getGrafik_form_a'][$selectedYear] = $this->getGrafik_form_a($satKer, $selectedYear);
 		$thisSatker['getRekap_form_b'][$selectedYear] = $this->getRekap_form_b($satKer, $selectedYear);
 		$thisSatker['getRekap_form_c'][$selectedYear] = $this->getRekap_form_c($satKer, $selectedYear);
+    
+    exec ("find /assets/json -type d -exec chmod 0755 {} +");
+    
 		$fp = fopen('assets/json/'.$satKer.'_'.$selectedYear.'.json', 'w');
 		fwrite($fp, json_encode($thisSatker));
 		fclose($fp);
