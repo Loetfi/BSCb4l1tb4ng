@@ -29,14 +29,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$this->form_validation->set_rules('username', 'Username', 'trim|required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required');
 
+//die('oe');
 			if ($this->form_validation->run()==TRUE) {
 
 				$parameter = array(
-					'username'	=> !empty($this->input->post('username')) ? $this->input->post('username') : 0,
-					'password'	=> !empty($this->input->post('password')) ? $this->input->post('password') : 0
+					'username'	=> ($this->input->post('username') !== null ) ? $this->input->post('username') : 0,
+					'password'	=> ($this->input->post('password') !== null ) ? $this->input->post('password') : 0
 				);
 
-				if (!empty($this->session->userdata('referrer_url'))) {
+				if ($this->session->userdata('referrer_url') !== null ) {
 					$referer = $this->session->userdata('referrer_url');
 				} else { 
 					$referer = '/';
